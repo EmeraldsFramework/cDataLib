@@ -1,0 +1,14 @@
+#!/bin/sh
+
+rm ./export/* -r
+gcc -g -Ofast -shared -fPIC ./src/*/*.c -o export/libdata.so
+sudo cp export/libdata.so /usr/lib/
+sudo chmod 755 /usr/lib/libdata.so
+cp headers export/ -r
+cp cDataLib.h export/
+mkdir export/cDataLib
+mkdir export/cDataLib/lib
+mv export/headers export/cDataLib.h export/cDataLib/
+mv export/libdata.so export/cDataLib/lib/
+cp LICENCE.txt export/cDataLib/
+cp export/cDataLib ../../uoi/java/DataStructures/PDPs/ -r
