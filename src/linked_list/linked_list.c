@@ -87,5 +87,4 @@ void linked_list_free(linked_listT *list) {
         /* Finally free the node */
         free(to_be_freed);
     }
-    free(list);
 }

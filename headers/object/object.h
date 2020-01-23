@@ -113,11 +113,4 @@ vectorT *new_vectorT(void);
 hashmapT *new_hashmapT(void);
 linked_listT *new_linked_listT(void);
 
-/**
- * @func: object_free
- * @desc: Frees a typed object
- * @param obj -> The object to free
- **/
-void object_free(object *obj);
-
 #endif

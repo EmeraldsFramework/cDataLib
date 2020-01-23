@@ -258,8 +258,3 @@ linked_listT *new_linked_listT(void) {
     garbage_collector_push_value(gc, obj);
     return obj;
 }
-
-void object_free(object *obj) {
-    // free(obj->value);
-    // free(obj);
-}

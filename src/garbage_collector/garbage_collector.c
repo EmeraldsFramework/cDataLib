@@ -67,55 +67,6 @@ static void garbage_collector_sweep(garbage_collector *gc) {
     gc_item *obj = gc->first_object;
 
     while(obj) {
-        /* Special case for the first element to avoid pointer arithmetics */
-        if(gc->num_of_objects == 1) {
-            /* Typecast the object to a object */
-            object *item = (object*)(gc->first_object->value);
-
-            /* Switch on the item type */
-            switch(object_get_type(item)) {
-                /* Use the custom free function */
-                /* Free the pointer to the gc item */
-                case STRING:
-                    string_free(item);
-                    free(gc->first_object->value);
-                    break;
-                case VECTOR:
-                    vector_free(item);
-                    free(gc->first_object->value);
-                    break;
-                case HASHMAP:
-                    hashmap_free(item);
-                    free(gc->first_object->value);
-                    break;
-                case LINKED_LIST:
-                    linked_list_free(item);
-                    free(gc->first_object->value);
-                    break;
-                case CHAR:
-                case SHORT:
-                case INT:
-                case LONG:
-                case LONG_LONG:
-                case UNSIGNED_CHAR:
-                case UNSIGNED_SHORT:
-                case UNSIGNED_INT:
-                case UNSIGNED_LONG:
-                case UNSIGNED_LONG_LONG:
-                case FLOAT:
-                case DOUBLE:
-                case LONG_DOUBLE:
-                    object_free(item);
-                    free(gc->first_object->value);
-                    break;
-                default:
-                    free(gc->first_object->value);
-                    break;
-            }
-            gc->num_of_objects--;
-            break;
-        }
-
         /* If the object is not marked */
         if(!obj->marked) {
             /* This object wasnt reached, so remove it from the list and free it */
@@ -124,8 +75,17 @@ static void garbage_collector_sweep(garbage_collector *gc) {
             /* Get the address and free the memory address */
             obj = untracked->next;
 
-            /* Typecast the object to a object */
-            object *item = (object*)(untracked->next->value);
+            /* Special case for the first element to avoid pointer arithmetics */
+            /* TODO TRY IMPLEMENT WITH POINTERS TO POINTERS */
+            object *item;
+            if(gc->num_of_objects == 1) {
+                /* Typecast the object to a object */
+                item = (object*)(gc->first_object->value);
+            }
+            else {
+                /* Typecast the object to a object */
+                item = (object*)(untracked->next->value);
+            }
 
             /* Switch on the item type */
             switch(object_get_type(item)) {
@@ -133,19 +93,19 @@ static void garbage_collector_sweep(garbage_collector *gc) {
                 /* Free the pointer to the gc item */
                 case STRING:
                     string_free(item);
-                    free(untracked->next->value);
+                    free(item);
                     break;
                 case VECTOR:
                     vector_free(item);
-                    free(untracked->next->value);
+                    free(item);
                     break;
                 case HASHMAP:
                     hashmap_free(item);
-                    free(untracked->next->value);
+                    free(item);
                     break;
                 case LINKED_LIST:
                     linked_list_free(item);
-                    free(gc->first_object->value);
+                    free(item);
                     break;
                 case CHAR:
                 case SHORT:
@@ -160,11 +120,12 @@ static void garbage_collector_sweep(garbage_collector *gc) {
                 case FLOAT:
                 case DOUBLE:
                 case LONG_DOUBLE:
-                    object_free(item);
-                    free(untracked->next->value);
+                    free(item);
+                    free(untracked);
                     break;
                 default:
-                    free(untracked->next->value);
+                    free(item);
+                    free(untracked);
                     break;
             }
 
