@@ -53,7 +53,7 @@ void *vector_reduce(vectorT *obj, lambda fold) {
     /* Create a duplicate of the vector */
     vectorT *dup = vector_dup(obj);
 
-    /* Create the value than gets returned with the accumulation of the vector elements */
+    /* Create the value that gets returned with the accumulation of the vector elements */
     void *folded_value;
 
     /* The functionality all lies in the function pointer passed in */

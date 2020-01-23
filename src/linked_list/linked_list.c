@@ -13,6 +13,11 @@ linked_list *linked_list_create(void) {
 }
 
 void linked_list_add(linked_listT *list, object *obj) {
+    /* In case of empty inputs */
+    if(list == NULL || obj->value == NULL) {
+        return;
+    }
+
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
     llnode **probe = &(((linked_list*)object_get_value(list))->head);
 
@@ -38,6 +43,11 @@ void linked_list_add(linked_listT *list, object *obj) {
 }
 
 void linked_list_remove(linked_listT *list, object *obj) {
+    /* In case of empty inputs */
+    if(list == NULL || obj == NULL) {
+        return;
+    }
+
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
     llnode **probe = &(((linked_list*)object_get_value(list))->head);
 
@@ -54,6 +64,11 @@ void linked_list_remove(linked_listT *list, object *obj) {
 }
 
 linked_listT *linked_list_dup(linked_listT *list) {
+    /* In case of empty inputs */
+    if(list == NULL) {
+        return;
+    }
+
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
     llnode **probe = &(((linked_list*)object_get_value(list))->head);
 
@@ -73,6 +88,11 @@ linked_listT *linked_list_dup(linked_listT *list) {
 }
 
 void linked_list_free(linked_listT *list) {
+    /* In case of empty inputs */
+    if(list == NULL) {
+        return;
+    }
+
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
     llnode **probe = &(((linked_list*)object_get_value(list))->head);
 

@@ -23,4 +23,22 @@ typedef void* (*lambda)(void*);
  **/
 linked_listT *linked_list_map(linked_listT *obj, lambda modifier);
 
+/**
+ * @func: linked_list_filter
+ * @desc: Filters all linked list elements in iteration using a filter function
+ * @param obj -> The typed object containing the linked list to map
+ * @param filter -> The filter functions
+ * @return The filtered linked list duplicate
+ **/
+linked_listT *linked_list_filter(linked_listT *obj, lambda filter);
+
+/**
+ * @func: linked_list_reduce
+ * @desc: Reduces all linked list elements to some accumulated value using a fold function
+ * @param obj -> The linked list to reduce
+ * @param fold -> The fold function
+ * @return The accumulated result
+ **/
+void *linked_list_reduce(linked_listT *obj, lambda fold);
+
 #endif

@@ -78,6 +78,6 @@ void *hashmap_reduce(hashmapT *obj, lambda fold) {
     /* The functionality all lies in the function pointer passed in */
     folded_value = fold(dup);
 
-    // /* This function only works as a wrapper */
+    /* This function only works as a wrapper */
     return folded_value;
 }
