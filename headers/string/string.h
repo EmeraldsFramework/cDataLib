@@ -27,14 +27,14 @@ typedef struct string {
  * @param obj -> The typed object containing the string builder
  * @param add_len -> he length that needs to be added *not* including a NULL terminator
  **/
-static void string_ensure_space(typed_object *obj, size_t add_len);
+static void string_ensure_space(stringT *obj, size_t add_len);
 
 /**
  * @func: new_string
  * @desc: Create an str builder
  * @return: The str builder
  **/
-typed_object *new_string(char *initial);
+stringT *new_string(char *initial);
 
 /**
  * @func: string_add_str
@@ -44,7 +44,7 @@ typed_object *new_string(char *initial);
  * @param len -> The length of the string to add.
  *              If 0, strlen will be called internally to determine length
  **/
-void string_add_str(typed_object *obj, const char *str);
+void string_add_str(stringT *obj, const char *str);
 
 /**
  * @func: string_add_char
@@ -52,7 +52,7 @@ void string_add_str(typed_object *obj, const char *str);
  * @param: sb -> The typed object containing the string builder
  * @param: c -> The character to add 
  **/
-void string_add_char(typed_object *obj, char c);
+void string_add_char(stringT *obj, char c);
 
 /**
  * @func: string_add_int
@@ -60,7 +60,7 @@ void string_add_char(typed_object *obj, char c);
  * @param obj -> The typed object containing the string builder
  * @param val -> The integer to add
  **/
-void string_add_int(typed_object *obj, size_t val);
+void string_add_int(stringT *obj, size_t val);
 
 /**
  * @func: string_get
@@ -68,7 +68,7 @@ void string_add_int(typed_object *obj, size_t val);
  * @param obj -> The typed object containing the string builder
  * @return A pointer to the internal string data
  **/
-char *string_get(typed_object *obj);
+char *string_get(stringT *obj);
 
 /**
  * @func: string_shorten
@@ -76,14 +76,14 @@ char *string_get(typed_object *obj);
  * @param obj -> The typed object containing the string builder
  * @param len -> The new length of the string, anything after this length is removed
  **/
-void string_shorten(typed_object *obj, size_t len);
+void string_shorten(stringT *obj, size_t len);
 
 /**
  * @func: string_delete
  * @desc: Clear the builder
  * @param obj -> The typed object containing the string builder
  **/
-void string_delete(typed_object *obj);
+void string_delete(stringT *obj);
 
 /**
  * @func: string_skip
@@ -91,7 +91,7 @@ void string_delete(typed_object *obj);
  * @param obj -> The typed object containing the string builder
  * @param len -> The length to remove
  **/
-void string_skip(typed_object *obj, size_t len);
+void string_skip(stringT *obj, size_t len);
 
 /**
  * @func: string_length
@@ -99,7 +99,7 @@ void string_skip(typed_object *obj, size_t len);
  * @param obj -> The typed object containing the string builder
  * @return The current length of the string
  **/
-size_t string_length(typed_object *obj);
+size_t string_length(stringT *obj);
 
 /**
  * @func: string_dup
@@ -107,13 +107,13 @@ size_t string_length(typed_object *obj);
  * @param: obj -> The typed string to duplicate
  * @return The dup string
  **/
-typed_object *string_dup(typed_object *obj);
+stringT *string_dup(stringT *obj);
 
 /**
  * @func: string_free
  * @desc: Free the allocated memory for the char*
  * @param obj -> The typed object containing the string builder
  **/
-void string_free(typed_object *obj);
+void string_free(stringT *obj);
 
 #endif

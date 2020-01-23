@@ -14,5 +14,6 @@
 #include "string/__all.h"
 #include "vector/__all.h"
 #include "hashmap/__all.h"
+#include "linked_list/__all.h"
 
 #endif

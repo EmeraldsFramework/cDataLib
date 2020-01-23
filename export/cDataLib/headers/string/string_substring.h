@@ -11,6 +11,6 @@
  * @param to -> The point where we end our substring
  * @return A substring of a copy of the original string
  **/
-typed_object *string_substring(typed_object *obj, size_t from, size_t to);
+stringT *string_substring(stringT *obj, size_t from, size_t to);
 
 #endif

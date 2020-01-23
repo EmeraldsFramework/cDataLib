@@ -17,28 +17,28 @@ typedef void* (*lambda)(void*);
 /**
  * @func: vector_map
  * @desc: Maps all vector elements in iteration using a modifier function pointer
- * @param obj -> The typed object containing the hashmap to map
+ * @param obj -> The typed object containing the vector to map
  * @param modifier -> The modifier function
  * @return The mapped vector duplicate
  **/
-vector *vector_map(typed_object *obj, lambda modifier);
+vectorT *vector_map(vectorT *obj, lambda modifier);
 
 /**
  * @func: vector_filter
  * @desc: Filters all vector elements in iteration using a filter function
- * @param obj -> The typed object containing the hashmap to filter
+ * @param obj -> The typed object containing the vector to filter
  * @param filter -> The filter function
  * @return The filtered vector duplicate
  **/
-vector *vector_filter(typed_object *obj, lambda filter);
+vectorT *vector_filter(vectorT *obj, lambda filter);
 
 /**
  * @func: vector_reduce
  * @desc: Recudes all vector elements into a void* result using a foldl function
- * @param obj -> The typed object containing the hashmap to reduce
+ * @param obj -> The typed object containing the vector to reduce
  * @param fold -> The folding function to use
  * @return The folder void* result
  **/
-void *vector_reduce(typed_object *obj, lambda fold);
+void *vector_reduce(vectorT *obj, lambda fold);
 
 #endif

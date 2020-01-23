@@ -2,7 +2,7 @@
 
 extern garbage_collector *gc;
 
-static void vector_ensure_space(typed_object *obj, size_t capacity) {
+static void vector_ensure_space(vectorT *obj, size_t capacity) {
     /* Typecast the value to a string so that it can be manipulated */
     vector *v = (vector*)obj->value;
 
@@ -21,7 +21,7 @@ static void vector_ensure_space(typed_object *obj, size_t capacity) {
     }
 }
 
-typed_object *new_vector(void) {
+vectorT *new_vector(void) {
     /* Allocate space for the vector */
     vector *v = malloc(sizeof(vector));
 
@@ -34,7 +34,7 @@ typed_object *new_vector(void) {
     v->items = malloc(sizeof(void*) * v->alloced);
 
     /* Created a typed wrapper */
-    typed_object *obj = malloc(sizeof(typed_object));
+    vectorT *obj = malloc(sizeof(vectorT));
 
     /* Set the type */
     obj->type = VECTOR;
@@ -47,7 +47,7 @@ typed_object *new_vector(void) {
     return obj;
 }
 
-void vector_add(typed_object *obj, void *item) {
+void vector_add(vectorT *obj, void *item) {
     /* Typecast the value to a string so that it can be manipulated */
     vector *v = (vector*)obj->value;
 
@@ -68,7 +68,7 @@ void vector_add(typed_object *obj, void *item) {
     v->items[v->length++] = item;
 }
 
-void vector_set(typed_object *obj, size_t index, void *item) {
+void vector_set(vectorT *obj, size_t index, void *item) {
     /* Typecast the value to a string so that it can be manipulated */
     vector *v = (vector*)obj->value;
 
@@ -83,7 +83,7 @@ void vector_set(typed_object *obj, size_t index, void *item) {
     }
 }
 
-void *vector_get(typed_object *obj, size_t index) {
+void *vector_get(vectorT *obj, size_t index) {
     /* Typecast the value to a string so that it can be manipulated */
     vector *v = (vector*)obj->value;
 
@@ -101,7 +101,7 @@ void *vector_get(typed_object *obj, size_t index) {
     return NULL;
 }
 
-void vector_delete(typed_object *obj, size_t index) {
+void vector_delete(vectorT *obj, size_t index) {
     /* Typecast the value to a string so that it can be manipulated */
     vector *v = (vector*)obj->value;
 
@@ -133,7 +133,7 @@ void vector_delete(typed_object *obj, size_t index) {
     }
 }
 
-size_t vector_length(typed_object *obj) {
+size_t vector_length(vectorT *obj) {
     /* Typecast the value to a string so that it can be manipulated */
     vector *v = (vector*)obj->value;
 
@@ -145,7 +145,7 @@ size_t vector_length(typed_object *obj) {
     return v->length;
 };
 
-typed_object *vector_dup(typed_object *obj) {
+vectorT *vector_dup(vectorT *obj) {
     /* Typecast the value to a string so that it can be manipulated */
     vector *v = (vector*)obj->value;
 
@@ -155,7 +155,7 @@ typed_object *vector_dup(typed_object *obj) {
     }
 
     /* Allocate new space for the vector */
-    typed_object *dup = new_vector();
+    vectorT *dup = new_vector();
 
     /* Iteratively copy the vector items from one memory location to another */
     for(size_t i = 0; i < vector_length(obj); i++) {
@@ -166,7 +166,7 @@ typed_object *vector_dup(typed_object *obj) {
     return dup;
 }
 
-void vector_free(typed_object *obj) {
+void vector_free(vectorT *obj) {
     /* Typecast the value to a string so that it can be manipulated */
     vector *v = (vector*)obj->value;
 

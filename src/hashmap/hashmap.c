@@ -149,7 +149,7 @@ unsigned static int hashmap_hash_int(typed_object *obj, char *keystring) {
  * @param key -> The key to hash
  * @return The location
  **/
-static size_t hashmap_hash(typed_object *obj, char *key) {
+static size_t hashmap_hash(hashmapT *obj, char *key) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -183,7 +183,7 @@ static size_t hashmap_hash(typed_object *obj, char *key) {
  * @desc: Doubles the size of the hashmap and rehashes all the elements
  * @param in -> The hashmap to rehash
  **/
-static void hashmap_rehash(typed_object *obj) {
+static void hashmap_rehash(hashmapT *obj) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -214,7 +214,7 @@ static void hashmap_rehash(typed_object *obj) {
 	return;
 }
 
-typed_object *new_hashmap(void) {
+hashmapT *new_hashmap(void) {
     /* Allocate enough space */
     hashmap *map = malloc(sizeof(hashmap));
 
@@ -225,7 +225,7 @@ typed_object *new_hashmap(void) {
     map->gc = gc;
 
     /* Created a typed wrapper */
-    typed_object *obj = malloc(sizeof(typed_object));
+    hashmapT *obj = malloc(sizeof(hashmapT));
 
     /* Set the type and value */
     obj->type = HASHMAP;
@@ -236,7 +236,7 @@ typed_object *new_hashmap(void) {
 	return obj;
 }
 
-void hashmap_add(typed_object *obj, char *key, void *value) {
+void hashmap_add(hashmapT *obj, char *key, void *value) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -263,7 +263,7 @@ void hashmap_add(typed_object *obj, char *key, void *value) {
 	return;
 }
 
-void hashmap_set(typed_object *obj, char *key, void *value) {
+void hashmap_set(hashmapT *obj, char *key, void *value) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -291,7 +291,7 @@ void hashmap_set(typed_object *obj, char *key, void *value) {
     return;
 }
 
-void *hashmap_get(typed_object *obj, char *key) {
+void *hashmap_get(hashmapT *obj, char *key) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -321,7 +321,7 @@ void *hashmap_get(typed_object *obj, char *key) {
 	return NULL;
 }
 
-void hashmap_delete(typed_object *obj, char *key) {
+void hashmap_delete(hashmapT *obj, char *key) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -357,7 +357,7 @@ void hashmap_delete(typed_object *obj, char *key) {
 	return;
 }
 
-size_t hashmap_length(typed_object *obj) {
+size_t hashmap_length(hashmapT *obj) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -371,7 +371,7 @@ size_t hashmap_length(typed_object *obj) {
     }
 }
 
-typed_object *hashmap_dup(typed_object *obj) {
+hashmapT *hashmap_dup(hashmapT *obj) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
     
@@ -381,7 +381,7 @@ typed_object *hashmap_dup(typed_object *obj) {
     }
 
     /* Allocate space for a new hashmap */
-    typed_object *dup = new_hashmap();
+    hashmapT *dup = new_hashmap();
 
     /* Iteratively copy all hashmap elements from one pointer to another */
     for(size_t i = 0; i < map->alloced; i++) {
@@ -394,7 +394,7 @@ typed_object *hashmap_dup(typed_object *obj) {
     return dup;
 }
 
-void hashmap_free(typed_object *obj) {
+void hashmap_free(hashmapT *obj) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 

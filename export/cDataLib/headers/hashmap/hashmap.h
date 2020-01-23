@@ -46,7 +46,7 @@ typedef struct _hashmap {
  * @desc: Createa an empty hashmap
  * @return: The hashmap
  **/
-typed_object *new_hashmap(void);
+hashmapT *new_hashmap(void);
 
 /**
  * @func: hashmap_add
@@ -55,7 +55,7 @@ typed_object *new_hashmap(void);
  * @param key -> The key of the new element
  * @param value -> The value of the new element
  **/
-void hashmap_add(typed_object *obj, char *key, void *value);
+void hashmap_add(hashmapT *obj, char *key, void *value);
 
 /**
  * @func: hashmap_set
@@ -64,7 +64,7 @@ void hashmap_add(typed_object *obj, char *key, void *value);
  * @param key -> The key to get the value of
  * @param value -> The item to set to the specific key
  **/
-void hashmap_set(typed_object *obj, char *key, void *value);
+void hashmap_set(hashmapT *obj, char *key, void *value);
 
 /**
  * @func: hashmap_get
@@ -73,7 +73,7 @@ void hashmap_set(typed_object *obj, char *key, void *value);
  * @param key -> The key to get the value of
  * @return The value we are searching for
  **/
-void *hashmap_get(typed_object *obj, char *key);
+void *hashmap_get(hashmapT *obj, char *key);
 
 /**
  * @func: hashmap_delete
@@ -81,7 +81,7 @@ void *hashmap_get(typed_object *obj, char *key);
  * @param obj -> The typed object containing the hashmap
  * @param key -> The key of the element to remove
  **/
-void hashmap_delete(typed_object *obj, char *key);
+void hashmap_delete(hashmapT *obj, char *key);
 
 /**
  * @func: hashmap_length
@@ -89,7 +89,7 @@ void hashmap_delete(typed_object *obj, char *key);
  * @param obj -> The typed object containing the hashmap
  * @return The size of the provided hashmap
  **/
-size_t hashmap_length(typed_object *obj);
+size_t hashmap_length(hashmapT *obj);
 
 /**
  * @func: hashmap_dup
@@ -97,13 +97,13 @@ size_t hashmap_length(typed_object *obj);
  * @param obj -> The typed object containing the hashmap to copy
  * @return The duplicate hashmap
  **/
-typed_object *hashmap_dup(typed_object *obj);
+hashmapT *hashmap_dup(hashmapT *obj);
 
 /**
  * @func: hashmap_free
  * @desc: Free (deallocate) the hashmap memory
  * @param obj -> The typed object containing the hashmap
  **/
-void hashmap_free(typed_object *obj);
+void hashmap_free(hashmapT *obj);
 
 #endif

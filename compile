@@ -10,5 +10,6 @@ mkdir export/cDataLib
 mkdir export/cDataLib/lib
 mv export/headers export/cDataLib.h export/cDataLib/
 mv export/libdata.so export/cDataLib/lib/
-cp LICENCE.txt export/cDataLib/
+cp LICENSE export/cDataLib/
+cp README.md export/cDataLib/
 cp export/cDataLib ../../uoi/java/DataStructures/PDPs/ -r

@@ -27,14 +27,14 @@ typedef struct vector {
  * @param obj -> The typed object containing the vector
  * @param capacity -> The new capacity to set
  **/
-static void vector_ensure_space(typed_object *obj, size_t capacity);
+static void vector_ensure_space(vectorT *obj, size_t capacity);
 
 /**
  * @func: new_vector
  * @desc: Initializes a vector data structure
  * @return: The newly created vector
  **/
-typed_object *new_vector(void);
+vectorT *new_vector(void);
 
 /**
  * @func: vector_add
@@ -42,7 +42,7 @@ typed_object *new_vector(void);
  * @param obj -> The typed object containing the vector
  * @param item -> The item to add
  **/
-void vector_add(typed_object *obj, void *item);
+void vector_add(vectorT *obj, void *item);
 
 /**
  * @func: vector_set
@@ -51,7 +51,7 @@ void vector_add(typed_object *obj, void *item);
  * @param index -> The index to set the value of
  * @param item -> The item to set the value as
  **/
-void vector_set(typed_object *obj, size_t index, void *item);
+void vector_set(vectorT *obj, size_t index, void *item);
 
 /**
  * @func: vector_get
@@ -60,7 +60,7 @@ void vector_set(typed_object *obj, size_t index, void *item);
  * @param index -> The index to get the value of
  * @return The value
  **/
-void *vector_get(typed_object *obj, size_t index);
+void *vector_get(vectorT *obj, size_t index);
 
 /**
  * @func: vector_delete
@@ -68,7 +68,7 @@ void *vector_get(typed_object *obj, size_t index);
  * @param obj -> The typed object containing the vector
  * @param index -> The index to delete
  **/
-void vector_delete(typed_object *obj, size_t index);
+void vector_delete(vectorT *obj, size_t index);
 
 /**
  * @func: vector_length
@@ -76,7 +76,7 @@ void vector_delete(typed_object *obj, size_t index);
  * @param obj -> The typed object containing the vector
  * @return: The number of items in the vector
  **/
-size_t vector_length(typed_object *obj);
+size_t vector_length(vectorT *obj);
 
 /**
  * @func: vector_dup
@@ -84,13 +84,13 @@ size_t vector_length(typed_object *obj);
  * @param obj -> The typed object containing the vector
  * @return The duplicate vector
  **/
-typed_object *vector_dup(typed_object *obj);
+vectorT *vector_dup(vectorT *obj);
 
 /**
  * @func: vector_free
  * @desc: Free the allocated memory from the vector
  * @param obj -> The typed object containing the vector
  **/
-void vector_free(typed_object *obj);
+void vector_free(vectorT *obj);
 
 #endif

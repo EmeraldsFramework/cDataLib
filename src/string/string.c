@@ -4,7 +4,7 @@ extern garbage_collector *gc;
 
 /* Define helper methods for wrapping a garbage collector in function calls */
 
-static void string_ensure_space(typed_object *obj, size_t add_len) {
+static void string_ensure_space(stringT *obj, size_t add_len) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 
@@ -36,7 +36,7 @@ static void string_ensure_space(typed_object *obj, size_t add_len) {
     sb->str = realloc(sb->str, sb->alloced);
 }
 
-typed_object *new_string(char *initial) {
+stringT *new_string(char *initial) {
     /* Get a string builder object */
     string *sb;
 
@@ -59,7 +59,7 @@ typed_object *new_string(char *initial) {
     sb->gc = gc;
 
     /* Created a typed wrapper */
-    typed_object *obj = malloc(sizeof(typed_object));
+    stringT *obj = malloc(sizeof(stringT));
 
     /* Set the type */
     obj->type = STRING;
@@ -77,7 +77,7 @@ typed_object *new_string(char *initial) {
     return obj;
 }
 
-void string_add_str(typed_object *obj, const char *str) {
+void string_add_str(stringT *obj, const char *str) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 
@@ -99,7 +99,7 @@ void string_add_str(typed_object *obj, const char *str) {
     sb->str[sb->length] = '\0';
 }
 
-void string_add_char(typed_object *obj, char c) {
+void string_add_char(stringT *obj, char c) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 
@@ -122,7 +122,7 @@ void string_add_char(typed_object *obj, char c) {
     sb->str[sb->length] = '\0';
 }
 
-void string_add_int(typed_object *obj, size_t val) {
+void string_add_int(stringT *obj, size_t val) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 
@@ -140,7 +140,7 @@ void string_add_int(typed_object *obj, size_t val) {
     string_add_str(obj, str);
 }
 
-char *string_get(typed_object *obj) {
+char *string_get(stringT *obj) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 
@@ -151,7 +151,7 @@ char *string_get(typed_object *obj) {
     return sb->str;
 }
 
-void string_shorten(typed_object *obj, size_t len) {
+void string_shorten(stringT *obj, size_t len) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 
@@ -166,7 +166,7 @@ void string_shorten(typed_object *obj, size_t len) {
     sb->str[sb->length] = '\0';
 }
 
-void string_delete(typed_object *obj) {
+void string_delete(stringT *obj) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 
@@ -179,7 +179,7 @@ void string_delete(typed_object *obj) {
     string_shorten(obj, 0);
 }
 
-void string_skip(typed_object *obj, size_t len) {
+void string_skip(stringT *obj, size_t len) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 
@@ -201,7 +201,7 @@ void string_skip(typed_object *obj, size_t len) {
     memmove(sb->str, sb->str+len, sb->length+1);
 }
 
-size_t string_length(typed_object *obj) {
+size_t string_length(stringT *obj) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 
@@ -212,7 +212,7 @@ size_t string_length(typed_object *obj) {
     return sb->length;
 }
 
-typed_object *string_dup(typed_object *obj) {
+stringT *string_dup(stringT *obj) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 
@@ -222,7 +222,7 @@ typed_object *string_dup(typed_object *obj) {
     }
     
     /* Allocate space for a new string */
-    typed_object *dup = new_string("");
+    stringT *dup = new_string("");
 
     /* Add the string from one pointer to another */
     string_add_str(dup, string_get(obj));
@@ -231,7 +231,7 @@ typed_object *string_dup(typed_object *obj) {
     return dup;
 }
 
-void string_free(typed_object *obj) {
+void string_free(stringT *obj) {
     /* Typecast the value to a string so that it can be manipulated */
     string *sb = (string*)obj->value;
 

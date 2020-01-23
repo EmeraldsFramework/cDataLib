@@ -1,13 +1,13 @@
 #include "../../headers/_data_structures.h"
 
-vector *vector_map(typed_object *obj, lambda modifier) {
+vectorT *vector_map(vectorT *obj, lambda modifier) {
     /* In case of invalid inputs */
     if((vector*)obj->value == NULL || modifier == NULL) {
         return NULL;
     }
 
     /* Create a new vector */
-    typed_object *dup = new_vector();
+    vectorT *dup = new_vector();
 
     /* Iterate over the elements */
     for(size_t i = 0; i < vector_length(obj); i++) {
@@ -19,14 +19,14 @@ vector *vector_map(typed_object *obj, lambda modifier) {
     return dup;
 }
 
-vector *vector_filter(typed_object *obj, lambda filter) {
+vectorT *vector_filter(vectorT *obj, lambda filter) {
     /* In case of invalid inputs */
     if((vector*)obj->value == NULL || filter == NULL) {
         return NULL;
     }
 
     /* Create a new vector */
-    typed_object *dup = new_vector();
+    vectorT *dup = new_vector();
 
     /* Iterate over the elements */
     for(size_t i = 0; i < vector_length(obj); i++) {
@@ -44,14 +44,14 @@ vector *vector_filter(typed_object *obj, lambda filter) {
     return dup;
 }
 
-void *vector_reduce(typed_object *obj, lambda fold) {
+void *vector_reduce(vectorT *obj, lambda fold) {
     /* In case of invalid inputs */
     if((vector*)obj->value == NULL || fold == NULL) {
         return NULL;
     }
 
     /* Create a duplicate of the vector */
-    typed_object *dup = vector_dup(obj);
+    vectorT *dup = vector_dup(obj);
 
     /* Create the value than gets returned with the accumulation of the vector elements */
     void *folded_value;

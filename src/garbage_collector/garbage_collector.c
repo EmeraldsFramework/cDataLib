@@ -88,6 +88,10 @@ static void garbage_collector_sweep(garbage_collector *gc) {
                     hashmap_free(item);
                     free(gc->first_object->value);
                     break;
+                case LINKED_LIST:
+                    linked_list_free(item);
+                    free(gc->first_object->value);
+                    break;
                 case CHAR:
                 case SHORT:
                 case INT:
@@ -138,6 +142,10 @@ static void garbage_collector_sweep(garbage_collector *gc) {
                 case HASHMAP:
                     hashmap_free(item);
                     free(untracked->next->value);
+                    break;
+                case LINKED_LIST:
+                    linked_list_free(item);
+                    free(gc->first_object->value);
                     break;
                 case CHAR:
                 case SHORT:

@@ -4,8 +4,11 @@ vectorT *string_split(stringT *str, stringT *delimeter) {
 	/* Create a vector to store tokens */
 	vectorT *str_tokens = new_vector();
 
+	/* Create a duplicate */
+	stringT *dup = string_dup(str);
+
 	/* Add the first token */
-	char *token = strtok(string_get(str), string_get(delimeter));
+	char *token = strtok(string_get(dup), string_get(delimeter));
 
 	/* As long as the split token is not NULL continue inserting */
 	while(token != NULL) {

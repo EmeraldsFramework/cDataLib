@@ -1,6 +1,6 @@
 #include "../../headers/_data_structures.h"
 
-typed_object *hashmap_map(typed_object *obj, lambda modifier) {
+hashmapT *hashmap_map(hashmapT *obj, lambda modifier) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     /* In case of invalid inputs */
     if((hashmap *)obj->value == NULL || modifier == NULL) {
@@ -9,7 +9,7 @@ typed_object *hashmap_map(typed_object *obj, lambda modifier) {
 
     /* Create a duplicate */
     /* In the case of hashmaps, deleting or setting elements is faster than inserting */
-    typed_object *dup = hashmap_dup(obj);
+    hashmapT *dup = hashmap_dup(obj);
 
     /* Typecast the dup */
     hashmap *dup_map = (hashmap*)dup->value;
@@ -26,7 +26,7 @@ typed_object *hashmap_map(typed_object *obj, lambda modifier) {
     return dup;
 }
 
-typed_object *hashmap_filter(typed_object *obj, lambda filter) {
+hashmapT *hashmap_filter(hashmapT *obj, lambda filter) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -36,7 +36,7 @@ typed_object *hashmap_filter(typed_object *obj, lambda filter) {
     }
 
     /* Create a duplicate */
-    typed_object *dup = hashmap_dup(obj);
+    hashmapT *dup = hashmap_dup(obj);
 
     /* Typecast the dup */
     hashmap *dup_map = (hashmap*)dup->value;
@@ -57,7 +57,7 @@ typed_object *hashmap_filter(typed_object *obj, lambda filter) {
     return dup;
 }
 
-void *hashmap_reduce(typed_object *obj, lambda fold) {
+void *hashmap_reduce(hashmapT *obj, lambda fold) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -67,7 +67,7 @@ void *hashmap_reduce(typed_object *obj, lambda fold) {
     }
 
     /* Create a duplicate of the hashmap */
-    typed_object *dup = hashmap_dup(obj);
+    hashmapT *dup = hashmap_dup(obj);
 
     /* Typecast the dup */
     hashmap *dup_map = (hashmap*)dup->value;

@@ -21,7 +21,7 @@ typedef void* (*lambda)(void*);
  * @param modifier -> The modifier function
  * @return The mapped hashmap duplicate
  **/
-typed_object *hashmap_map(typed_object *obj, lambda modifier);
+hashmapT *hashmap_map(hashmapT *obj, lambda modifier);
 
 /**
  * @func: hashmap_filter
@@ -30,7 +30,7 @@ typed_object *hashmap_map(typed_object *obj, lambda modifier);
  * @param filter -> The filter function
  * @return The filtered hashmap duplicate
  **/
-typed_object *hashmap_filter(typed_object *obj, lambda filter);
+hashmapT *hashmap_filter(hashmapT *obj, lambda filter);
 
 /**
  * @func: hashmap_reduce
@@ -39,6 +39,6 @@ typed_object *hashmap_filter(typed_object *obj, lambda filter);
  * @param fold -> The folding function to use
  * @return The folder void* result
  **/
-void *hashmap_reduce(typed_object *obj, lambda fold);
+void *hashmap_reduce(hashmapT *obj, lambda fold);
 
 #endif

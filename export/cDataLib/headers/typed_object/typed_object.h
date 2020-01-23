@@ -25,7 +25,8 @@ typedef enum {
     /* Custom data types */
     STRING,
     VECTOR,
-    HASHMAP
+    HASHMAP,
+    LINKED_LIST
 } object_type;
 
 /**
@@ -56,6 +57,7 @@ typedef typed_object longdoubleT;
 typedef typed_object stringT;
 typedef typed_object vectorT;
 typedef typed_object hashmapT;
+typedef typed_object linked_listT;
 
 /**
  * @func: typed_object_get_value
@@ -91,7 +93,6 @@ void typed_object_set_type(typed_object *object, object_type type);
  * @param value -> The value to insert
  * @return The typed variable
  **/
-intT *new_int(int value);
 charT *new_charT(char value);
 shortT *new_shortT(short value);
 intT *new_intT(int value);
@@ -113,11 +114,12 @@ longdoubleT *new_longdoubleT(long double *value);
  **/
 void typed_object_free(typed_object *obj);
 
-// /**
-//  * @func: typed_object_typecast
-//  * @desc: Typecast the object passed according to its type field
-//  * @param obj -> The object to typecast
-//  **/
-// void *typed_object_typecast(void *obj);
+/**
+ * @func: typed_object_typecast
+ * @desc: Typecast the object passed according to its type field
+ * @param obj -> The object to typecast
+ * @return The typecast object
+ **/
+void *typed_object_typecast(void *obj);
 
 #endif
