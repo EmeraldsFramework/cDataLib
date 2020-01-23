@@ -50,16 +50,13 @@ linked_listT *linked_list_filter(linked_listT *obj, lambda filter) {
     /* Return the new linked list */
     return dup;
 }
-/* MIGHT NOT NEED A DUPLICATE FOR READ ONLY ALGORITHMS */
-void *linked_list_reduce(linked_listT *obj, lambda fold) {
-    /* Create a duplicate of the linked list */
-    linked_listT *dup = linked_list_dup(obj);
 
+void *linked_list_reduce(linked_listT *obj, lambda fold) {
     /* Create the value that gets returned with the accumulation of the vector elements */
     void *folded_value;
 
     /* The functionality all lies in the function pointer passed in */
-    folded_value = fold(dup);
+    folded_value = fold(obj);
 
     /* This function only works as a wrapper */
     return folded_value;

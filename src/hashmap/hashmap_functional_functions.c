@@ -66,17 +66,14 @@ void *hashmap_reduce(hashmapT *obj, lambda fold) {
         return NULL;
     }
 
-    /* Create a duplicate of the hashmap */
-    hashmapT *dup = hashmap_dup(obj);
-
-    /* Typecast the dup */
-    hashmap *dup_map = (hashmap*)dup->value;
+    /* Typecast the obj */
+    hashmap *obj_map = (hashmap*)obj->value;
 
     /* Create the value that gets returned with the accumulation of the vector elements */
     void *folded_value;
 
     /* The functionality all lies in the function pointer passed in */
-    folded_value = fold(dup);
+    folded_value = fold(obj);
 
     /* This function only works as a wrapper */
     return folded_value;
