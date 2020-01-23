@@ -7,7 +7,7 @@
  * @param next -> The next node on the linked list
  **/
 typedef struct _llnode {
-    typed_object *item;
+    object *item;
     struct llnode *next;
 } llnode;
 
@@ -17,20 +17,18 @@ typedef struct _llnode {
  * @param alloced -> The total bytes alloced
  * @param length -> The number of elements in the linked list
  * @param head -> The head node of the list
- * @param gc -> The garbage collector
  **/
 typedef struct linked_list {
 	size_t length;
     llnode *head;
-	garbage_collector *gc;
 } linked_list;
 
 /**
- * @func: new_linked_list
+ * @func: linked_list_create
  * @desc: Creates a new linked list instance and initiates the head node
  * @return The newly created typed linked list
  **/
-linked_listT *new_linked_list(void);
+linked_list *linked_list_create(void);
 
 /**
  * @func: linked_list_add
@@ -38,7 +36,7 @@ linked_listT *new_linked_list(void);
  * @param list -> The list to append to
  * @param obj -> The node to append
  **/
-void linked_list_add(linked_listT *list, typed_object *obj);
+void linked_list_add(linked_listT *list, object *obj);
 
 /**
  * @func: linked_list_remove
@@ -46,7 +44,7 @@ void linked_list_add(linked_listT *list, typed_object *obj);
  * @param list -> The list to remove from
  * @param obj -> The node to remove
  **/
-void linked_list_remove(linked_listT *list, typed_object *obj);
+void linked_list_remove(linked_listT *list, object *obj);
 
 /**
  * @func: linked_list_dup

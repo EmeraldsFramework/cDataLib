@@ -1,7 +1,5 @@
 #include "../../headers/_data_structures.h"
 
-extern garbage_collector *gc;
-
 /* Define helper methods for wrapping a garbage collector in function calls */
 
 static void string_ensure_space(stringT *obj, size_t add_len) {
@@ -36,7 +34,7 @@ static void string_ensure_space(stringT *obj, size_t add_len) {
     sb->str = realloc(sb->str, sb->alloced);
 }
 
-stringT *new_string(char *initial) {
+string *string_create(void) {
     /* Get a string builder object */
     string *sb;
 
@@ -55,26 +53,8 @@ stringT *new_string(char *initial) {
     /* Initial length to 0 */
     sb->length = 0;
 
-    /* Set the gc */
-    sb->gc = gc;
-
-    /* Created a typed wrapper */
-    stringT *obj = malloc(sizeof(stringT));
-
-    /* Set the type */
-    obj->type = STRING;
-
-    /* Set the value */
-    obj->value = sb;
-    
-    /* Push the value to the garbage collector */
-    garbage_collector_push_value(sb->gc, obj);
-
-    /* Set the initial value */
-    string_add_str(obj, initial);
-
     /* Return the object */
-    return obj;
+    return sb;
 }
 
 void string_add_str(stringT *obj, const char *str) {
@@ -222,7 +202,7 @@ stringT *string_dup(stringT *obj) {
     }
     
     /* Allocate space for a new string */
-    stringT *dup = new_string("");
+    stringT *dup = new_stringT("");
 
     /* Add the string from one pointer to another */
     string_add_str(dup, string_get(obj));

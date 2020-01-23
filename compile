@@ -1,7 +1,8 @@
 #!/bin/sh
 
 rm ./export/* -r
-gcc -g -Ofast -shared -fPIC ./src/*/*.c -o export/libdata.so
+#gcc -g -Ofast -shared -fPIC ./src/*/*.c -o export/libdata.so
+gcc -Ofast -shared -fPIC -w ./src/*/*.c -o export/libdata.so
 sudo cp export/libdata.so /usr/lib/
 sudo chmod 755 /usr/lib/libdata.so
 cp headers export/ -r

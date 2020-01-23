@@ -12,13 +12,11 @@ static const size_t vector_init_capacity = 32;
  * @param items -> A void pointer array that contains the heterogenous elements of the vector
  * @param alloced -> The total capacity of the vector
  * @param length -> The total number of values
- * @param gc -> The garbage collector to save objects to
  **/
 typedef struct vector {
     void **items;
     size_t alloced;
     size_t length;
-    garbage_collector *gc;
 } vector;
 
 /**
@@ -30,11 +28,11 @@ typedef struct vector {
 static void vector_ensure_space(vectorT *obj, size_t capacity);
 
 /**
- * @func: new_vector
+ * @func: vector_create
  * @desc: Initializes a vector data structure
  * @return: The newly created vector
  **/
-vectorT *new_vector(void);
+vector *vector_create(void);
 
 /**
  * @func: vector_add

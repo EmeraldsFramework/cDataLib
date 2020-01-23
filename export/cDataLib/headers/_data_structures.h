@@ -10,7 +10,7 @@
 #include <assert.h>
 
 #include "garbage_collector/__all.h"
-#include "typed_object/__all.h"
+#include "object/__all.h"
 #include "string/__all.h"
 #include "vector/__all.h"
 #include "hashmap/__all.h"

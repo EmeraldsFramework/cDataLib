@@ -1,5 +1,5 @@
-#ifndef __TYPED_OBJECT_H_
-#define __TYPED_OBJECT_H_
+#ifndef __OBJECT_H_
+#define __OBJECT_H_
 
 #include "../_data_structures.h"
 
@@ -30,62 +30,62 @@ typedef enum {
 } object_type;
 
 /**
- * @struct: typed_object
+ * @struct: object
  * @desc: A wrapper around void* values containing a type
  * @param type -> The type of the object
  * @param value -> The value that the object contains
  **/
-typedef struct typed_object {
+typedef struct object {
     object_type type;
     void *value;
-} typed_object;
+} object;
 
 /* Some typenames for calling the types easier */
-typedef typed_object charT;
-typedef typed_object shortT;
-typedef typed_object intT;
-typedef typed_object longT;
-typedef typed_object longlongT;
-typedef typed_object unsignedcharT;
-typedef typed_object unsignedshortT;
-typedef typed_object unsignedintT;
-typedef typed_object unsignedlongT;
-typedef typed_object unsignedlonglongT;
-typedef typed_object floatT;
-typedef typed_object doubleT;
-typedef typed_object longdoubleT;
-typedef typed_object stringT;
-typedef typed_object vectorT;
-typedef typed_object hashmapT;
-typedef typed_object linked_listT;
+typedef object charT;
+typedef object shortT;
+typedef object intT;
+typedef object longT;
+typedef object longlongT;
+typedef object unsignedcharT;
+typedef object unsignedshortT;
+typedef object unsignedintT;
+typedef object unsignedlongT;
+typedef object unsignedlonglongT;
+typedef object floatT;
+typedef object doubleT;
+typedef object longdoubleT;
+typedef object stringT;
+typedef object vectorT;
+typedef object hashmapT;
+typedef object linked_listT;
 
 /**
- * @func: typed_object_get_value
+ * @func: object_get_value
  * @desc: Get the value of the object
  * @return -> The value
  **/
-void *typed_object_get_value(typed_object *object);
+void *object_get_value(object *object);
 
 /**
- * @func: typed_object_get_type
+ * @func: object_get_type
  * @desc: Get the type of the object
  * @return -> The type of the object
  **/
-object_type typed_object_get_type(typed_object *object);
+object_type object_get_type(object *object);
 
 /**
- * @func: typed_object_set_value
+ * @func: object_set_value
  * @desc: Set the value of the object
  * @param value -> The value to set
  **/
-void typed_object_set_value(typed_object *object, void *value);
+void object_set_value(object *object, void *value);
 
 /**
- * @func: typed_object_set_type
+ * @func: object_set_type
  * @desc: Set the value of the object
  * @param type -> The type to set
  **/
-void typed_object_set_type(typed_object *object, object_type type);
+void object_set_type(object *object, object_type type);
 
 /**
  * @funcs: new_*
@@ -107,19 +107,17 @@ floatT *new_floatT(float *value);
 doubleT *new_doubleT(double *value);
 longdoubleT *new_longdoubleT(long double *value);
 
+/* Custom data types */
+stringT *new_stringT(char *value);
+vectorT *new_vectorT(void);
+hashmapT *new_hashmapT(void);
+linked_listT *new_linked_listT(void);
+
 /**
- * @func: typed_object_free
+ * @func: object_free
  * @desc: Frees a typed object
  * @param obj -> The object to free
  **/
-void typed_object_free(typed_object *obj);
-
-/**
- * @func: typed_object_typecast
- * @desc: Typecast the object passed according to its type field
- * @param obj -> The object to typecast
- * @return The typecast object
- **/
-void *typed_object_typecast(void *obj);
+void object_free(object *obj);
 
 #endif

@@ -7,7 +7,7 @@ vectorT *vector_map(vectorT *obj, lambda modifier) {
     }
 
     /* Create a new vector */
-    vectorT *dup = new_vector();
+    vectorT *dup = new_vectorT();
 
     /* Iterate over the elements */
     for(size_t i = 0; i < vector_length(obj); i++) {
@@ -26,7 +26,7 @@ vectorT *vector_filter(vectorT *obj, lambda filter) {
     }
 
     /* Create a new vector */
-    vectorT *dup = new_vector();
+    vectorT *dup = new_vectorT();
 
     /* Iterate over the elements */
     for(size_t i = 0; i < vector_length(obj); i++) {

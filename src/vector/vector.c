@@ -1,7 +1,5 @@
 #include "../../headers/_data_structures.h"
 
-extern garbage_collector *gc;
-
 static void vector_ensure_space(vectorT *obj, size_t capacity) {
     /* Typecast the value to a string so that it can be manipulated */
     vector *v = (vector*)obj->value;
@@ -21,30 +19,19 @@ static void vector_ensure_space(vectorT *obj, size_t capacity) {
     }
 }
 
-vectorT *new_vector(void) {
+vector *vector_create(void) {
     /* Allocate space for the vector */
     vector *v = malloc(sizeof(vector));
 
     /* Set base values */
     v->alloced = vector_init_capacity;
     v->length = 0;
-    v->gc = gc;
 
     /* Allocate memory according to the data type we insert */
     v->items = malloc(sizeof(void*) * v->alloced);
 
-    /* Created a typed wrapper */
-    vectorT *obj = malloc(sizeof(vectorT));
-
-    /* Set the type */
-    obj->type = VECTOR;
-
-    /* Set the value */
-    obj->value = v;
-    
-    /* Push the value to the garbage collector and return it */
-    garbage_collector_push_value(v->gc, obj);
-    return obj;
+    /* Return the vector */
+    return v;
 }
 
 void vector_add(vectorT *obj, void *item) {
@@ -155,7 +142,7 @@ vectorT *vector_dup(vectorT *obj) {
     }
 
     /* Allocate new space for the vector */
-    vectorT *dup = new_vector();
+    vectorT *dup = new_vectorT();
 
     /* Iteratively copy the vector items from one memory location to another */
     for(size_t i = 0; i < vector_length(obj); i++) {

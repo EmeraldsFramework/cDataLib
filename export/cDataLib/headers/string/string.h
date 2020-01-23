@@ -12,13 +12,11 @@ static const size_t string_init_capacity = 32;
  * @param str -> The str char* we construct our string into
  * @param alloced -> The total sized allocated for the string
  * @param length -> The total length of the string
- * @param gc -> The garbage collector to save objects to
  **/
 typedef struct string {
     char *str;
     size_t alloced;
     size_t length;
-    garbage_collector *gc;
 } string;
 
 /**
@@ -34,7 +32,7 @@ static void string_ensure_space(stringT *obj, size_t add_len);
  * @desc: Create an str builder
  * @return: The str builder
  **/
-stringT *new_string(char *initial);
+string *string_create();
 
 /**
  * @func: string_add_str

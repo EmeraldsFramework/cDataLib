@@ -1,7 +1,5 @@
 #include "../../headers/_data_structures.h"
 
-extern garbage_collector *gc;
-
 /* ============================================================= */
 /*  First, the polynomial itself and its table of feedback terms.  The    */
 /*  polynomial is                                                         */
@@ -120,7 +118,7 @@ unsigned static long crc32(const unsigned char *s, unsigned int len) {
  * @param keystring -> The string to hash
  * @return The hashed int
  **/
-unsigned static int hashmap_hash_int(typed_object *obj, char *keystring) {
+unsigned static int hashmap_hash_int(hashmapT *obj, char *keystring) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -214,7 +212,7 @@ static void hashmap_rehash(hashmapT *obj) {
 	return;
 }
 
-hashmapT *new_hashmap(void) {
+hashmap *hashmap_create(void) {
     /* Allocate enough space */
     hashmap *map = malloc(sizeof(hashmap));
 
@@ -222,18 +220,9 @@ hashmapT *new_hashmap(void) {
 	map->data = (hashmap_element*)calloc(hashmap_init_capacity, sizeof(hashmap_element));
 	map->alloced = hashmap_init_capacity;
 	map->length = 0;
-    map->gc = gc;
 
-    /* Created a typed wrapper */
-    hashmapT *obj = malloc(sizeof(hashmapT));
-
-    /* Set the type and value */
-    obj->type = HASHMAP;
-    obj->value = map;
-
-    /* Push the value to the garbage collector and return it */
-    garbage_collector_push_value(map->gc, obj);
-	return obj;
+    /* Return the map */
+	return map;
 }
 
 void hashmap_add(hashmapT *obj, char *key, void *value) {
@@ -381,7 +370,7 @@ hashmapT *hashmap_dup(hashmapT *obj) {
     }
 
     /* Allocate space for a new hashmap */
-    hashmapT *dup = new_hashmap();
+    hashmapT *dup = new_hashmapT();
 
     /* Iteratively copy all hashmap elements from one pointer to another */
     for(size_t i = 0; i < map->alloced; i++) {

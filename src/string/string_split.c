@@ -2,7 +2,7 @@
 
 vectorT *string_split(stringT *str, stringT *delimeter) {
 	/* Create a vector to store tokens */
-	vectorT *str_tokens = new_vector();
+	vectorT *str_tokens = new_vectorT();
 
 	/* Create a duplicate */
 	stringT *dup = string_dup(str);
@@ -12,7 +12,7 @@ vectorT *string_split(stringT *str, stringT *delimeter) {
 
 	/* As long as the split token is not NULL continue inserting */
 	while(token != NULL) {
-		stringT *token_str = new_string(token);
+		stringT *token_str = new_stringT(token);
 		vector_add(str_tokens, token_str);
 		token = strtok(NULL, string_get(delimeter));
 	}

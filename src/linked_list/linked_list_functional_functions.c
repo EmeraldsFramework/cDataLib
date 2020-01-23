@@ -5,7 +5,7 @@ linked_listT *linked_list_map(linked_listT *obj, lambda modifier) {
     linked_listT *dup = linked_list_dup(obj);
 
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
-    llnode **probe = &((linked_list*)typed_object_get_value(dup))->head;
+    llnode **probe = &((linked_list*)object_get_value(dup))->head;
 
     /* Dereference once */
     while(*probe) {

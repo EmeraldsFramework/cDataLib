@@ -69,11 +69,11 @@ static void garbage_collector_sweep(garbage_collector *gc) {
     while(obj) {
         /* Special case for the first element to avoid pointer arithmetics */
         if(gc->num_of_objects == 1) {
-            /* Typecast the object to a typed_object */
-            typed_object *item = (typed_object*)(gc->first_object->value);
+            /* Typecast the object to a object */
+            object *item = (object*)(gc->first_object->value);
 
             /* Switch on the item type */
-            switch(typed_object_get_type(item)) {
+            switch(object_get_type(item)) {
                 /* Use the custom free function */
                 /* Free the pointer to the gc item */
                 case STRING:
@@ -105,7 +105,7 @@ static void garbage_collector_sweep(garbage_collector *gc) {
                 case FLOAT:
                 case DOUBLE:
                 case LONG_DOUBLE:
-                    typed_object_free(item);
+                    object_free(item);
                     free(gc->first_object->value);
                     break;
                 default:
@@ -124,11 +124,11 @@ static void garbage_collector_sweep(garbage_collector *gc) {
             /* Get the address and free the memory address */
             obj = untracked->next;
 
-            /* Typecast the object to a typed_object */
-            typed_object *item = (typed_object*)(untracked->next->value);
+            /* Typecast the object to a object */
+            object *item = (object*)(untracked->next->value);
 
             /* Switch on the item type */
-            switch(typed_object_get_type(item)) {
+            switch(object_get_type(item)) {
                 /* Use the custom free function */
                 /* Free the pointer to the gc item */
                 case STRING:
@@ -160,7 +160,7 @@ static void garbage_collector_sweep(garbage_collector *gc) {
                 case FLOAT:
                 case DOUBLE:
                 case LONG_DOUBLE:
-                    typed_object_free(item);
+                    object_free(item);
                     free(untracked->next->value);
                     break;
                 default:

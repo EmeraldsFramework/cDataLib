@@ -32,21 +32,19 @@ typedef struct _hashmap_element {
  * @param alloced -> The maximum allocated size
  * @param length -> The current total size
  * @param data -> The data array contained
- * @param gc -> The garbage collector to save objects to
  **/
 typedef struct _hashmap {
 	size_t alloced;
 	size_t length;
 	hashmap_element *data;
-	garbage_collector *gc;
 } hashmap;
 
 /**
- * @func: new_hashmap
- * @desc: Createa an empty hashmap
+ * @func: hashmap_create
+ * @desc: Create an empty hashmap
  * @return: The hashmap
  **/
-hashmapT *new_hashmap(void);
+hashmap *hashmap_create(void);
 
 /**
  * @func: hashmap_add
