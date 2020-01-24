@@ -66,19 +66,6 @@ void *hashmap_reduce(hashmapT *obj, lambda fold) {
         return NULL;
     }
 
-    /* Typecast the obj */
-
-
-
-
-    /* TODO CHECK CHECK CHECK */
-    hashmap *obj_map = (hashmap*)obj->value;
-
-
-
-
-
-
     /* Create the value that gets returned with the accumulation of the vector elements */
     void *folded_value;
 
