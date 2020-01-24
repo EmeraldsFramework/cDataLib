@@ -105,7 +105,7 @@ static void garbage_collector_sweep(garbage_collector *gc) {
                     break;
                 case LINKED_LIST:
                     linked_list_free(item);
-                    // free(item);
+                    free(item);
                     break;
                 case CHAR:
                 case SHORT:
