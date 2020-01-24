@@ -2,7 +2,6 @@
 
 linked_listT *linked_list_map(linked_listT *obj, lambda modifier) {
     /* Create a new linked list duplicate */
-    // linked_listT *dup = linked_list_dup(obj);
     linked_listT *dup = new_linked_listT();
 
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
@@ -14,7 +13,6 @@ linked_listT *linked_list_map(linked_listT *obj, lambda modifier) {
         object *item = (*probe)->item;
 
         /* Set the modified element */
-        // modifier(item);
         linked_list_add(dup, modifier(item));
 
         /* Point probe to the next node */
@@ -38,7 +36,6 @@ linked_listT *linked_list_filter(linked_listT *obj, lambda filter) {
         object *item = (*probe)->item;
 
         /* Set the modified element */
-        // modifier((*probe)->item);
         if(filter(item)) {
             linked_list_add(dup, item);
         }

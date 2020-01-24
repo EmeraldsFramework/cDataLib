@@ -12,22 +12,25 @@ linked_list *linked_list_create(void) {
     return list;
 }
 
-void linked_list_add(linked_listT *list, object *obj) {
+void linked_list_add(linked_listT *obj, void *item) {
+    /* Typecast the value to a string so that it can be manipulated */
+    linked_list *list = (linked_list*)object_get_value(obj);
+
     /* In case of empty inputs */
-    if(list == NULL || obj->value == NULL) {
+    if(list == NULL || item == NULL) {
         return;
     }
 
-    /* Typecast and use the address to take advantage of a pointer to pointer approach */
-    llnode **probe = &(((linked_list*)object_get_value(list))->head);
+    /* Use the address to take advantage of a pointer to pointer approach */
+    llnode **probe = &(list->head);
 
     /* Create a new node */
     /* Allocate size for the node as well as its contents */
     llnode *newnode = malloc(sizeof(llnode));
-    newnode->item = malloc(sizeof(object));
+    newnode->item = malloc(sizeof(item));
 
     /* Set the value inside the new node */
-    newnode->item->value = obj->value;
+    newnode->item = item;
 
     /* Traverse to the end of the linked list */
     while(*probe) {
@@ -39,19 +42,22 @@ void linked_list_add(linked_listT *list, object *obj) {
     *probe = newnode;
 
     /* Increase the size of the linked list */
-    ((linked_list*)list->value)->length++;
+    list->length++;
 }
 
-void linked_list_remove(linked_listT *list, object *obj) {
+void linked_list_remove(linked_listT *obj, void *item) {
+    /* Typecast the value to a string so that it can be manipulated */
+    linked_list *list = (linked_list*)object_get_value(obj);
+
     /* In case of empty inputs */
-    if(list == NULL || obj == NULL) {
+    if(list == NULL || item == NULL) {
         return;
     }
 
-    /* Typecast and use the address to take advantage of a pointer to pointer approach */
-    llnode **probe = &(((linked_list*)object_get_value(list))->head);
+    /* Use the address to take advantage of a pointer to pointer approach */
+    llnode **probe = &(list->head);
 
-    while((*probe) && object_get_value((*probe)->item) != object_get_value(obj)) {
+    while((*probe) && (*probe)->item != obj) {
         probe = &(*probe)->next;
     }
 
@@ -63,14 +69,17 @@ void linked_list_remove(linked_listT *list, object *obj) {
     free(old);
 }
 
-linked_listT *linked_list_dup(linked_listT *list) {
+linked_listT *linked_list_dup(linked_listT *obj) {
+    /* Typecast the value to a string so that it can be manipulated */
+    linked_list *list = (linked_list*)object_get_value(obj);
+
     /* In case of empty inputs */
     if(list == NULL) {
         return;
     }
 
-    /* Typecast and use the address to take advantage of a pointer to pointer approach */
-    llnode **probe = &(((linked_list*)object_get_value(list))->head);
+    /* Use the address to take advantage of a pointer to pointer approach */
+    llnode **probe = &(list->head);
 
     /* Allocate new space for the duplicate */
     linked_listT *dup = new_linked_listT();
@@ -87,24 +96,15 @@ linked_listT *linked_list_dup(linked_listT *list) {
     return dup;
 }
 
-void linked_list_free(linked_listT *list) {
+void linked_list_free(linked_listT *obj) {
+    /* Typecast the value to a string so that it can be manipulated */
+    linked_list *list = (linked_list*)object_get_value(obj);
+
     /* In case of empty inputs */
     if(list == NULL) {
         return;
     }
 
-    /* Typecast and use the address to take advantage of a pointer to pointer approach */
-    llnode **probe = &(((linked_list*)object_get_value(list))->head);
-
-    /* Dereference once */
-    while(*probe) {
-        /* Dereference once more to get the typed object */
-        object *to_be_freed = (*probe)->item;
-
-        /* Save the last element and point probe to the next before freeing */
-        probe = &(*probe)->next;
-        
-        /* Finally free the node */
-        free(to_be_freed);
-    }
+    free(list->head);
+    free(list);
 }

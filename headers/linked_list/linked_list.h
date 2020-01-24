@@ -36,7 +36,7 @@ linked_list *linked_list_create(void);
  * @param list -> The list to append to
  * @param obj -> The node to append
  **/
-void linked_list_add(linked_listT *list, object *obj);
+void linked_list_add(linked_listT *list, void *obj);
 
 /**
  * @func: linked_list_remove
@@ -44,7 +44,7 @@ void linked_list_add(linked_listT *list, object *obj);
  * @param list -> The list to remove from
  * @param obj -> The node to remove
  **/
-void linked_list_remove(linked_listT *list, object *obj);
+void linked_list_remove(linked_listT *list, void *obj);
 
 /**
  * @func: linked_list_dup
