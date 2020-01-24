@@ -1,3 +1,6 @@
+#ifndef __LINKED_LIST_H_
+#define __LINKED_LIST_H_
+
 #include "../_data_structures.h"
 
 /**
@@ -47,16 +50,10 @@ void linked_list_add(linked_listT *list, void *obj);
 void linked_list_remove(linked_listT *list, void *obj);
 
 /**
- * @func: linked_list_dup
- * @desc: Creates a duplicate linked list
- * @param list -> The linked list to duplicate
- * @return The duplicate
- **/
-linked_listT *linked_list_dup(linked_listT *list);
-
-/**
  * @func: linked_list_free
  * @desc: Frees all elements of the list as well as the list pointer itself
  * @param list -> The list to free
  **/
 void linked_list_free(linked_listT *list);
+
+#endif

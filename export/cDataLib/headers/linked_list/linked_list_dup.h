@@ -1,0 +1,14 @@
+#ifndef __LINKED_LIST_DUP_H_
+#define __LINKED_LIST_DUP_H_
+
+#include "../_data_structures.h"
+
+/**
+ * @func: linked_list_dup
+ * @desc: Creates a duplicate linked list
+ * @param list -> The linked list to duplicate
+ * @return The duplicate
+ **/
+linked_listT *linked_list_dup(linked_listT *list);
+
+#endif

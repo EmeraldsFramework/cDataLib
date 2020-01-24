@@ -90,14 +90,6 @@ void hashmap_delete(hashmapT *obj, char *key);
 size_t hashmap_length(hashmapT *obj);
 
 /**
- * @func: hashmap_dup
- * @desc: Create a memory duplicate of the hashmap
- * @param obj -> The typed object containing the hashmap to copy
- * @return The duplicate hashmap
- **/
-hashmapT *hashmap_dup(hashmapT *obj);
-
-/**
  * @func: hashmap_free
  * @desc: Free (deallocate) the hashmap memory
  * @param obj -> The typed object containing the hashmap

@@ -1,7 +1,8 @@
 #include "../../headers/_data_structures.h"
 
 stringT *string_substring(stringT *str, size_t from, size_t to) {
-    stringT *strdup = string_dup(str);
+    /* Create a string duplicate */
+    stringT *strdup = object_dup(str);
 
     /* Drop from the front */
     string_skip(strdup, from);

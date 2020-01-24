@@ -77,14 +77,6 @@ void vector_delete(vectorT *obj, size_t index);
 size_t vector_length(vectorT *obj);
 
 /**
- * @func: vector_dup
- * @desc: Get a memory duplicate of the passed vector
- * @param obj -> The typed object containing the vector
- * @return The duplicate vector
- **/
-vectorT *vector_dup(vectorT *obj);
-
-/**
  * @func: vector_free
  * @desc: Free the allocated memory from the vector
  * @param obj -> The typed object containing the vector

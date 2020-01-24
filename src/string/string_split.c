@@ -5,7 +5,7 @@ vectorT *string_split(stringT *str, stringT *delimeter) {
 	vectorT *str_tokens = new_vectorT();
 
 	/* Create a duplicate */
-	stringT *dup = string_dup(str);
+	stringT *dup = object_dup(str);
 
 	/* Add the first token */
 	char *token = strtok(string_get(dup), string_get(delimeter));

@@ -1,11 +1,19 @@
 #include "../../headers/_data_structures.h"
 
 linked_listT *linked_list_map(linked_listT *obj, lambda modifier) {
+    /* Typecast the value to a string so that it can be manipulated */
+    linked_list *list = (linked_list*)object_get_value(obj);
+
+    /* Check for invalid input */
+    if(list == NULL || modifier == NULL) {
+        return NULL;
+    }
+
     /* Create a new linked list duplicate */
     linked_listT *dup = new_linked_listT();
 
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
-    llnode **probe = &(((linked_list*)object_get_value(obj))->head);
+    llnode **probe = &(list->head);
 
     /* Dereference once */
     while(*probe) {
@@ -24,11 +32,19 @@ linked_listT *linked_list_map(linked_listT *obj, lambda modifier) {
 }
 
 linked_listT *linked_list_filter(linked_listT *obj, lambda filter) {
+    /* Typecast the value to a string so that it can be manipulated */
+    linked_list *list = (linked_list*)object_get_value(obj);
+
+    /* Check for invalid input */
+    if(list == NULL || filter == NULL) {
+        return NULL;
+    }
+
     /* Create a new linked list duplicate */
     linked_listT *dup = new_linked_listT();
 
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
-    llnode **probe = &(((linked_list*)object_get_value(obj))->head);
+    llnode **probe = &(list->head);
 
     /* Dereference once */
     while(*probe) {
@@ -49,11 +65,19 @@ linked_listT *linked_list_filter(linked_listT *obj, lambda filter) {
 }
 
 void *linked_list_reduce(linked_listT *obj, lambda fold) {
+    /* Typecast the value to a string so that it can be manipulated */
+    linked_list *list = (linked_list*)object_get_value(obj);
+
+    /* Check for invalid input */
+    if(list == NULL || fold == NULL) {
+        return NULL;
+    }
+
     /* Create the value that gets returned with the accumulation of the vector elements */
     void *folded_value;
 
     /* The functionality all lies in the function pointer passed in */
-    folded_value = fold(obj);
+    folded_value = fold(list);
 
     /* This function only works as a wrapper */
     return folded_value;

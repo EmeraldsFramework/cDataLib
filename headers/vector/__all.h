@@ -3,5 +3,6 @@
 
 #include "vector.h"
 #include "vector_functional_functions.h"
+#include "vector_dup.h"
 
 #endif

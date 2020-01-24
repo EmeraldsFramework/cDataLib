@@ -9,7 +9,7 @@ hashmapT *hashmap_map(hashmapT *obj, lambda modifier) {
 
     /* Create a duplicate */
     /* In the case of hashmaps, deleting or setting elements is faster than inserting */
-    hashmapT *dup = hashmap_dup(obj);
+    hashmapT *dup = object_dup(obj);
 
     /* Typecast the dup */
     hashmap *dup_map = (hashmap*)dup->value;
@@ -36,7 +36,7 @@ hashmapT *hashmap_filter(hashmapT *obj, lambda filter) {
     }
 
     /* Create a duplicate */
-    hashmapT *dup = hashmap_dup(obj);
+    hashmapT *dup = object_dup(obj);
 
     /* Typecast the dup */
     hashmap *dup_map = (hashmap*)dup->value;
@@ -67,7 +67,17 @@ void *hashmap_reduce(hashmapT *obj, lambda fold) {
     }
 
     /* Typecast the obj */
+
+
+
+
+    /* TODO CHECK CHECK CHECK */
     hashmap *obj_map = (hashmap*)obj->value;
+
+
+
+
+
 
     /* Create the value that gets returned with the accumulation of the vector elements */
     void *folded_value;

@@ -100,14 +100,6 @@ void string_skip(stringT *obj, size_t len);
 size_t string_length(stringT *obj);
 
 /**
- * @func: string_dup
- * @desc: Return a memory duplicate string
- * @param: obj -> The typed string to duplicate
- * @return The dup string
- **/
-stringT *string_dup(stringT *obj);
-
-/**
  * @func: string_free
  * @desc: Free the allocated memory for the char*
  * @param obj -> The typed object containing the string builder
