@@ -64,7 +64,7 @@ linked_listT *linked_list_filter(linked_listT *obj, lambda filter) {
     return dup;
 }
 
-void *linked_list_reduce(linked_listT *obj, lambda fold) {
+void *linked_list_reduce(linked_listT *obj, lambda2 fold) {
     /* Typecast the value to a string so that it can be manipulated */
     linked_list *list = (linked_list*)object_get_value(obj);
 
@@ -73,12 +73,24 @@ void *linked_list_reduce(linked_listT *obj, lambda fold) {
         return NULL;
     }
 
+    /* Get a probe */
+    llnode **probe = (&list->head);
+
+    /* Get the initial value */
     /* Create the value that gets returned with the accumulation of the vector elements */
-    void *folded_value;
+    void *accumulator = (*probe)->item;
 
-    /* The functionality all lies in the function pointer passed in */
-    folded_value = fold(list);
+    /* Start counting from the next */
+    probe = &(*probe)->next;
 
-    /* This function only works as a wrapper */
-    return folded_value;
+    /* Iterate through the list */
+    while(*probe) {
+        /* Get the current value */
+        void *current = (*probe)->item;
+        accumulator = fold(accumulator, current);
+        probe = &(*probe)->next;
+    }
+
+    /* Return the accumulated value */
+    return object_get_value(accumulator);
 }

@@ -13,6 +13,11 @@
 /* Since this is completely generic we can't check for validity of arguments */
 /* The validity of the function is dependent on the callee */
 typedef void* (*lambda)(void*);
+typedef void* (*lambda2)(void*, void*);
+typedef void* (*lambda3)(void*, void*, void*);
+typedef void* (*lambda4)(void*, void*, void*, void*);
+
+/* TODO Obviously find some generic abstraction for the above */
 
 /**
  * @func: hashmap_map
@@ -39,6 +44,6 @@ hashmapT *hashmap_filter(hashmapT *obj, lambda filter);
  * @param fold -> The folding function to use
  * @return The folder void* result
  **/
-void *hashmap_reduce(hashmapT *obj, lambda fold);
+void *hashmap_reduce(hashmapT *obj, lambda2 fold, hashmap_element_type element_type);
 
 #endif

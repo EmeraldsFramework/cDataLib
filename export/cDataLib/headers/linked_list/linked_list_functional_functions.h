@@ -13,6 +13,11 @@
 /* Since this is completely generic we can't check for validity of arguments */
 /* The validity of the function is dependent on the callee */
 typedef void* (*lambda)(void*);
+typedef void* (*lambda2)(void*, void*);
+typedef void* (*lambda3)(void*, void*, void*);
+typedef void* (*lambda4)(void*, void*, void*, void*);
+
+/* TODO Obviously find some generic abstraction for the above */
 
 /**
  * @func: linked_list_map
@@ -39,6 +44,6 @@ linked_listT *linked_list_filter(linked_listT *obj, lambda filter);
  * @param fold -> The fold function
  * @return The accumulated result
  **/
-void *linked_list_reduce(linked_listT *obj, lambda fold);
+void *linked_list_reduce(linked_listT *obj, lambda2 fold);
 
 #endif

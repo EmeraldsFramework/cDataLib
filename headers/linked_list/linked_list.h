@@ -10,7 +10,7 @@
  * @param next -> The next node on the linked list
  **/
 typedef struct _llnode {
-    object *item;
+    void *item;
     struct llnode *next;
 } llnode;
 

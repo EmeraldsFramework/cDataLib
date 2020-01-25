@@ -57,7 +57,15 @@ hashmapT *hashmap_filter(hashmapT *obj, lambda filter) {
     return dup;
 }
 
-void *hashmap_reduce(hashmapT *obj, lambda fold) {
+
+
+/* FIX MAKE REDUCE ALSO WORD FOR KEYS AND VALUES AND PAIRS */
+
+
+
+
+
+void *hashmap_reduce(hashmapT *obj, lambda2 fold, hashmap_element_type element_type) {
     /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
@@ -66,12 +74,24 @@ void *hashmap_reduce(hashmapT *obj, lambda fold) {
         return NULL;
     }
 
+    /* Get the initial value */
     /* Create the value that gets returned with the accumulation of the vector elements */
-    void *folded_value;
+    void *accumulator;
 
-    /* The functionality all lies in the function pointer passed in */
-    folded_value = fold(obj);
+    /* Iterate through the hashmap */
+    for(size_t i = 0; i < map->alloced; i++) {
+        if(map->data[i].in_use != 0) {
+            /* Set accumulator to some arbitrary hashmap value  */
+            accumulator = hashmap_get(obj, map->data[i].key);
 
-    /* This function only works as a wrapper */
-    return folded_value;
+            /* Get the current item */
+            void *current = hashmap_get(obj, map->data[i].key);
+
+            /* Accumulate the result */
+            accumulator = fold(accumulator, current);
+        }
+    }
+
+    /* Return the accumulated value */
+    return object_get_value(accumulator);
 }

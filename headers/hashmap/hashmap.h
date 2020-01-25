@@ -10,6 +10,15 @@ static const size_t hashmap_init_capacity = 32;
 static const size_t max_chain_length = 8;
 
 /**
+ * @enum: hashmap_element_type
+ * @desc: Defines an enum of KEYS or VALUES
+ **/
+typedef enum {
+	KEYS,
+	VALUES
+} hashmap_element_type;
+
+/**
  * @struct: hashmap_element
  * @desc: Elements contained in the hashmap both keys and values
  * @param key -> The key of the element

@@ -1,8 +1,11 @@
 #include "../../headers/_data_structures.h"
 
 vectorT *vector_map(vectorT *obj, lambda modifier) {
+    /* Typecast the value to a vector so that it can be manipulated */
+    vector *v = (vector*)obj->value;
+    
     /* In case of invalid inputs */
-    if((vector*)obj->value == NULL || modifier == NULL) {
+    if(v == NULL || modifier == NULL) {
         return NULL;
     }
 
@@ -20,8 +23,11 @@ vectorT *vector_map(vectorT *obj, lambda modifier) {
 }
 
 vectorT *vector_filter(vectorT *obj, lambda filter) {
+    /* Typecast the value to a vector so that it can be manipulated */
+    vector *v = (vector*)obj->value;
+
     /* In case of invalid inputs */
-    if((vector*)obj->value == NULL || filter == NULL) {
+    if(v == NULL || filter == NULL) {
         return NULL;
     }
 
@@ -44,18 +50,26 @@ vectorT *vector_filter(vectorT *obj, lambda filter) {
     return dup;
 }
 
-void *vector_reduce(vectorT *obj, lambda fold) {
+void *vector_reduce(vectorT *obj, lambda2 fold) {
+    /* Typecast the value to a vector so that it can be manipulated */
+    vector *v = (vector*)obj->value;
+
     /* In case of invalid inputs */
-    if((vector*)obj->value == NULL || fold == NULL) {
+    if(v == NULL || fold == NULL) {
         return NULL;
     }
 
+    /* Get the initial value */
     /* Create the value that gets returned with the accumulation of the vector elements */
-    void *folded_value;
+    void *accumulator = vector_get(obj, 0);
 
-    /* The functionality all lies in the function pointer passed in */
-    folded_value = fold(obj);
+    /* Iterate over the elements */
+    for(size_t i = 1; i < vector_length(obj); i++) {
+        /* Get the current item */
+        void *current = vector_get(obj, i);
+        accumulator = fold(accumulator, current);
+    }
 
-    /* This function only works as a wrapper */
-    return folded_value;
+    /* Return the accumulated value */
+    return object_get_value(accumulator);
 }
