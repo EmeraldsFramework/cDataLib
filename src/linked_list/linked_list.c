@@ -13,7 +13,7 @@ linked_list *linked_list_create(void) {
 }
 
 void linked_list_add(linked_listT *obj, void *item) {
-    /* Typecast the value to a string so that it can be manipulated */
+    /* Typecast the value to a linked_list so that it can be manipulated */
     linked_list *list = (linked_list*)object_get_value(obj);
 
     /* In case of empty inputs */
@@ -46,7 +46,7 @@ void linked_list_add(linked_listT *obj, void *item) {
 }
 
 void linked_list_remove(linked_listT *obj, void *item) {
-    /* Typecast the value to a string so that it can be manipulated */
+    /* Typecast the value to a linked_list so that it can be manipulated */
     linked_list *list = (linked_list*)object_get_value(obj);
 
     /* In case of empty inputs */
@@ -70,7 +70,7 @@ void linked_list_remove(linked_listT *obj, void *item) {
 }
 
 void linked_list_free(linked_listT *obj) {
-    /* Typecast the value to a string so that it can be manipulated */
+    /* Typecast the value to a linked_list so that it can be manipulated */
     linked_list *list = (linked_list*)object_get_value(obj);
 
     /* In case of empty inputs */

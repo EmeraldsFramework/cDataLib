@@ -258,3 +258,17 @@ linked_listT *new_linked_listT(void) {
     garbage_collector_push_value(gc, obj);
     return obj;
 }
+
+binary_treeT *new_binary_treeT(void) {
+    /* Create a typed wrapper */
+    binary_treeT *obj = malloc(sizeof(binary_treeT));
+
+    /* Allocate enough space and set value and type */
+    obj->value = malloc(sizeof(binary_tree));
+    object_set_type(obj, BINARY_TREE);
+    object_set_value(obj, binary_tree_create());
+
+    /* Push the value to the garbage collector */
+    garbage_collector_push_value(gc, obj);
+    return obj;
+}

@@ -17,7 +17,6 @@ typedef struct _llnode {
 /**
  * @struct: linked_list
  * @desc: A helper linked list helper struct containing the head node
- * @param alloced -> The total bytes alloced
  * @param length -> The number of elements in the linked list
  * @param head -> The head node of the list
  **/

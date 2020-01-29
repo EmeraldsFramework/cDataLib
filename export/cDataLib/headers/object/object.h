@@ -26,7 +26,8 @@ typedef enum {
     STRING,
     VECTOR,
     HASHMAP,
-    LINKED_LIST
+    LINKED_LIST,
+    BINARY_TREE
 } object_type;
 
 /**
@@ -58,6 +59,7 @@ typedef object stringT;
 typedef object vectorT;
 typedef object hashmapT;
 typedef object linked_listT;
+typedef object binary_treeT;
 
 /**
  * @func: object_get_value
@@ -112,5 +114,6 @@ stringT *new_stringT(char *value);
 vectorT *new_vectorT(void);
 hashmapT *new_hashmapT(void);
 linked_listT *new_linked_listT(void);
+binary_treeT *new_binary_treeT(void);
 
 #endif
