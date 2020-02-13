@@ -1,9 +1,20 @@
-#!/bin/bash
+#!/bin/sh
 
 rm a.out
 rm export/cDataLib/lib/libdata.so
-./compile
-#gcc -g -Ofast test.c ./cDataLib/src/*/*.c
-#gcc -g -Ofast -w test.c -ldata
+rm ./export/* -r
+#gcc -g -Ofast -shared -fPIC ./src/*/*.c -o export/libdata.so
+gcc -Ofast -shared -fPIC -w ./src/*/*.c -o export/libdata.so
+sudo cp export/libdata.so /usr/lib/
+sudo chmod 755 /usr/lib/libdata.so
+cp headers export/ -r
+cp cDataLib.h export/
+mkdir export/cDataLib
+mkdir export/cDataLib/lib
+mv export/headers export/cDataLib.h export/cDataLib/
+mv export/libdata.so export/cDataLib/lib/
+cp LICENSE export/cDataLib/
+cp README.md export/cDataLib/
+cp export/cDataLib ../../uoi/java/DataStructures/PDPs/ -r
 gcc -Ofast -w test.c -ldata
 ./a.out
