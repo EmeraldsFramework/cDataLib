@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rm a.out
+rm export/cDataLib/lib/libdata.so
+./compile
+#gcc -g -Ofast test.c ./cDataLib/src/*/*.c
+#gcc -g -Ofast -w test.c -ldata
+gcc -Ofast -w test.c -ldata
+./a.out
