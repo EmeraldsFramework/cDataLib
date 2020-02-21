@@ -1,13 +1,17 @@
 #ifndef ___DATA_STRUCTURES_H_
 #define ___DATA_STRUCTURES_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stddef.h>
+// #include <stdio.h>
+// #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
-#include <ctype.h>
-#include <assert.h>
+// #include <stdint.h>
+// #include <stdbool.h>
+// #include <stddef.h>
+// #include <ctype.h>
+// #include <assert.h>
+// #include <limits.h>
+// #include <unistd.h>
+// #include <errno.h>
 
 #include "garbage_collector/__all.h"
 #include "object/__all.h"

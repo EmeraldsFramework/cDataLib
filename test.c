@@ -96,16 +96,6 @@ int main(void) {
     int lsum = linked_list_reduce(positive_double_list, adder);
     printf("LL SUM: %d\n\n", lsum);
 
-    printf("TESTING BINARY TREE\n");
-    binary_treeT *tree = new_binary_treeT();
-    binary_tree_add(tree, 5);
-    binary_tree_add(tree, 2);
-    binary_tree_add(tree, 3);
-    binary_tree_add(tree, 1);
-    binary_tree_add(tree, 7);
-    binary_tree_add(tree, 9);
-    binary_tree_inorder_search(((binary_tree*)tree)->head);
-
     printf("TESTING GARBAGE COLLECTOR\n");
     stringT *strValue1 = new_stringT("test value 1");
     stringT *strValue2 = new_stringT("test value 2");
