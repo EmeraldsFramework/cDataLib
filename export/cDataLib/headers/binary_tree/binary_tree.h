@@ -13,7 +13,6 @@
 typedef struct binary_tree_node {
     struct binary_tree_node *left;
     struct binary_tree_node *right;
-    // int item;
     int item;
     /* TODO TRY TO MAKE A GENERIC TREE, ONLY WORKS FOR INTS FTM */
 } binary_tree_node;

@@ -27,8 +27,6 @@ static gc_item *garbage_collector_pop(garbage_collector *gc) {
  **/
 static void garbage_collector_mark(gc_item *item) {
     if(item->marked) return;
-
-    /* Mark the item */
     item->marked = 1;
 }
 
@@ -142,7 +140,6 @@ garbage_collector *new_garbage_collector(const size_t stack_max) {
 
 void garbage_collector_collect(garbage_collector *gc) {
     int num_of_objects = gc->num_of_objects;
-
     garbage_collector_mark_all(gc);
     garbage_collector_sweep(gc);
     gc->max_objects = gc->num_of_objects * 2;

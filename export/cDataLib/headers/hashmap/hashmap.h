@@ -5,8 +5,6 @@
 
 /* Initial capacity of the hashmap */
 static const size_t hashmap_init_capacity = 32;
-
-/* Max chain hash length */
 static const size_t max_chain_length = 8;
 
 /**
@@ -30,9 +28,6 @@ typedef struct _hashmap_element {
 	void *data;
 	size_t in_use;
 } hashmap_element;
-
-/* A hashmap has some maximum size and current size,
-    as well as the data to hold. */
 
 /**
  * @struct: hashmap

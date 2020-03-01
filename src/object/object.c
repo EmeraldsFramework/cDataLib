@@ -27,7 +27,6 @@ charT *new_charT(char value) {
     object_set_type(obj, CHAR);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -41,7 +40,6 @@ shortT *new_shortT(short value) {
     object_set_type(obj, SHORT);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -55,7 +53,6 @@ intT *new_intT(int value) {
     object_set_type(obj, INT);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -69,7 +66,6 @@ longT *new_longT(long value) {
     object_set_type(obj, LONG);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -83,7 +79,6 @@ longlongT *new_longlongT(long long value) {
     object_set_type(obj, LONG_LONG);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -97,7 +92,6 @@ unsignedcharT *new_unsignedcharT(unsigned char value) {
     object_set_type(obj, UNSIGNED_CHAR);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -111,7 +105,6 @@ unsignedshortT *new_unsignedshortT(unsigned short value) {
     object_set_type(obj, UNSIGNED_SHORT);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -125,7 +118,6 @@ unsignedintT *new_unsignedintT(unsigned int value) {
     object_set_type(obj, UNSIGNED_INT);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -139,7 +131,6 @@ unsignedlongT *new_unsignedlongT(unsigned long value) {
     object_set_type(obj, UNSIGNED_LONG);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -153,7 +144,6 @@ unsignedlonglongT *new_unsignedlonglongT(unsigned long value) {
     object_set_type(obj, UNSIGNED_LONG_LONG);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -167,7 +157,6 @@ floatT *new_floatT(float *value) {
     object_set_type(obj, FLOAT);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -181,7 +170,6 @@ doubleT *new_doubleT(double *value) {
     object_set_type(obj, DOUBLE);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -195,7 +183,6 @@ longdoubleT *new_longdoubleT(long double *value) {
     object_set_type(obj, LONG_DOUBLE);
     object_set_value(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -212,7 +199,6 @@ stringT *new_stringT(char *value) {
     /* Set the initial value */
     string_add_str(obj, value);
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -226,7 +212,6 @@ vectorT *new_vectorT(void) {
     object_set_type(obj, VECTOR);
     object_set_value(obj, vector_create());
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -240,7 +225,6 @@ hashmapT *new_hashmapT(void) {
     object_set_type(obj, HASHMAP);
     object_set_value(obj, hashmap_create());
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -254,7 +238,6 @@ linked_listT *new_linked_listT(void) {
     object_set_type(obj, LINKED_LIST);
     object_set_value(obj, linked_list_create());
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }
@@ -268,7 +251,6 @@ binary_treeT *new_binary_treeT(void) {
     object_set_type(obj, BINARY_TREE);
     object_set_value(obj, binary_tree_create());
 
-    /* Push the value to the garbage collector */
     garbage_collector_push_value(gc, obj);
     return obj;
 }

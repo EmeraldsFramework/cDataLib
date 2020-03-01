@@ -16,7 +16,6 @@ typedef void* (*lambda)(void*);
 typedef void* (*lambda2)(void*, void*);
 typedef void* (*lambda3)(void*, void*, void*);
 typedef void* (*lambda4)(void*, void*, void*, void*);
-
 /* TODO Obviously find some generic abstraction for the above */
 
 /**

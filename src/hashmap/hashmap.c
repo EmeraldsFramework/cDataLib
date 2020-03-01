@@ -1,42 +1,5 @@
 #include "../../headers/_data_structures.h"
 
-/* ============================================================= */
-/*  First, the polynomial itself and its table of feedback terms.  The    */
-/*  polynomial is                                                         */
-/*  X^32+X^26+X^23+X^22+X^16+X^12+X^11+X^10+X^8+X^7+X^5+X^4+X^2+X^1+X^0   */
-/*                                                                        */
-/*  Note that we take it "backwards" and put the highest-order term in    */
-/*  the lowest-order bit.  The X^32 term is "implied"; the LSB is the     */
-/*  X^31 term, etc.  The X^0 term (usually shown as "+1") results in      */
-/*  the MSB being 1.                                                      */
-/*                                                                        */
-/*  Note that the usual hardware shift register implementation, which     */
-/*  is what we're using (we're merely optimizing it by doing eight-bit    */
-/*  chunks at a time) shifts bits into the lowest-order term.  In our     */
-/*  implementation, that means shifting towards the right.  Why do we     */
-/*  do it this way?  Because the calculated CRC must be transmitted in    */
-/*  order from highest-order term to lowest-order term.  UARTs transmit   */
-/*  characters in order from LSB to MSB.  By storing the CRC this way,    */
-/*  we hand it to the UART in the order low-byte to high-byte; the UART   */
-/*  sends each low-bit to hight-bit; and the result is transmission bit   */
-/*  by bit from highest- to lowest-order term without requiring any bit   */
-/*  shuffling on our part.  Reception works similarly.                    */
-/*                                                                        */
-/*  The feedback terms table consists of 256, 32-bit entries.  Notes:     */
-/*                                                                        */
-/*      The table can be generated at runtime if desired; code to do so   */
-/*      is shown later.  It might not be obvious, but the feedback        */
-/*      terms simply represent the results of eight shift/xor opera-      */
-/*      tions for all combinations of data and CRC register values.       */
-/*                                                                        */
-/*      The values must be right-shifted by eight bits by the "updcrc"    */
-/*      logic; the shift must be unsigned (bring in zeroes).  On some     */
-/*      hardware you could probably optimize the shift in assembler by    */
-/*      using byte-swap instructions.                                     */
-/*      polynomial $edb88320                                              */
-/*                                                                        */
-/*  --------------------------------------------------------------------  */
-
 static unsigned long crc32_tab[] = {
       0x00000000L, 0x77073096L, 0xee0e612cL, 0x990951baL, 0x076dc419L,
       0x706af48fL, 0xe963a535L, 0x9e6495a3L, 0x0edb8832L, 0x79dcb8a4L,
@@ -101,11 +64,9 @@ static unsigned long crc32_tab[] = {
  * @return The crc32 value of the key string
  **/
 unsigned static long crc32(const unsigned char *s, unsigned int len) {
-    unsigned int i;
-    unsigned long crc32val;
-    
-    crc32val = 0;
-    for(i = 0;  i < len;  i ++) {
+    unsigned long crc32val = 0;
+
+    for(unsigned int i = 0; i < len; i++) {
         crc32val = crc32_tab[(crc32val ^ s[i]) & 0xff] ^ (crc32val >> 8);
     }
     return crc32val;
@@ -116,10 +77,9 @@ unsigned static long crc32(const unsigned char *s, unsigned int len) {
  * @desc: Hashing functions for a string
  * @param map -> The hashmap we want to modify the table size of
  * @param keystring -> The string to hash
- * @return The hashed int
+ * @return A unique hashed int
  **/
-unsigned static int hashmap_hash_int(hashmapT *obj, char *keystring) {
-    /* Typecast the value to a hashmap so that it can be manipulated */
+static unsigned int hashmap_hash_int(hashmapT *obj, char *keystring) {
     hashmap *map = (hashmap*)obj->value;
 
     unsigned long key = crc32((unsigned char*)(keystring), strlen(keystring));
@@ -148,24 +108,19 @@ unsigned static int hashmap_hash_int(hashmapT *obj, char *keystring) {
  * @return The location
  **/
 static size_t hashmap_hash(hashmapT *obj, char *key) {
-    /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
 	/* If full, return immediately */
-	if(map->length >= (map->alloced / 2)) {
-        return -1;
-    }
+	if(map->length >= (map->alloced / 2)) return -1;
 
-	/* Find the best hash index */
 	size_t curr = hashmap_hash_int(obj, key);
 
 	/* Linear probing */
 	for(int i = 0; i < max_chain_length; i++){
-		if(map->data[curr].in_use == 0) {
-            return curr;
-        }
-
-		if(map->data[curr].in_use == 1 && (strcmp(map->data[curr].key, key) == 0)) {
+		if(map->data[curr].in_use == 0) return curr;
+		
+        if(map->data[curr].in_use == 1
+        && (strcmp(map->data[curr].key, key) == 0)) {
             return curr;
         }
 
@@ -182,7 +137,6 @@ static size_t hashmap_hash(hashmapT *obj, char *key) {
  * @param in -> The hashmap to rehash
  **/
 static void hashmap_rehash(hashmapT *obj) {
-    /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
 
     /* Allocate double the current memory */
@@ -197,14 +151,10 @@ static void hashmap_rehash(hashmapT *obj) {
 	map->alloced = 2 * map->alloced;
 	map->length = 0;
 
-	/* Rehash all the elements */
+    /* Rehash all the elements */
 	for(int i = 0; i < old_size; i++) {
         /* Skip deleted elements */
-        if(curr[i].in_use == 0) {
-            continue;
-        }
-
-        /* Insert the element */
+        if(curr[i].in_use == 0) continue;
 		hashmap_add(map, curr[i].key, curr[i].data);
 	}
 
@@ -213,32 +163,21 @@ static void hashmap_rehash(hashmapT *obj) {
 }
 
 hashmap *hashmap_create(void) {
-    /* Allocate enough space */
     hashmap *map = malloc(sizeof(hashmap));
-
-    /* Allocate space for the data element */
 	map->data = (hashmap_element*)calloc(hashmap_init_capacity, sizeof(hashmap_element));
 	map->alloced = hashmap_init_capacity;
 	map->length = 0;
-
-    /* Return the map */
 	return map;
 }
 
 void hashmap_add(hashmapT *obj, char *key, void *value) {
-    /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
+    if(map == NULL || key == NULL) return;
 
-    /* In case of NULL inputs */
-    if(map == NULL || key == NULL) {
-        return;
-    }
-
-	/* Find a place to put our value */
 	size_t index = hashmap_hash(obj, key);
-
+    
+    /* In case of a full hashmap */
 	while(index == -1) {
-        /* In case of a full hashmap */
         hashmap_rehash(obj);
 		index = hashmap_hash(obj, key);
 	}
@@ -248,20 +187,13 @@ void hashmap_add(hashmapT *obj, char *key, void *value) {
 	map->data[index].key = key;
 	map->data[index].in_use = 1;
 	map->length++;
-
 	return;
 }
 
 void hashmap_set(hashmapT *obj, char *key, void *value) {
-    /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
+    if(map == NULL || key == NULL) return;
 
-    /* In case of invalid inputs */
-    if(map == NULL || key == NULL) {
-        return;
-    }
-
-	/* Find data location */
 	size_t curr = hashmap_hash_int(obj, key);
 
 	/* Linear probing, if necessary */
@@ -281,15 +213,9 @@ void hashmap_set(hashmapT *obj, char *key, void *value) {
 }
 
 void *hashmap_get(hashmapT *obj, char *key) {
-    /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
+    if(map == NULL || key == NULL) return NULL;
 
-    /* In case of invalid inputs */
-    if(map == NULL || key == NULL) {
-        return NULL;
-    }
-
-	/* Find data location */
 	size_t curr = hashmap_hash_int(obj, key);
 
 	/* Linear probing, if necessary */
@@ -297,7 +223,7 @@ void *hashmap_get(hashmapT *obj, char *key) {
         size_t in_use = map->data[curr].in_use;
         if(in_use == 1) {
             if(strcmp(map->data[curr].key, key) == 0) {
-                /* Return the contained data void* */
+                /* Return the contained data void pointer */
                 return map->data[curr].data;
             }
 		}
@@ -311,15 +237,9 @@ void *hashmap_get(hashmapT *obj, char *key) {
 }
 
 void hashmap_delete(hashmapT *obj, char *key) {
-    /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
+    if(map == NULL || key == NULL) return;
 
-    /* In case of invalid inputs */
-    if(map == NULL || key == NULL) {
-        return;
-    }
-
-	/* Find key */
 	size_t curr = hashmap_hash_int(obj, key);
 
 	/* Linear probing, if necessary */
@@ -331,43 +251,28 @@ void hashmap_delete(hashmapT *obj, char *key) {
                 map->data[curr].in_use = 0;
                 map->data[curr].data = NULL;
                 map->data[curr].key = NULL;
-
-                /* Reduce the size */
                 map->length--;
                 return;
             }
 		}
 
-        /* Reset */
+        /* Fix the current hash */
 		curr = (curr + 1) % map->alloced;
 	}
 
-	/* At this point our data is not found */
 	return;
 }
 
 size_t hashmap_length(hashmapT *obj) {
-    /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
-
-    /* Return the size as long as the map is not NULL */
-	if(map != NULL) {
-        return map->length;
-    }
-	else {
-        /* Just return 0 */
-        return 0;
-    }
+	if(map != NULL) return map->length;
+	else return 0;
 }
 
 void hashmap_free(hashmapT *obj) {
-    /* Typecast the value to a hashmap so that it can be manipulated */
     hashmap *map = (hashmap*)obj->value;
-
-    /* In case of NULL input */
-    if(map == NULL) {
-        return;
-    }
+    if(map == NULL) return;
+    
     /* Free the hashmap element data */
     free(map->data->key);
     free(map->data->data);

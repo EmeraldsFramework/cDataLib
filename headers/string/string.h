@@ -30,7 +30,7 @@ static void string_ensure_space(stringT *obj, size_t add_len);
 /**
  * @func: new_string
  * @desc: Create an str builder
- * @return: The str builder
+ * @return The str builder
  **/
 string *string_create();
 
@@ -47,8 +47,8 @@ void string_add_str(stringT *obj, const char *str);
 /**
  * @func: string_add_char
  * @desc: Add a character to the builder
- * @param: sb -> The typed object containing the string builder
- * @param: c -> The character to add 
+ * @param sb -> The typed object containing the string builder
+ * @param c -> The character to add 
  **/
 void string_add_char(stringT *obj, char c);
 
