@@ -7,11 +7,13 @@ mkdir export/cDataLib/lib
 cp headers export/cDataLib/ -r
 cp cDataLib.h export/cDataLib/
 #gcc -g -Ofast -shared -fPIC ./src/*/*.c -o export/cDataLib/lib/libdata.so
+#gcc -shared -fPIC -w ./src/*/*.c -o export/cDataLib/lib/libdata.so
 gcc -Ofast -shared -fPIC -w ./src/*/*.c -o export/cDataLib/lib/libdata.so
 sudo cp export/cDataLib/lib/libdata.so /usr/lib/
 sudo chmod 755 /usr/lib/libdata.so
 cp LICENSE export/cDataLib/
 cp README.md export/cDataLib/
 cp export/cDataLib ../../uoi/java/DataStructures/PDPs/ -r
+#gcc -w test.c -ldata
 gcc -Ofast -w test.c -ldata
 ./a.out
