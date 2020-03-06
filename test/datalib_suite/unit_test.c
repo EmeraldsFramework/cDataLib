@@ -64,6 +64,17 @@ describe("Test Lib 2", {
     it("should do some stuff with assert", {
         assert(2 == 2, "asserts 2 == 2");
     });
+
+    it("should do more some stuff with assert", {
+        assert(4 == 4, "asserts 4 == 4");
+        assert(5 == 5, "asserts 5 == 5");
+        assert(6 == 6, "asserts 6 == 6");
+        assert(9 == 9, "asserts 9 == 9");
+    });
+
+    it("should fail at somethiing", {
+        fail("ok");
+    });
 });
 
 }

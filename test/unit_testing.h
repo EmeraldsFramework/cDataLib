@@ -59,6 +59,9 @@
 #define MAXIMUM_NUMBER_OF_TESTS 8192
 #define FLOAT_COMPARISON_ACCURACY 1E-12
 
+static int number_of_describes = 0;
+static int number_of_it_blocks = 0;
+static int number_of_failing_it_blocks = 0;
 static int number_of_tests = 0;
 static int number_of_asserts = 0;
 static int number_of_failing_tests = 0;
@@ -73,8 +76,9 @@ static char test_result_message[MAXIMUM_LENGTH_OF_RESULT_MESSAGE];
 static char name_of_tested_proc[1024];
 
 /** Lists of tests outputs **/
-static char *passing_tests[MAXIMUM_NUMBER_OF_TESTS] = {"0"};
-static char *failing_tests[MAXIMUM_NUMBER_OF_TESTS] = {"0"};
+static char *passing_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TESTS];
+static char *failing_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TESTS];
+static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TESTS];
 
 /**
  * @macro: BLOCK
@@ -111,8 +115,14 @@ static char *failing_tests[MAXIMUM_NUMBER_OF_TESTS] = {"0"};
  * @param proc -> The proc to extend to
  **/
 #define describe(object_name, proc) BLOCK( \
-    printf("\033[38;5;205mDescribing: %s\033[0m\n", object_name); \
+    number_of_tests = 0; \
+    number_of_failing_tests = 0; \
+    number_of_describes++; \
+    failing_tests[number_of_describes][0] = object_name; \
+    passing_tests[number_of_describes][0] = object_name; \
     proc; \
+    size_of_described_tests[number_of_describes][0] = number_of_tests - number_of_failing_tests; \
+    size_of_described_tests[number_of_describes][1] = number_of_failing_tests; \
 )
 
 /**
@@ -130,14 +140,16 @@ static char *failing_tests[MAXIMUM_NUMBER_OF_TESTS] = {"0"};
     double end_test_timer = get_timer(); \
     \
 	number_of_tests++; \
+    number_of_it_blocks++; \
 	if(!(status_of_test)) { \
 		number_of_failing_tests++; \
+        number_of_failing_it_blocks++; \
         char *new_test_message = malloc(sizeof(test_result_message) + 1); \
         \
         snprintf(new_test_message, strlen(test_result_message) + 1, \
         test_result_message); \
         \
-        failing_tests[number_of_failing_tests] = new_test_message; \
+        failing_tests[number_of_describes][number_of_failing_tests] = new_test_message; \
 	} \
     else { \
         char *new_test_message = malloc(sizeof(test_result_message) + 1); \
@@ -145,7 +157,7 @@ static char *failing_tests[MAXIMUM_NUMBER_OF_TESTS] = {"0"};
         snprintf(new_test_message, strlen(test_result_message) + 1, \
         test_result_message); \
         \
-        passing_tests[number_of_tests - number_of_failing_tests] = new_test_message; \
+        passing_tests[number_of_describes][number_of_tests - number_of_failing_tests] = new_test_message; \
     } \
     total_time_taken_for_tests += end_test_timer - start_test_timer; \
 	fflush(stdout); \
@@ -156,9 +168,14 @@ static char *failing_tests[MAXIMUM_NUMBER_OF_TESTS] = {"0"};
  * @desc: Prints all elements of the passing_tests list
  **/
 #define print_passing_tests() BLOCK( \
-    printf("\n"); \
-    for(int i = 1; i <= number_of_tests - number_of_failing_tests; i++) { \
-        printf("%s\n", passing_tests[i]); \
+    for(int j = 1; j <= number_of_describes; j++) { \
+        if(size_of_described_tests[j][0] > 0) { \
+            printf("\033[38;5;205mDescribing: %s\033[0m\n", passing_tests[j][0]); \
+        } \
+        for(int i = 1; i <= size_of_described_tests[j][0]; i++) { \
+            printf("%s\n", passing_tests[j][i]); \
+        } \
+        printf("\n"); \
     } \
 )
 
@@ -167,9 +184,13 @@ static char *failing_tests[MAXIMUM_NUMBER_OF_TESTS] = {"0"};
  * @desc: Prints all elements of the failing_tests list
  **/
 #define print_failing_tests() BLOCK( \
-    printf("\n\n"); \
-    for(int i = 1; i <= number_of_failing_tests; i++) { \
-        printf("%s\n", failing_tests[i]); \
+    for(int j = 1; j <= number_of_describes; j++) { \
+        if(size_of_described_tests[j][1] > 0) { \
+            printf("\033[38;5;205mDescribing: %s\033[0m\n", failing_tests[j][0]); \
+        } \
+        for(int i = 1; i <= size_of_described_tests[j][1]; i++) { \
+            printf("%s\n\n", failing_tests[j][i]); \
+        } \
     } \
 )
 
@@ -182,8 +203,9 @@ static char *failing_tests[MAXIMUM_NUMBER_OF_TESTS] = {"0"};
  **/
 #define report_time_taken_for_tests() BLOCK( \
 	printf("\n\n→ %d tests\n\033[38;5;208m→ %d assertions\033[0m\n\033[1;32m→ %d passing\033[0m\n\033[1;31m→ %d failing\033[0m\n", \
-    number_of_tests, number_of_asserts, \
-    number_of_tests-number_of_failing_tests, number_of_failing_tests); \
+    number_of_it_blocks, number_of_asserts, \
+    number_of_it_blocks - number_of_failing_it_blocks, \
+    number_of_failing_it_blocks); \
     printf("\033[1;36m→ Finished in %.4f ms\033[0m\n", \
     total_time_taken_for_tests / 1000000.0); \
     \
