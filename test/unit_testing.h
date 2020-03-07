@@ -120,7 +120,9 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
     number_of_describes++; \
     failing_tests[number_of_describes][0] = object_name; \
     passing_tests[number_of_describes][0] = object_name; \
+    printf("\033[38;5;205mDescribing: %s\033[0m\n", object_name); \
     proc; \
+    printf("\033[38;5;205mTested: %s\033[0m\n", object_name); \
     size_of_described_tests[number_of_describes][0] = number_of_tests - number_of_failing_tests; \
     size_of_described_tests[number_of_describes][1] = number_of_failing_tests; \
 )
@@ -150,6 +152,7 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
         test_result_message); \
         \
         failing_tests[number_of_describes][number_of_failing_tests] = new_test_message; \
+        printf("%s\n\n", new_test_message); \
 	} \
     else { \
         char *new_test_message = malloc(sizeof(test_result_message) + 1); \
@@ -158,6 +161,7 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
         test_result_message); \
         \
         passing_tests[number_of_describes][number_of_tests - number_of_failing_tests] = new_test_message; \
+        printf("%s\n", new_test_message); \
     } \
     total_time_taken_for_tests += end_test_timer - start_test_timer; \
 	fflush(stdout); \
