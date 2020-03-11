@@ -66,15 +66,36 @@ void *hashmap_reduce(hashmapT *obj, lambda2 fold, hashmap_element_type element_t
 
     void *accumulator;
     void *current;
+    int skip_first = 1;
 
-    /* Iterate through the hashmap */
+    /* In general this takes constant time no matter the hashmap size */
     for(size_t i = 0; i < map->alloced; i++) {
         if(map->data[i].in_use != 0) {
             switch(element_type) {
                 case KEYS:
                     /* Set accumulator to some arbitrary hashmap key */
                     accumulator = map->data[i].key;
+                    break;
+                case VALUES:
+                    /* Set accumulator to some arbitrary hashmap value  */
+                    accumulator = hashmap_get(obj, map->data[i].key);
+                    break;
+                default:
+                    return NULL;
+            }
+            break;
+        }
+    }
 
+    /* Iterate through the hashmap */
+    for(size_t i = 0; i < map->alloced; i++) {
+        if(map->data[i].in_use != 0) {
+            if(skip_first == 1) {
+                skip_first = 0;
+                continue;
+            }
+            switch(element_type) {
+                case KEYS:
                     /* Get the current item */
                     current = map->data[i].key;
 
@@ -82,12 +103,9 @@ void *hashmap_reduce(hashmapT *obj, lambda2 fold, hashmap_element_type element_t
                     accumulator = fold(accumulator, current);
                     break;
                 case VALUES:
-                    /* Set accumulator to some arbitrary hashmap value  */
-                    accumulator = hashmap_get(obj, map->data[i].key);
-                    
                     /* Get the current item */
                     current = hashmap_get(obj, map->data[i].key);
-                    
+
                     /* Accumulate the result */
                     accumulator = fold(accumulator, current);
                     break;
