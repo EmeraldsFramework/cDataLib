@@ -66,14 +66,25 @@ void string_add_char(stringT *obj, char c) {
     sb->str[sb->length] = '\0';
 }
 
-void string_add_int(stringT *obj, size_t val) {
+void string_add_int(stringT *obj, int val) {
     string *sb = (string*)obj->value;
-    char str[12];
+    char str[1024];
 
     if(sb == NULL) return;
 
     /* Add as a string to an str array */
     snprintf(str, sizeof(str), "%d", val);
+    string_add_str(obj, str);
+}
+
+void string_add_double_precision(stringT *obj, double val) {
+    string *sb = (string*)obj->value;
+    char str[1024];
+
+    if(sb == NULL) return;
+
+    /* Add as a string to an str array */
+    snprintf(str, sizeof(str), "%g", val);
     string_add_str(obj, str);
 }
 

@@ -58,7 +58,15 @@ void string_add_char(stringT *obj, char c);
  * @param obj -> The typed object containing the string builder
  * @param val -> The integer to add
  **/
-void string_add_int(stringT *obj, size_t val);
+void string_add_int(stringT *obj, int val);
+
+/**
+ * @func: string_add_double_precision
+ * @desc: Add a double to the builder
+ * @param obj -> The typed object containing the string builder
+ * @param val -> The double to add
+ **/
+void string_add_double_precision(stringT *obj, double val);
 
 /**
  * @func: string_get
