@@ -87,6 +87,10 @@ static void garbage_collector_sweep(garbage_collector *gc) {
                     linked_list_free(item);
                     free(item);
                     break;
+                case STACK:
+                    stack_free(item);
+                    free(item);
+                    break;
                 default:
                     free(item);
                     free(untracked);

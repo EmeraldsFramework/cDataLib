@@ -254,3 +254,16 @@ binary_treeT *new_binary_treeT(void) {
     garbage_collector_push_value(gc, obj);
     return obj;
 }
+
+stackT *new_stackT(void) {
+    /* Create a typed wrapper */
+    stackT *obj = malloc(sizeof(stackT));
+
+    /* Allocate enough space and set value and type */
+    obj->value = malloc(sizeof(stack));
+    object_set_type(obj, STACK);
+    object_set_value(obj, stack_create());
+
+    garbage_collector_push_value(gc, obj);
+    return obj;
+}

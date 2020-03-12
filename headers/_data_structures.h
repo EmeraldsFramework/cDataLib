@@ -10,5 +10,6 @@
 #include "hashmap/__all.h"
 #include "linked_list/__all.h"
 #include "binary_tree/__all.h"
+#include "stack/__all.h"
 
 #endif
