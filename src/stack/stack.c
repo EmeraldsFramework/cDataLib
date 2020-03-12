@@ -54,7 +54,7 @@ void *stack_peek(stackT *obj) {
 
 void stack_free(stackT *obj) {
     stack *st = (stack*)obj->value;
-    if(st == NULL) return 0;
+    if(st == NULL) return;
 
     /* 'items' is free'd using vector_free */
     free(st);
