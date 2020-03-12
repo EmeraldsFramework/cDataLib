@@ -56,6 +56,8 @@ int main(void) {
     hashmap_add(testh, "3", new_intT(3));
     hashmap_add(testh, "42", new_intT(-4));
     hashmap_add(testh, "5", new_intT(5));
+    hashmap_add(testh, "56", new_intT(5));
+    hashmap_add(testh, "500", new_intT(6));
     hashmap_add(testh, "64", new_intT(1));
     hashmap_add(testh, "7", new_intT(1));
 
@@ -95,6 +97,21 @@ int main(void) {
     linked_listT *positive_double_list = linked_list_filter(double_list, positive_filter);
     int lsum = linked_list_reduce(positive_double_list, adder);
     printf("LL SUM: %d\n\n", lsum);
+
+
+
+    printf("TESTING STACK\n");
+    stackT *st = new_stackT();
+    stack_push(st, 2);
+    stack_push(st, 3);
+    stack_push(st, -1);
+    printf("item %d, should be -1\n", (int)stack_pop(st));
+    printf("item %d, should be 3\n", (int)stack_pop(st));
+    printf("peek item %d should be 2\n", (int)stack_peek(st));
+    printf("item %d, should be 2\n", (int)stack_pop(st));
+    printf("\n");
+
+
 
     printf("TESTING GARBAGE COLLECTOR\n");
     stringT *strValue1 = new_stringT("test value 1");

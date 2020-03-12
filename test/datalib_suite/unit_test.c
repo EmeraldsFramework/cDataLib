@@ -6,6 +6,7 @@ static double double_value = 0.1;
 static const char *random_string = "Thisstring";
 
 void run_tests(void) {
+setup_test_data();
 
 describe("Test of the test library", {
     before({
@@ -48,8 +49,24 @@ describe("Test of the test library", {
             assert(6 == 6, "asserts 6 == 6");
             assert(9 == 9, "asserts 9 == 9");
         });
+        describe("Describe 3", {
+        it("does some stuff with assert", {
+            assert(2 == 2, "asserts 2 == 2");
+        });
 
-        it("fails at somethiing", {
+        it("does more some stuff with assert", {
+            assert(4 == 4, "asserts 4 == 4");
+            assert(5 == 5, "asserts 5 == 5");
+            assert(6 == 6, "asserts 6 == 6");
+            assert(9 == 9, "asserts 9 == 9");
+        });
+
+        it("fails at something", {
+            fail("ok");
+        });
+    });
+
+        it("fails at something", {
             fail("ok");
         });
     });
@@ -81,8 +98,7 @@ describe("Test of the test library", {
 
 int main(void) {
     run_tests();
-    // print_passing_tests();
-    // print_failing_tests();
+    report_test_results("both");
     report_time_taken_for_tests();
     return exit_code;
 }

@@ -43,6 +43,7 @@
     #error "Unknown OS"
 #endif
 
+#include "../headers/_data_structures.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -56,15 +57,11 @@
 #define FAILING 0
 
 #define MAXIMUM_LENGTH_OF_RESULT_MESSAGE 1024
-#define MAXIMUM_NUMBER_OF_TESTS 8192
 #define FLOAT_COMPARISON_ACCURACY 1E-12
 
-static int number_of_describes = 0;
-static int number_of_it_blocks = 0;
-static int number_of_failing_it_blocks = 0;
 static int number_of_tests = 0;
-static int number_of_asserts = 0;
 static int number_of_failing_tests = 0;
+static int number_of_asserts = 0;
 static int status_of_test = FAILING;
 
 /**
@@ -72,13 +69,13 @@ static int status_of_test = FAILING;
  * @param test_result_message -> The outcome returned from the test
  **/
 static double total_time_taken_for_tests = 0;
-static char test_result_message[MAXIMUM_LENGTH_OF_RESULT_MESSAGE];
-static char name_of_tested_proc[1024];
+hashmapT *describes_hashmap;
+stackT *describes_stack;
 
-/** Lists of tests outputs **/
-static char *passing_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TESTS];
-static char *failing_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TESTS];
-static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TESTS];
+stringT *test_result_message;
+stringT *name_of_tested_proc;
+stringT *name_of_describe;
+stringT *display_tab;
 
 /**
  * @macro: BLOCK
@@ -115,16 +112,19 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
  * @param proc -> The proc to extend to
  **/
 #define describe(object_name, proc) BLOCK( \
-    number_of_tests = 0; \
-    number_of_failing_tests = 0; \
-    number_of_describes++; \
-    failing_tests[number_of_describes][0] = object_name; \
-    passing_tests[number_of_describes][0] = object_name; \
-    printf("\033[38;5;205mDescribing: %s\033[0m\n", object_name); \
+    name_of_describe = new_stringT(object_name); \
+    \
+    vectorT *vector_of_tests = new_vectorT(); \
+    vector_add(vector_of_tests, new_vectorT()); \
+    vector_add(vector_of_tests, new_vectorT()); \
+    \
+    hashmap_add(describes_hashmap, string_get(name_of_describe), vector_of_tests); \
+    /* string_add_str(display_tab, "    "); */ \
+    stack_push(describes_stack, name_of_describe); \
     proc; \
-    printf("\033[38;5;205mTested: %s\033[0m\n", object_name); \
-    size_of_described_tests[number_of_describes][0] = number_of_tests - number_of_failing_tests; \
-    size_of_described_tests[number_of_describes][1] = number_of_failing_tests; \
+    stack_pop(describes_stack); \
+    name_of_describe = stack_peek(describes_stack); \
+    /* string_shorten(display_tab, string_length(display_tab) - 4); */ \
 )
 
 /**
@@ -134,86 +134,101 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
  * @param proc -> The actual test code
  **/
 #define it(proc_name, proc) BLOCK( \
+    /* printf("IT BLOCK INSIDE %s\n", string_get(name_of_describe)); */ \
 	status_of_test = FAILING; \
-    snprintf(name_of_tested_proc, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, proc_name); \
+    name_of_tested_proc = new_stringT(proc_name); \
     \
     double start_test_timer = get_timer(); \
     proc; \
     double end_test_timer = get_timer(); \
     \
 	number_of_tests++; \
-    number_of_it_blocks++; \
 	if(!(status_of_test)) { \
 		number_of_failing_tests++; \
-        number_of_failing_it_blocks++; \
-        char *new_test_message = malloc(sizeof(test_result_message) + 1); \
+        stringT *new_test_message = string_dup(test_result_message); \
+        vector_add(vector_get(hashmap_get(describes_hashmap, \
+        string_get(name_of_describe)), 1), new_test_message); \
         \
-        snprintf(new_test_message, strlen(test_result_message) + 1, \
-        test_result_message); \
-        \
-        failing_tests[number_of_describes][number_of_failing_tests] = new_test_message; \
-        printf("%s\n\n", new_test_message); \
 	} \
     else { \
-        char *new_test_message = malloc(sizeof(test_result_message) + 1); \
-        \
-        snprintf(new_test_message, strlen(test_result_message) + 1, \
-        test_result_message); \
-        \
-        passing_tests[number_of_describes][number_of_tests - number_of_failing_tests] = new_test_message; \
-        printf("%s\n", new_test_message); \
+        stringT *new_test_message = string_dup(test_result_message); \
+        vector_add(vector_get(hashmap_get(describes_hashmap, \
+        string_get(name_of_describe)), 0), new_test_message); \
     } \
     total_time_taken_for_tests += end_test_timer - start_test_timer; \
-	fflush(stdout); \
 )
 
 /**
- * @macro: print_passing_tests
- * @desc: Prints all elements of the passing_tests list
+ * @func: print_stringT
+ * @desc: Handle iterating through vector elements for printing test messages
+ * @param element -> The vector element to print
  **/
-#define print_passing_tests() BLOCK( \
-    for(int j = 1; j <= number_of_describes; j++) { \
-        if(size_of_described_tests[j][0] > 0) { \
-            printf("\033[38;5;205mDescribing: %s\033[0m\n", passing_tests[j][0]); \
-        } \
-        for(int i = 1; i <= size_of_described_tests[j][0]; i++) { \
-            printf("%s\n", passing_tests[j][i]); \
-        } \
-        printf("\n"); \
-    } \
+static void print_stringT(stringT *element) {
+    printf("%s\n", string_get(element));
+}
+
+/**
+ * @func: print_passing_tests
+ * @desc: Print all elements of the passing tests vector
+ * @param vector_of_tests -> The vector of vectors of tests
+ **/
+#define print_passing_tests(vector_of_tests) BLOCK( \
+    vector_map(vector_get(vector_of_tests, 0), print_stringT); \
 )
 
 /**
- * @macro: print_failing_tests
- * @desc: Prints all elements of the failing_tests list
+ * @func: print_failing_tests
+ * @desc: Print all vector_of_testss of the failing tests vector
+ * @param vector_of_tests -> The vector of vectors of tests
  **/
-#define print_failing_tests() BLOCK( \
-    for(int j = 1; j <= number_of_describes; j++) { \
-        if(size_of_described_tests[j][1] > 0) { \
-            printf("\033[38;5;205mDescribing: %s\033[0m\n", failing_tests[j][0]); \
-        } \
-        for(int i = 1; i <= size_of_described_tests[j][1]; i++) { \
-            printf("%s\n\n", failing_tests[j][i]); \
+#define print_failing_tests(vector_of_tests) BLOCK( \
+    vector_map(vector_get(vector_of_tests, 1), print_stringT); \
+)
+
+/**
+ * @macro: report_test_results
+ * @desc: Prints all elements of the desired test vectors
+ * @param vector -> Either passing failing or both
+ **/
+#define report_test_results(vector) BLOCK( \
+    hashmap *map = (hashmap*)describes_hashmap->value; \
+    for(size_t i = 0; i < map->alloced; i++) { \
+        if(map->data[i].in_use != 0) { \
+            printf("\033[38;5;207m%s\033[0m\n", \
+            (&map->data[i])->key); \
+            \
+            if(vector == "passing") { \
+                print_passing_tests((&map->data[i])->data); \
+                printf("\n"); \
+            } \
+            else if(vector == "failing") { \
+                print_failing_tests((&map->data[i])->data); \
+            } \
+            else if(vector == "both") { \
+                print_passing_tests((&map->data[i])->data); \
+                printf("\n"); \
+                print_failing_tests((&map->data[i])->data); \
+            } \
         } \
     } \
 )
-
-/** @param exit_code -> Used in return **/
-#define exit_code number_of_failing_tests
 
 /**
  * @macro: report_time_taken_for_tests
  * @desc: Report the number of tests, assertions and time taken while testing
  **/
 #define report_time_taken_for_tests() BLOCK( \
-	printf("\n\n→ %d tests\n\033[38;5;208m→ %d assertions\033[0m\n\033[1;32m→ %d passing\033[0m\n\033[1;31m→ %d failing\033[0m\n", \
-    number_of_it_blocks, number_of_asserts, \
-    number_of_it_blocks - number_of_failing_it_blocks, \
-    number_of_failing_it_blocks); \
-    printf("\033[1;36m→ Finished in %.4f ms\033[0m\n", \
+	printf("\n→ %d tests\n\033[38;5;11m● %d assertions\033[0m\n\033[38;5;78m✓ %d passing\033[0m\n\033[1;31m✗ %d failing\033[0m\n", \
+    number_of_tests, number_of_asserts, \
+    number_of_tests - number_of_failing_tests, \
+    number_of_failing_tests); \
+    printf("\033[1;36m★ Finished in %.4f ms\033[0m\n", \
     total_time_taken_for_tests / 1000000.0); \
     \
 )
+
+/** @param exit_code -> Used in return **/
+#define exit_code number_of_failing_tests
 
 /**
  * @macro: check
@@ -222,19 +237,29 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
  **/
 #define check(test) BLOCK( \
 	number_of_asserts++; \
+    test_result_message = new_stringT(""); \
 	if(!(test)) { \
-		\
-        snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-        "\033[1;31m✗\033[0m it %s:\n    %s:%d:\n\t|> %s", \
-        name_of_tested_proc, __FILE__, __LINE__, #test); \
-		\
         status_of_test = FAILING; \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "\033[1;31m✗\033[0m it "); \
+        string_add_str(test_result_message, string_get(name_of_tested_proc)); \
+        string_add_str(test_result_message, ":\n"); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "    "); \
+        string_add_str(test_result_message, __FILE__); \
+        string_add_str(test_result_message, ":"); \
+        string_add_int(test_result_message, __LINE__); \
+        string_add_str(test_result_message, ":\n"); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "        |> "); \
+        string_add_str(test_result_message, #test); \
+        string_add_str(test_result_message, "\n"); \
 	} \
     else { \
         status_of_test = PASSING; \
-        \
-        snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-        "\033[1;32m✓\033[0m it %s", name_of_tested_proc); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "\033[38;5;78m✓\033[0m it "); \
+        string_add_str(test_result_message, string_get(name_of_tested_proc)); \
     } \
 )
 
@@ -245,12 +270,22 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
  **/
 #define fail(message) BLOCK( \
 	number_of_asserts++; \
-	\
-    snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-    "\033[1;31m✗\033[0m it %s:\n    %s:%d:\n\t|> %s", \
-    name_of_tested_proc, __FILE__, __LINE__, message); \
-	\
+    test_result_message = new_stringT(""); \
     status_of_test = FAILING; \
+    string_add_str(test_result_message, string_get(display_tab)); \
+    string_add_str(test_result_message, "\033[1;31m✗\033[0m it "); \
+    string_add_str(test_result_message, string_get(name_of_tested_proc)); \
+    string_add_str(test_result_message, ":\n"); \
+    string_add_str(test_result_message, string_get(display_tab)); \
+    string_add_str(test_result_message, "    "); \
+    string_add_str(test_result_message, __FILE__); \
+    string_add_str(test_result_message, ":"); \
+    string_add_int(test_result_message, __LINE__); \
+    string_add_str(test_result_message, ":\n"); \
+    string_add_str(test_result_message, string_get(display_tab)); \
+    string_add_str(test_result_message, "        |> "); \
+    string_add_str(test_result_message, #message); \
+    string_add_str(test_result_message, "\n"); \
 )
 
 /**
@@ -261,19 +296,29 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
  **/
 #define assert(test, message) BLOCK( \
 	number_of_asserts++; \
+    test_result_message = new_stringT(""); \
 	if(!(test)) { \
-        \
-		snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-        "\033[1;31m✗\033[0m it %s:\n    %s:%d:\n\t|> %s", \
-        name_of_tested_proc, __FILE__, __LINE__, message); \
-		\
         status_of_test = FAILING; \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "\033[1;31m✗\033[0m it "); \
+        string_add_str(test_result_message, string_get(name_of_tested_proc)); \
+        string_add_str(test_result_message, ":\n"); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "    "); \
+        string_add_str(test_result_message, __FILE__); \
+        string_add_str(test_result_message, ":"); \
+        string_add_int(test_result_message, __LINE__); \
+        string_add_str(test_result_message, ":\n"); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "        |> "); \
+        string_add_str(test_result_message, message); \
+        string_add_str(test_result_message, "\n"); \
 	} \
     else { \
         status_of_test = PASSING; \
-        \
-        snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-        "\033[1;32m✓\033[0m it %s", name_of_tested_proc); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "\033[38;5;78m✓\033[0m it "); \
+        string_add_str(test_result_message, string_get(name_of_tested_proc)); \
     } \
 )
 
@@ -284,25 +329,36 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
  * @param actual -> The actual value
  **/
 #define assert_int_equality(expected, actual) BLOCK( \
-	int temp_expected; \
-	int temp_actual_value; \
 	number_of_asserts++; \
-	temp_expected = (expected); \
-	temp_actual_value = (actual); \
+    test_result_message = new_stringT(""); \
+	int temp_expected = (expected); \
+	int temp_actual_value = (actual); \
 	if(temp_expected != temp_actual_value) { \
-        \
-		snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-        "\033[1;31m✗\033[0m it %s:\n    %s:%d:\n\t|> \"%d\" expected but got \"%d\"", \
-        name_of_tested_proc, __FILE__, __LINE__, \
-        temp_expected, temp_actual_value); \
-        \
 		status_of_test = FAILING; \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "\033[1;31m✗\033[0m it "); \
+        string_add_str(test_result_message, string_get(name_of_tested_proc)); \
+        string_add_str(test_result_message, ":\n"); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "    "); \
+        string_add_str(test_result_message, __FILE__); \
+        string_add_str(test_result_message, ":"); \
+        string_add_int(test_result_message, __LINE__); \
+        string_add_str(test_result_message, ":\n"); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "        |> "); \
+        string_add_str(test_result_message, "\""); \
+        string_add_int(test_result_message, temp_expected); \
+        string_add_str(test_result_message, "\""); \
+        string_add_str(test_result_message, " expected but got \""); \
+        string_add_int(test_result_message, temp_actual_value); \
+        string_add_str(test_result_message, "\"\n"); \
 	} \
     else { \
         status_of_test = PASSING; \
-        \
-        snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-        "\033[1;32m✓\033[0m it %s", name_of_tested_proc); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "\033[38;5;78m✓\033[0m it "); \
+        string_add_str(test_result_message, string_get(name_of_tested_proc)); \
     } \
 )
 
@@ -313,25 +369,36 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
  * @param actual -> The actual value
  **/
 #define assert_double_equality(expected, actual) BLOCK( \
-	double temp_expected; \
-	double temp_actual_value; \
 	number_of_asserts++; \
-	temp_expected = (expected); \
-	temp_actual_value = (actual); \
+    test_result_message = new_stringT(""); \
+	double temp_expected = (expected); \
+	double temp_actual_value = (actual); \
 	if(fabs(temp_expected - temp_actual_value) > FLOAT_COMPARISON_ACCURACY) { \
-		int significant_figures = 1 - log10(FLOAT_COMPARISON_ACCURACY); \
-		\
-        snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-        "\033[1;31m✗\033[0m it %s:\n    %s:%d:\n\t|> \"%.*g\" expected but got \"%.*g\"", \
-        name_of_tested_proc, __FILE__, __LINE__, significant_figures, \
-        temp_expected, significant_figures, temp_actual_value); \
-        \
 		status_of_test = FAILING; \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "\033[1;31m✗\033[0m it "); \
+        string_add_str(test_result_message, string_get(name_of_tested_proc)); \
+        string_add_str(test_result_message, ":\n"); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "    "); \
+        string_add_str(test_result_message, __FILE__); \
+        string_add_str(test_result_message, ":"); \
+        string_add_int(test_result_message, __LINE__); \
+        string_add_str(test_result_message, ":\n"); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "        |> "); \
+        string_add_str(test_result_message, "\""); \
+        string_add_double_precision(test_result_message, temp_expected); \
+        string_add_str(test_result_message, "\""); \
+        string_add_str(test_result_message, " expected but got \""); \
+        string_add_double_precision(test_result_message, temp_actual_value); \
+        string_add_str(test_result_message, "\"\n"); \
 	} \
     else { \
         status_of_test = PASSING; \
-        snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-        "\033[1;32m✓\033[0m it %s", name_of_tested_proc); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "\033[38;5;78m✓\033[0m it "); \
+        string_add_str(test_result_message, string_get(name_of_tested_proc)); \
     } \
 )
 
@@ -345,24 +412,49 @@ static int size_of_described_tests[MAXIMUM_NUMBER_OF_TESTS][MAXIMUM_NUMBER_OF_TE
 	const char *temp_expected = expected; \
 	const char *temp_actual_value = actual; \
 	number_of_asserts++; \
+    test_result_message = new_stringT(""); \
 	if(!temp_expected) temp_expected = "NULL"; \
 	if(!temp_actual_value) temp_actual_value = "NULL"; \
 	if(strcmp(temp_expected, temp_actual_value)) { \
-        \
-		snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-        "\033[1;31m✗\033[0m it %s:\n    %s:%d:\n\t|> \"%s\" expected but got \"%s\"", \
-        name_of_tested_proc, __FILE__, __LINE__, \
-        temp_expected, temp_actual_value); \
-        \
 		status_of_test = FAILING; \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "\033[1;31m✗\033[0m it "); \
+        string_add_str(test_result_message, string_get(name_of_tested_proc)); \
+        string_add_str(test_result_message, ":\n"); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "    "); \
+        string_add_str(test_result_message, __FILE__); \
+        string_add_str(test_result_message, ":"); \
+        string_add_int(test_result_message, __LINE__); \
+        string_add_str(test_result_message, ":\n"); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "        |> "); \
+        string_add_str(test_result_message, "\""); \
+        string_add_str(test_result_message, temp_expected); \
+        string_add_str(test_result_message, "\""); \
+        string_add_str(test_result_message, " expected but got \""); \
+        string_add_str(test_result_message, temp_actual_value); \
+        string_add_str(test_result_message, "\"\n"); \
 	} \
     else { \
         status_of_test = PASSING; \
-        \
-        snprintf(test_result_message, MAXIMUM_LENGTH_OF_RESULT_MESSAGE, \
-        "\033[1;32m✓\033[0m it %s", name_of_tested_proc); \
+        string_add_str(test_result_message, string_get(display_tab)); \
+        string_add_str(test_result_message, "\033[38;5;78m✓\033[0m it "); \
+        string_add_str(test_result_message, string_get(name_of_tested_proc)); \
     } \
 )
+
+/**
+ * @func: setup_test_data
+ * @desc: Allocates memory for vectors to save test results in
+ **/
+static void setup_test_data() {
+    extern garbage_collector *gc;
+    gc = new_garbage_collector(4096);
+    describes_hashmap = new_hashmapT();
+    describes_stack = new_stackT();
+    display_tab = new_stringT("    ");
+}
 
 /**
  * @func: get_timer
