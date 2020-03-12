@@ -1,5 +1,10 @@
 #include "export/cDataLib/cDataLib.h"
 
+/* For displaying purposes */
+#if defined (_WIN32)
+    #include <conio.h>
+#endif
+
 extern garbage_collector *gc;
 
 void *double_item(object *item) {
@@ -123,6 +128,10 @@ int main(void) {
     printf("BEFORE: %s, %s, %s, %s, %s\n", string_get(strValue1), string_get(strValue2), string_get(strValue3), string_get(strValue4), string_get(strValue5));
     garbage_collector_free(gc);
     printf("AFTER:  %p, %p, %p, %p, %p\n", string_get(strValue1), string_get(strValue2), string_get(strValue3), string_get(strValue4), string_get(strValue5));
+
+#if defined(_WIN32)
+    getch();
+#endif
 
     return 0;
 }
