@@ -77,6 +77,15 @@ void string_add_double_precision(stringT *obj, double val);
 char *string_get(stringT *obj);
 
 /**
+ * @func: string_get_char_at_index
+ * @desc: Accessor to the string characters by index
+ * @param obj -> The typed object containing the string builder
+ * @param index -> The index of the character we want to receive
+ * @return The character we searched for
+ **/
+char string_get_char_at_index(stringT *obj, size_t index);
+
+/**
  * @func: string_shorten
  * @desc: Remove data from the end of the builder
  * @param obj -> The typed object containing the string builder

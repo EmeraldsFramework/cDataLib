@@ -1,7 +1,7 @@
 #ifndef ___DATA_STRUCTURES_H_
 #define ___DATA_STRUCTURES_H_
 
-#include <string.h>
+#include <stdio.h> /* No other (easy) way to printf */
 
 #include "garbage_collector/__all.h"
 #include "object/__all.h"

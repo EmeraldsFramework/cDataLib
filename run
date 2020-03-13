@@ -22,7 +22,7 @@ cp cDataLib.h export/cDataLib/
     ## Create a shared library
     #gcc -g -Ofast -shared -fPIC ./src/*/*.c -o export/cDataLib/lib/libdata.so
     #gcc -shared -fPIC -w ./src/*/*.c -o export/cDataLib/lib/libdata.so
-    gcc -Ofast -shared -fPIC -w ./src/*/*.c -o export/cDataLib/lib/so/libdata.so
+    gcc -Ofast -shared -w -fPIC ./src/*/*.c -o export/cDataLib/lib/so/libdata.so
 
 ## Form the directory structure
 sudo cp export/cDataLib/lib/so/libdata.so /usr/lib/
@@ -33,7 +33,7 @@ cp export/cDataLib ../../uoi/java/DataStructures/PDPs/ -r
 
 ## Compile the test file using the shared library
 #gcc -w test.c -ldata
-gcc -Ofast test.c -ldata
+gcc -Ofast -w test.c -ldata
 
 ## Run the test files
 ./a.out
