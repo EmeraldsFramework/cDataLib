@@ -33,7 +33,7 @@ cp export/cDataLib ../../uoi/java/DataStructures/PDPs/ -r
 
 ## Compile the test file using the shared library
 #gcc -w test.c -ldata
-gcc -Ofast -w test.c -ldata
+gcc -Ofast test.c -ldata
 
 ## Run the test files
 ./a.out
