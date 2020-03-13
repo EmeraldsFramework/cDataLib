@@ -94,6 +94,12 @@ char *string_get(stringT *obj) {
     return sb->str;
 }
 
+char string_get_char_at_index(stringT *obj, size_t index) {
+    string *sb = (string*)obj->value;
+    if(sb == NULL || index < 0) return NULL;
+    return sb->str[index];
+}
+
 void string_shorten(stringT *obj, size_t len) {
     string *sb = (string*)obj->value;
     if(sb == NULL || len >= sb->length) return;
