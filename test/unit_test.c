@@ -1,4 +1,4 @@
-#include "../unit_testing.h"
+#include "../../cSpec/unit_testing.h"
 
 static int a = 0;
 static int b = 0;
@@ -49,25 +49,25 @@ describe("Test of the test library", {
             assert(6 == 6, "asserts 6 == 6");
             assert(9 == 9, "asserts 9 == 9");
         });
+        
         describe("Describe 3", {
-        it("does some stuff with assert", {
-            assert(2 == 2, "asserts 2 == 2");
-        });
+            it("is a nested describe", {
+                assert(2 == 2, "asserts 2 == 2");
+            });
 
-        it("does more some stuff with assert", {
-            assert(4 == 4, "asserts 4 == 4");
-            assert(5 == 5, "asserts 5 == 5");
-            assert(6 == 6, "asserts 6 == 6");
-            assert(9 == 9, "asserts 9 == 9");
+            it("does a lot with asserting integers", {
+                assert(4 == 4, "asserts 4 == 4");
+                assert(5 == 5, "asserts 5 == 5");
+                assert(9 == 9, "asserts 9 == 9");
+            });
+
+            it("sometimes fails", {
+                fail("some times");
+            });
         });
 
         it("fails at something", {
-            fail("ok");
-        });
-    });
-
-        it("fails at something", {
-            fail("ok");
+            fail("some thing i fail at");
         });
     });
 

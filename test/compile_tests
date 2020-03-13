@@ -1,5 +1,5 @@
 #!/bin/sh
 
-gcc datalib_suite/unit_test.c -w -lrt -lm -ldata
+gcc unit_test.c -w -ldata
 ./a.out
 rm a.out
