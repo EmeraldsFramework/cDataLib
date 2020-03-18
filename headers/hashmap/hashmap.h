@@ -49,55 +49,56 @@ typedef struct _hashmap {
  * @return: The hashmap
  **/
 hashmap *hashmap_create(void);
+#define new_hashmap() hashmap_create()
 
 /**
  * @func: hashmap_add
  * @desc: Add an element to the hashmap
- * @param obj -> The typed object containing the hashmap
+ * @param map -> The hashmap to use
  * @param key -> The key of the new element
  * @param value -> The value of the new element
  **/
-void hashmap_add(hashmapT *obj, char *key, void *value);
+void hashmap_add(hashmap *map, char *key, void *value);
 
 /**
  * @func: hashmap_set
  * @desc: Set an element from the hashmap to a new one
- * @param obj -> The typed object containing the hashmap
+ * @param map -> The hashmap to use
  * @param key -> The key to get the value of
  * @param value -> The item to set to the specific key
  **/
-void hashmap_set(hashmapT *obj, char *key, void *value);
+void hashmap_set(hashmap *map, char *key, void *value);
 
 /**
  * @func: hashmap_get
  * @desc: Get an element from the hashmap
- * @param obj -> The typed object containing the hashmap
+ * @param map -> The hashmap to use
  * @param key -> The key to get the value of
  * @return The value we are searching for
  **/
-void *hashmap_get(hashmapT *obj, char *key);
+void *hashmap_get(hashmap *map, char *key);
 
 /**
  * @func: hashmap_delete
  * @desc: Remove an element from the hashmap
- * @param obj -> The typed object containing the hashmap
+ * @param map -> The hashmap to use
  * @param key -> The key of the element to remove
  **/
-void hashmap_delete(hashmapT *obj, char *key);
+void hashmap_delete(hashmap *map, char *key);
 
 /**
  * @func: hashmap_length
  * @desc: Get the current size of the hashmap
- * @param obj -> The typed object containing the hashmap
+ * @param map -> The hashmap to use
  * @return The size of the provided hashmap
  **/
-size_t hashmap_length(hashmapT *obj);
+size_t hashmap_length(hashmap *map);
 
 /**
  * @func: hashmap_free
  * @desc: Free (deallocate) the hashmap memory
- * @param obj -> The typed object containing the hashmap
+ * @param map -> The hashmap to use
  **/
-void hashmap_free(hashmapT *obj);
+void hashmap_free(hashmap *map);
 
 #endif

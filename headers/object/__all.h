@@ -1,7 +1,7 @@
-#ifndef ____ALL_OBJECT_H_
-#define ____ALL_OBJECT_H_
+// #ifndef ____ALL_OBJECT_H_
+// #define ____ALL_OBJECT_H_
 
-#include "object.h"
-#include "object_dup.h"
+// #include "object.h"
+// #include "object_dup.h"
 
-#endif
+// #endif

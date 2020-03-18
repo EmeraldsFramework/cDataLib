@@ -1,14 +1,13 @@
 #include "../../headers/_data_structures.h"
 
-vectorT *vector_dup(vectorT *obj) {
-    vector *v = (vector*)obj->value;
+vector *vector_dup(vector *v) {
     if(v == NULL) return NULL;
 
-    vectorT *dup = new_vectorT();
-    for(size_t i = 0; i < vector_length(obj); i++) {
-        /* Iteratively copy the vector items from one memory location to another */
-        vector_add(dup, vector_get(obj, i));
-    }
+    vector *dup = new_vector();
+    
+    /* Iteratively copy the vector items from one memory location to another */
+    for(size_t i = 0; i < vector_length(v); i++)
+        vector_add(dup, vector_get(v, i));
 
     return dup;
 }

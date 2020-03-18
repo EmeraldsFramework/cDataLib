@@ -13,7 +13,7 @@
 typedef struct stack {
     size_t length;
     int top;
-    vectorT *items;
+    vector *items;
 } stack;
 
 /**
@@ -22,52 +22,53 @@ typedef struct stack {
  * @return The newly created stack
  **/
 stack *stack_create(void);
+#define new_stack() stack_create()
 
 /**
  * @func: stack_length
  * @desc: Returns the number of elements pushed in the array
- * @param obj -> The typed object containing the stack
+ * @param st -> The stack to use
  * @return The length (st->length)
  **/
-size_t stack_length(stackT *obj);
+size_t stack_length(stack *st);
 
 /**
  * @func: stack_is_empty
  * @desc: Checks whether the stack is empty or not
- * @param obj -> The typed object containing the stack
+ * @param st -> The stack to use
  * @return A boolean
  **/
-int stack_is_empty(stackT *obj);
+int stack_is_empty(stack *st);
 
 /**
  * @func: stack_push
  * @desc: Performs a bury operation on the stack
- * @param obj -> The typed object containing the stack
+ * @param st -> The stack to use
  * @param item -> The item to push to the stack
  **/
-void stack_push(stackT *obj, void *item);
+void stack_push(stack *st, void *item);
 
 /**
  * @func: stack_pop
  * @desc: Performs a pop operation on the stack
- * @param obj -> The typed object containing the stack
+ * @param st -> The stack to use
  * @return The item on the top of the stack
  **/
-void *stack_pop(stackT *obj);
+void *stack_pop(stack *st);
 
 /**
  * @func: stack_peek
  * @desc: Performs a peek operation on the stack
- * @param obj -> The typed object containing the stack
+ * @param st -> The stack to use
  * @return The item on top of the stack withou removing it
  **/
-void *stack_peek(stackT *obj);
+void *stack_peek(stack *st);
 
 /**
  * @func: stack_free
  * @desc: Frees all memory of the stack
- * @param obj -> The typed object containing the stack
+ * @param st -> The stack to use
  **/
-void stack_free(stackT *obj);
+void stack_free(stack *st);
 
 #endif

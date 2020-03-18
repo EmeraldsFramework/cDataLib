@@ -21,31 +21,31 @@ typedef void* (*lambda4)(void*, void*, void*, void*);
 /**
  * @func: hashmap_map
  * @desc: Maps all hashmap elements in iteration using a modifier function pointer
- * @param obj -> The typed object containing the hashmap
+ * @param map -> The hashmap to use
  * @param modifier -> The modifier function
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The mapped hashmap duplicate
  **/
-hashmapT *hashmap_map(hashmapT *obj, lambda modifier, hashmap_element_type element_type);
+hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type);
 
 /**
  * @func: hashmap_filter
  * @desc: Filters all hashmap elements in iteration using a filter function pointer
- * @param obj -> The typed object containing the hashmap
+ * @param map -> The hashmap to use
  * @param filter -> The filter function
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The filtered hashmap duplicate
  **/
-hashmapT *hashmap_filter(hashmapT *obj, lambda filter, hashmap_element_type element_type);
+hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type element_type);
 
 /**
  * @func: hashmap_reduce
  * @desc: Recudes all hashmap elements into a void* result using a foldl function pointer
- * @param obj -> The typed object containing the hashmap
+ * @param map -> The hashmap to use
  * @param fold -> The folding function to use
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The folder void* result
  **/
-void *hashmap_reduce(hashmapT *obj, lambda2 fold, hashmap_element_type element_type);
+void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_type);
 
 #endif

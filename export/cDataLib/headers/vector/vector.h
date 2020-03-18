@@ -22,10 +22,10 @@ typedef struct vector {
 /**
  * @func: vector_ensure_space
  * @desc: Ensure there is enough space for our values in the vector
- * @param obj -> The typed object containing the vector
+ * @param v -> The vector to use
  * @param capacity -> The new capacity to set
  **/
-static void vector_ensure_space(vectorT *obj, size_t capacity);
+static void vector_ensure_space(vector *v, size_t capacity);
 
 /**
  * @func: vector_create
@@ -33,14 +33,15 @@ static void vector_ensure_space(vectorT *obj, size_t capacity);
  * @return: The newly created vector
  **/
 vector *vector_create(void);
+#define new_vector() vector_create()
 
 /**
  * @func: vector_add
  * @desc: Adds a new element in the vector
- * @param obj -> The typed object containing the vector
+ * @param v -> The vector to use
  * @param item -> The item to add
  **/
-void vector_add(vectorT *obj, void *item);
+void vector_add(vector *v, void *item);
 
 /**
  * @func: vector_set
@@ -49,38 +50,38 @@ void vector_add(vectorT *obj, void *item);
  * @param index -> The index to set the value of
  * @param item -> The item to set the value as
  **/
-void vector_set(vectorT *obj, size_t index, void *item);
+void vector_set(vector *v, size_t index, void *item);
 
 /**
  * @func: vector_get
  * @desc: Get the value of a specific vector index
- * @param obj -> The typed object containing the vector
+ * @param v -> The vector to use
  * @param index -> The index to get the value of
  * @return The value
  **/
-void *vector_get(vectorT *obj, size_t index);
+void *vector_get(vector *v, size_t index);
 
 /**
  * @func: vector_delete
  * @desc: Delete a specific vector value by index
- * @param obj -> The typed object containing the vector
+ * @param v -> The vector to use
  * @param index -> The index to delete
  **/
-void vector_delete(vectorT *obj, size_t index);
+void vector_delete(vector *v, size_t index);
 
 /**
  * @func: vector_length
  * @desc: Get the total number of values inserted in the vector
- * @param obj -> The typed object containing the vector
+ * @param v -> The vector to use
  * @return: The number of items in the vector
  **/
-size_t vector_length(vectorT *obj);
+size_t vector_length(vector *v);
 
 /**
  * @func: vector_free
  * @desc: Free the allocated memory from the vector
- * @param obj -> The typed object containing the vector
+ * @param v -> The vector to use
  **/
-void vector_free(vectorT *obj);
+void vector_free(vector *v);
 
 #endif

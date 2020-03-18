@@ -1,8 +1,8 @@
 #include "../../headers/_data_structures.h"
 
-vectorT *string_split(stringT *str, stringT *delimeter) {
-	vectorT *str_tokens = new_vectorT();
-	stringT *token_str = new_stringT("");
+vector *string_split(string *str, string *delimeter) {
+	vector *str_tokens = new_vector();
+	string *token_str = new_string("");
 
 	/* Iterate through the chars constructing a string and
 		reseting the value once we find the delimeter */
@@ -13,7 +13,7 @@ vectorT *string_split(stringT *str, stringT *delimeter) {
 			vector_add(str_tokens, token_str);
 
 			/* Reset the temp string */
-			token_str = new_stringT("");
+			token_str = new_string("");
 			continue;
 		}
 

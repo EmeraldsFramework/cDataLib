@@ -63,12 +63,11 @@ static unsigned long crc32_tab[] = {
  * @param len -> The length of the key string
  * @return The crc32 value of the key string
  **/
-unsigned static long crc32(const unsigned char *s, unsigned int len) {
+static unsigned long crc32(const unsigned char *s, unsigned int len) {
     unsigned long crc32val = 0;
 
-    for(unsigned int i = 0; i < len; i++) {
+    for(unsigned int i = 0; i < len; i++)
         crc32val = crc32_tab[(crc32val ^ s[i]) & 0xff] ^ (crc32val >> 8);
-    }
     return crc32val;
 }
 
@@ -79,9 +78,7 @@ unsigned static long crc32(const unsigned char *s, unsigned int len) {
  * @param keystring -> The string to hash
  * @return A unique hashed int
  **/
-static unsigned int hashmap_hash_int(hashmapT *obj, char *keystring) {
-    hashmap *map = (hashmap*)obj->value;
-
+static unsigned int hashmap_hash_int(hashmap *map, char *keystring) {
     unsigned long key = crc32((unsigned char*)(keystring), strlen(keystring));
 
 	/* Robert Jenkins' 32 bit Mix Function */
@@ -107,22 +104,18 @@ static unsigned int hashmap_hash_int(hashmapT *obj, char *keystring) {
  * @param key -> The key to hash
  * @return The location
  **/
-static size_t hashmap_hash(hashmapT *obj, char *key) {
-    hashmap *map = (hashmap*)obj->value;
-
-	/* If full, return immediately */
+static size_t hashmap_hash(hashmap *map, char *key) {
 	if(map->length >= (map->alloced / 2)) return -1;
 
-	size_t curr = hashmap_hash_int(obj, key);
+	size_t curr = hashmap_hash_int(map, key);
 
 	/* Linear probing */
 	for(int i = 0; i < max_chain_length; i++){
 		if(map->data[curr].in_use == 0) return curr;
 		
         if(map->data[curr].in_use == 1
-        && (strcmp(map->data[curr].key, key) == 0)) {
+        && (strcmp(map->data[curr].key, key) == 0))
             return curr;
-        }
 
 		curr = (curr + 1) % map->alloced;
 	}
@@ -136,11 +129,8 @@ static size_t hashmap_hash(hashmapT *obj, char *key) {
  * @desc: Doubles the size of the hashmap and rehashes all the elements
  * @param in -> The hashmap to rehash
  **/
-static void hashmap_rehash(hashmapT *obj) {
-    hashmap *map = (hashmap*)obj->value;
-
-    /* Allocate double the current memory */
-	hashmap_element* temp = (hashmap_element*)calloc(2 * map->alloced, sizeof(hashmap_element));
+static void hashmap_rehash(hashmap *map) {
+	hashmap_element* temp = (hashmap_element*)ccalloc(2 * map->alloced, sizeof(hashmap_element));
 
 	/* Update the array */
 	hashmap_element *curr = map->data;
@@ -157,32 +147,28 @@ static void hashmap_rehash(hashmapT *obj) {
         if(curr[i].in_use == 0) continue;
 		hashmap_add(map, curr[i].key, curr[i].data);
 	}
-
-	free(curr);
 	return;
 }
 
 hashmap *hashmap_create(void) {
-    hashmap *map = malloc(sizeof(hashmap));
-	map->data = (hashmap_element*)calloc(hashmap_init_capacity, sizeof(hashmap_element));
+    hashmap *map = mmalloc(sizeof(hashmap));
+	map->data = (hashmap_element*)ccalloc(hashmap_init_capacity, sizeof(hashmap_element));
 	map->alloced = hashmap_init_capacity;
 	map->length = 0;
 	return map;
 }
 
-void hashmap_add(hashmapT *obj, char *key, void *value) {
-    hashmap *map = (hashmap*)obj->value;
+void hashmap_add(hashmap *map, char *key, void *value) {
     if(map == NULL || key == NULL) return;
 
-	size_t index = hashmap_hash(obj, key);
+	size_t index = hashmap_hash(map, key);
     
     /* In case of a full hashmap */
 	while(index == -1) {
-        hashmap_rehash(obj);
-		index = hashmap_hash(obj, key);
+        hashmap_rehash(map);
+		index = hashmap_hash(map, key);
 	}
 
-	/* Set the data */
 	map->data[index].data = value;
 	map->data[index].key = key;
 	map->data[index].in_use = 1;
@@ -190,62 +176,50 @@ void hashmap_add(hashmapT *obj, char *key, void *value) {
 	return;
 }
 
-void hashmap_set(hashmapT *obj, char *key, void *value) {
-    hashmap *map = (hashmap*)obj->value;
+void hashmap_set(hashmap *map, char *key, void *value) {
     if(map == NULL || key == NULL) return;
 
-	size_t curr = hashmap_hash_int(obj, key);
+	size_t curr = hashmap_hash_int(map, key);
 
-	/* Linear probing, if necessary */
+	/* Linear probing */
 	for(int i = 0; i < max_chain_length; i++) {
-        size_t in_use = map->data[curr].in_use;
-        if(in_use == 1) {
+        if(map->data[curr].in_use == 1) {
             if(strcmp(map->data[curr].key, key) == 0) {
                 /* Set to the new value */
                 map->data[curr].data = value;
             }
 		}
-
-        /* Fix the current hash */
 		curr = (curr + 1) % map->alloced;
     }
     return;
 }
 
-void *hashmap_get(hashmapT *obj, char *key) {
-    hashmap *map = (hashmap*)obj->value;
+void *hashmap_get(hashmap *map, char *key) {
     if(map == NULL || key == NULL) return NULL;
 
-	size_t curr = hashmap_hash_int(obj, key);
+	size_t curr = hashmap_hash_int(map, key);
 
-	/* Linear probing, if necessary */
+	/* Linear probing  */
 	for(int i = 0; i < max_chain_length; i++) {
-        size_t in_use = map->data[curr].in_use;
-        if(in_use == 1) {
+        if(map->data[curr].in_use == 1) {
             if(strcmp(map->data[curr].key, key) == 0) {
                 /* Return the contained data void pointer */
                 return map->data[curr].data;
             }
 		}
-
-        /* Fix the current hash */
 		curr = (curr + 1) % map->alloced;
-    }
-
-	/* In case the element is not found */
+    }    
 	return NULL;
 }
 
-void hashmap_delete(hashmapT *obj, char *key) {
-    hashmap *map = (hashmap*)obj->value;
+void hashmap_delete(hashmap *map, char *key) {
     if(map == NULL || key == NULL) return;
 
-	size_t curr = hashmap_hash_int(obj, key);
+	size_t curr = hashmap_hash_int(map, key);
 
-	/* Linear probing, if necessary */
+	/* Linear probing */
 	for(int i = 0; i < max_chain_length; i++) {
-        size_t in_use = map->data[curr].in_use;
-        if(in_use == 1) { /* If the key exists */
+        if(map->data[curr].in_use == 1) {
             if(strcmp(map->data[curr].key, key) == 0) {
                 /* Blank out the fields */
                 map->data[curr].in_use = 0;
@@ -263,23 +237,7 @@ void hashmap_delete(hashmapT *obj, char *key) {
 	return;
 }
 
-size_t hashmap_length(hashmapT *obj) {
-    hashmap *map = (hashmap*)obj->value;
+size_t hashmap_length(hashmap *map) {
 	if(map != NULL) return map->length;
 	else return 0;
-}
-
-void hashmap_free(hashmapT *obj) {
-    hashmap *map = (hashmap*)obj->value;
-    if(map == NULL) return;
-    
-    /* Free the hashmap element data */
-    free(map->data->key);
-    free(map->data->data);
-
-    /* Free the map data pointer */
-	free(map->data);
-
-    /* Free the map pointer itself */
-	free(map);
 }

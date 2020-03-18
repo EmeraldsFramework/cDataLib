@@ -6,11 +6,11 @@
 /**
  * @func: string_substring
  * @desc: Return a substring of our current string without modifying the original
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder we are using
  * @param from -> The point where we start our substring
  * @param to -> The point where we end our substring
  * @return A substring of a copy of the original string
  **/
-stringT *string_substring(stringT *obj, size_t from, size_t to);
+string *string_substring(string *sb, size_t from, size_t to);
 
 #endif

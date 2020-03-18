@@ -22,105 +22,106 @@ typedef struct string {
 /**
  * @func: string_ensure_space
  * @desc: Ensure there is enough space for data being added plus a NULL terminator
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  * @param add_len -> he length that needs to be added *not* including a NULL terminator
  **/
-static void string_ensure_space(stringT *obj, size_t add_len);
+static void string_ensure_space(string *sb, size_t add_len);
 
 /**
  * @func: new_string
  * @desc: Create an str builder
  * @return The str builder
  **/
-string *string_create();
+string *string_create(char *initial_string);
+#define new_string(initial_string) string_create(initial_string)
 
 /**
  * @func: string_add_str
  * @desc: Add a string to the builder
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  * @param str -> The string to add
  * @param len -> The length of the string to add.
  *              If 0, strlen will be called internally to determine length
  **/
-void string_add_str(stringT *obj, const char *str);
+void string_add_str(string *sb, const char *str);
 
 /**
  * @func: string_add_char
  * @desc: Add a character to the builder
- * @param sb -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  * @param c -> The character to add 
  **/
-void string_add_char(stringT *obj, char c);
+void string_add_char(string *sb, char c);
 
 /**
  * @func: string_add_int
  * @desc: Add an integer to the builder
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  * @param val -> The integer to add
  **/
-void string_add_int(stringT *obj, int val);
+void string_add_int(string *sb, int val);
 
 /**
  * @func: string_add_double_precision
  * @desc: Add a double to the builder
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  * @param val -> The double to add
  **/
-void string_add_double_precision(stringT *obj, double val);
+void string_add_double_precision(string *sb, double val);
 
 /**
  * @func: string_get
  * @desc: A pointer to the internal buffer with the builder's stirng data
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  * @return A pointer to the internal string data
  **/
-char *string_get(stringT *obj);
+char *string_get(string *sb);
 
 /**
  * @func: string_get_char_at_index
  * @desc: Accessor to the string characters by index
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  * @param index -> The index of the character we want to receive
  * @return The character we searched for
  **/
-char string_get_char_at_index(stringT *obj, size_t index);
+char string_get_char_at_index(string *sb, size_t index);
 
 /**
  * @func: string_shorten
  * @desc: Remove data from the end of the builder
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  * @param len -> The new length of the string, anything after this length is removed
  **/
-void string_shorten(stringT *obj, size_t len);
+void string_shorten(string *sb, size_t len);
 
 /**
  * @func: string_delete
  * @desc: Clear the builder
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  **/
-void string_delete(stringT *obj);
+void string_delete(string *sb);
 
 /**
  * @func: string_skip
  * @desc: Remove data from the beginning of the builder
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  * @param len -> The length to remove
  **/
-void string_skip(stringT *obj, size_t len);
+void string_skip(string *sb, size_t len);
 
 /**
  * @func: string_length
  * @desc: The length of the string contained in the builder
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  * @return The current length of the string
  **/
-size_t string_length(stringT *obj);
+size_t string_length(string *sb);
 
 /**
  * @func: string_free
  * @desc: Free the allocated memory for the char*
- * @param obj -> The typed object containing the string builder
+ * @param sb -> The string builder to use
  **/
-void string_free(stringT *obj);
+void string_free(string *sb);
 
 #endif

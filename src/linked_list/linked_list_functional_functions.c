@@ -1,17 +1,16 @@
 #include "../../headers/_data_structures.h"
 
-linked_listT *linked_list_map(linked_listT *obj, lambda modifier) {
-    linked_list *list = (linked_list*)object_get_value(obj);
+linked_list *linked_list_map(linked_list *list, lambda modifier) {
     if(list == NULL || modifier == NULL) return NULL;
 
-    linked_listT *dup = new_linked_listT();
+    linked_list *dup = new_linked_list();
 
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
     llnode **probe = &(list->head);
 
     /* Dereference once */
     while(*probe) {
-        object *item = (*probe)->item;
+        void *item = (*probe)->item;
         linked_list_add(dup, modifier(item));
 
         /* Point probe to the next node */
@@ -21,21 +20,19 @@ linked_listT *linked_list_map(linked_listT *obj, lambda modifier) {
     return dup;
 }
 
-linked_listT *linked_list_filter(linked_listT *obj, lambda filter) {
-    linked_list *list = (linked_list*)object_get_value(obj);
+linked_list *linked_list_filter(linked_list *list, lambda filter) {
     if(list == NULL || filter == NULL) return NULL;
 
-    linked_listT *dup = new_linked_listT();
+    linked_list *dup = new_linked_list();
 
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
     llnode **probe = &(list->head);
 
     /* Dereference once */
     while(*probe) {
-        object *item = (*probe)->item;
-        if(filter(item)) {
+        void *item = (*probe)->item;
+        if(filter(item))
             linked_list_add(dup, item);
-        }
 
         /* Point probe to the next node */
         probe = &(*probe)->next;
@@ -44,8 +41,7 @@ linked_listT *linked_list_filter(linked_listT *obj, lambda filter) {
     return dup;
 }
 
-void *linked_list_reduce(linked_listT *obj, lambda2 fold) {
-    linked_list *list = (linked_list*)object_get_value(obj);
+void *linked_list_reduce(linked_list *list, lambda2 fold) {
     if(list == NULL || fold == NULL) return NULL;
 
     llnode **probe = (&list->head);
@@ -63,5 +59,5 @@ void *linked_list_reduce(linked_listT *obj, lambda2 fold) {
         probe = &(*probe)->next;
     }
     
-    return object_get_value(accumulator);
+    return accumulator;
 }

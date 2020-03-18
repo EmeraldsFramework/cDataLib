@@ -6,9 +6,9 @@
 /**
  * @func: string_dup
  * @desc: Return a memory duplicate string
- * @param: obj -> The typed string to duplicate
+ * @param sb -> The string to duplicate
  * @return The dup string
  **/
-stringT *string_dup(stringT *obj);
+string *string_dup(string *sb);
 
 #endif

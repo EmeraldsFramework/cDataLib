@@ -31,6 +31,7 @@ typedef struct linked_list {
  * @return The newly created typed linked list
  **/
 linked_list *linked_list_create(void);
+#define new_linked_list() linked_list_create()
 
 /**
  * @func: linked_list_add
@@ -38,7 +39,7 @@ linked_list *linked_list_create(void);
  * @param list -> The list to append to
  * @param obj -> The node to append
  **/
-void linked_list_add(linked_listT *list, void *obj);
+void linked_list_add(linked_list *list, void *obj);
 
 /**
  * @func: linked_list_remove
@@ -46,13 +47,13 @@ void linked_list_add(linked_listT *list, void *obj);
  * @param list -> The list to remove from
  * @param obj -> The node to remove
  **/
-void linked_list_remove(linked_listT *list, void *obj);
+void linked_list_remove(linked_list *list, void *obj);
 
 /**
  * @func: linked_list_free
  * @desc: Frees all elements of the list as well as the list pointer itself
  * @param list -> The list to free
  **/
-void linked_list_free(linked_listT *list);
+void linked_list_free(linked_list *list);
 
 #endif

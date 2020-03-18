@@ -3,13 +3,11 @@
 
 #include <stdio.h> /* No other (easy) way to printf */
 
-#include "garbage_collector/__all.h"
-#include "object/__all.h"
-#include "string/__all.h"
+#include "litterbin/__all.h"
 #include "vector/__all.h"
+#include "string/__all.h"
 #include "hashmap/__all.h"
-#include "linked_list/__all.h"
-#include "binary_tree/__all.h"
 #include "stack/__all.h"
+#include "linked_list/__all.h"
 
 #endif

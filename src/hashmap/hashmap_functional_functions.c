@@ -1,11 +1,9 @@
 #include "../../headers/_data_structures.h"
 
-hashmapT *hashmap_map(hashmapT *obj, lambda modifier, hashmap_element_type element_type) {
-    hashmap *map = (hashmap*)obj->value;
+hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type) {
     if(map == NULL || modifier == NULL || element_type == NULL) return NULL;
 
-    hashmapT *dup = object_dup(obj);
-    hashmap *dup_map = (hashmap*)dup->value;
+    hashmap *dup = hashmap_dup(map);
     
     /* Iterate with linear probing */
     for(size_t i = 0; i < map->alloced; i++) {
@@ -13,7 +11,7 @@ hashmapT *hashmap_map(hashmapT *obj, lambda modifier, hashmap_element_type eleme
             switch(element_type) {
                 case KEYS:
                     /* TODO CREATE ACCESSOR METHODS */
-                    dup_map->data[i].key = modifier(map->data[i].key);
+                    dup->data[i].key = modifier(map->data[i].key);
                     break;
                 case VALUES:
                     hashmap_set(dup, map->data[i].key, modifier(map->data[i].data));
@@ -27,11 +25,10 @@ hashmapT *hashmap_map(hashmapT *obj, lambda modifier, hashmap_element_type eleme
     return dup;
 }
 
-hashmapT *hashmap_filter(hashmapT *obj, lambda filter, hashmap_element_type element_type) {
-    hashmap *map = (hashmap*)obj->value;
+hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type element_type) {
     if(map == NULL || filter == NULL || element_type == NULL) return NULL;
 
-    hashmapT *dup = object_dup(obj);
+    hashmap *dup = hashmap_dup(map);
 
     /* Iterate with linear probing */
     for(size_t i = 0; i < map->alloced; i++) {
@@ -60,8 +57,7 @@ hashmapT *hashmap_filter(hashmapT *obj, lambda filter, hashmap_element_type elem
     return dup;
 }
 
-void *hashmap_reduce(hashmapT *obj, lambda2 fold, hashmap_element_type element_type) {
-    hashmap *map = (hashmap*)obj->value;
+void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_type) {
     if(map == NULL || fold == NULL || element_type == NULL) return NULL;
 
     void *accumulator;
@@ -78,7 +74,7 @@ void *hashmap_reduce(hashmapT *obj, lambda2 fold, hashmap_element_type element_t
                     break;
                 case VALUES:
                     /* Set accumulator to some arbitrary hashmap value  */
-                    accumulator = hashmap_get(obj, map->data[i].key);
+                    accumulator = hashmap_get(map, map->data[i].key);
                     break;
                 default:
                     return NULL;
@@ -104,7 +100,7 @@ void *hashmap_reduce(hashmapT *obj, lambda2 fold, hashmap_element_type element_t
                     break;
                 case VALUES:
                     /* Get the current item */
-                    current = hashmap_get(obj, map->data[i].key);
+                    current = hashmap_get(map, map->data[i].key);
 
                     /* Accumulate the result */
                     accumulator = fold(accumulator, current);
@@ -115,5 +111,5 @@ void *hashmap_reduce(hashmapT *obj, lambda2 fold, hashmap_element_type element_t
         }
     }
     
-    return object_get_value(accumulator);
+    return accumulator;
 }

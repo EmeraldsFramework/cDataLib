@@ -1,32 +1,29 @@
 #include "../../headers/_data_structures.h"
 
 stack *stack_create(void) {
-    stack *st = (stack*)malloc(sizeof(stack));
+    stack *st = (stack*)mmalloc(sizeof(stack));
 
     /* Initial values */
     st->length = 0;
     st->top = -1;
-    st->items = new_vectorT();
+    st->items = new_vector();
 
     return st;
 }
 
-size_t stack_length(stackT *obj) {
-    stack *st = (stack*)obj->value;
+size_t stack_length(stack *st) {
     if(st == NULL) return 0;
 
     return st->length;
 }
 
-int stack_is_empty(stackT *obj) {
-    stack *st = (stack*)obj->value;
+int stack_is_empty(stack *st) {
     if(st == NULL) return 0;
 
-    return stack_length(obj) == 0;
+    return stack_length(st) == 0;
 }
 
-void stack_push(stackT *obj, void *item) {
-    stack *st = (stack*)obj->value;
+void stack_push(stack *st, void *item) {
     if(st == NULL) return;
 
     /* Keep track of the top element and the length */
@@ -36,26 +33,16 @@ void stack_push(stackT *obj, void *item) {
     vector_add(st->items, item);
 }
 
-void *stack_pop(stackT *obj) {
-    stack *st = (stack*)obj->value;
+void *stack_pop(stack *st) {
     if(st == NULL) return NULL;
 
-    if(!stack_is_empty(obj)) return vector_get(st->items, st->top--);
+    if(!stack_is_empty(st)) return vector_get(st->items, st->top--);
     return NULL;
 }
 
-void *stack_peek(stackT *obj) {
-    stack *st = (stack*)obj->value;
+void *stack_peek(stack *st) {
     if(st == NULL) return NULL;
 
-    if(!stack_is_empty(obj)) return vector_get(st->items, st->top);
+    if(!stack_is_empty(st)) return vector_get(st->items, st->top);
     return NULL;
-}
-
-void stack_free(stackT *obj) {
-    stack *st = (stack*)obj->value;
-    if(st == NULL) return;
-
-    /* 'items' is free'd using vector_free */
-    free(st);
 }

@@ -21,28 +21,28 @@ typedef void* (*lambda4)(void*, void*, void*, void*);
 /**
  * @func: vector_map
  * @desc: Maps all vector elements in iteration using a modifier function pointer
- * @param obj -> The typed object containing the vector to map
+ * @param v -> The vector to map
  * @param modifier -> The modifier function
  * @return The mapped vector duplicate
  **/
-vectorT *vector_map(vectorT *obj, lambda modifier);
+vector *vector_map(vector *v, lambda modifier);
 
 /**
  * @func: vector_filter
  * @desc: Filters all vector elements in iteration using a filter function
- * @param obj -> The typed object containing the vector to filter
+ * @param v -> The vector to filter
  * @param filter -> The filter function
  * @return The filtered vector duplicate
  **/
-vectorT *vector_filter(vectorT *obj, lambda filter);
+vector *vector_filter(vector *v, lambda filter);
 
 /**
  * @func: vector_reduce
  * @desc: Recudes all vector elements into a void* result using a foldl function
- * @param obj -> The typed object containing the vector to reduce
+ * @param v -> The vector to reduce
  * @param fold -> The folding function to use
  * @return The folder void* result
  **/
-void *vector_reduce(vectorT *obj, lambda2 fold);
+void *vector_reduce(vector *v, lambda2 fold);
 
 #endif

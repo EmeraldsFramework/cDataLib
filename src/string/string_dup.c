@@ -1,10 +1,9 @@
 #include "../../headers/_data_structures.h"
 
-stringT *string_dup(stringT *obj) {
-    string *sb = (string*)obj->value;
+string *string_dup(string *sb) {
     if(sb == NULL) return NULL;
     
-    stringT *dup = new_stringT("");
-    string_add_str(dup, string_get(obj));
+    string *dup = new_string("");
+    string_add_str(dup, string_get(sb));
     return dup;
 }

@@ -6,10 +6,10 @@
 /**
  * @func: string_split
  * @desc: Splits a string to a spesific delimeter
- * @param str -> The typed string to split
+ * @param str -> The string to split
  * @param delimeter -> The string delimeter
  * @return A vector with the string tokens
  **/
-vectorT *string_split(stringT *str, stringT *delimeter);
+vector *string_split(string *str, string *delimeter);
 
 #endif

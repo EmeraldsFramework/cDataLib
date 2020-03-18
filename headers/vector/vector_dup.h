@@ -6,9 +6,9 @@
 /**
  * @func: vector_dup
  * @desc: Get a memory duplicate of the passed vector
- * @param obj -> The typed object containing the vector
+ * @param v -> The vector to use
  * @return The duplicate vector
  **/
-vectorT *vector_dup(vectorT *obj);
+vector *vector_dup(vector *v);
 
 #endif
