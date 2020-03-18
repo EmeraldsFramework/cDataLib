@@ -1,4 +1,4 @@
-#include "../../headers/_data_structures.h"
+#include "../../../cSuite.h"
 
 linked_list *linked_list_dup(linked_list *list) {
     if(list == NULL) return;

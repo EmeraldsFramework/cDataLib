@@ -1,7 +1,7 @@
 #ifndef __STRING_SUBSTRING_H_
 #define __STRING_SUBSTRING_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /**
  * @func: string_substring

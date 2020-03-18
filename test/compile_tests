@@ -1,5 +1,0 @@
-#!/bin/sh
-
-gcc unit_test.c -w -ldata
-./a.out
-rm a.out

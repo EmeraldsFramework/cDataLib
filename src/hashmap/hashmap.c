@@ -1,4 +1,4 @@
-#include "../../headers/_data_structures.h"
+#include "../../../cSuite.h"
 
 static unsigned long crc32_tab[] = {
       0x00000000L, 0x77073096L, 0xee0e612cL, 0x990951baL, 0x076dc419L,

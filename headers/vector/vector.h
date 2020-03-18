@@ -1,7 +1,7 @@
 #ifndef __VECTOR_H_
 #define __VECTOR_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /* Initial capacity of a vector */
 static const size_t vector_init_capacity = 32;

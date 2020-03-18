@@ -1,4 +1,4 @@
-#include "../../headers/_data_structures.h"
+#include "../../../cSuite.h"
 
 hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type) {
     if(map == NULL || modifier == NULL || element_type == NULL) return NULL;

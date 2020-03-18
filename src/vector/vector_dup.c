@@ -1,4 +1,4 @@
-#include "../../headers/_data_structures.h"
+#include "../../../cSuite.h"
 
 vector *vector_dup(vector *v) {
     if(v == NULL) return NULL;

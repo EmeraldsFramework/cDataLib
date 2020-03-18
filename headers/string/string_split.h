@@ -1,7 +1,7 @@
 #ifndef __STRING_SPLIT_H_
 #define __STRING_SPLIT_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /**
  * @func: string_split

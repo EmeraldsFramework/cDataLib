@@ -1,7 +1,7 @@
 #ifndef __STACK_H_
 #define __STACK_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /**
  * @struct: stack

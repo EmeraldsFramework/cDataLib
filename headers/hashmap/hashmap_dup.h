@@ -1,7 +1,7 @@
 #ifndef __HASHMAP_DUP_H_
 #define __HASHMAP_DUP_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /**
  * @func: hashmap_dup

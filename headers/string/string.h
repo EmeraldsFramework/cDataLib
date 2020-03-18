@@ -1,7 +1,7 @@
 #ifndef __STRING_H_
 #define __STRING_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /** The initial minimum size of a string **/
 static const size_t string_init_capacity = 32;

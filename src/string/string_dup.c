@@ -1,4 +1,4 @@
-#include "../../headers/_data_structures.h"
+#include "../../../cSuite.h"
 
 string *string_dup(string *sb) {
     if(sb == NULL) return NULL;

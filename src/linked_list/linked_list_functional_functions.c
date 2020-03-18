@@ -1,4 +1,4 @@
-#include "../../headers/_data_structures.h"
+#include "../../../cSuite.h"
 
 linked_list *linked_list_map(linked_list *list, lambda modifier) {
     if(list == NULL || modifier == NULL) return NULL;

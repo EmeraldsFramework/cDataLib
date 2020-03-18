@@ -1,4 +1,4 @@
-#include "../../headers/_data_structures.h"
+#include "../../../cSuite.h"
 
 hashmap *hashmap_dup(hashmap *map) {
     if(map == NULL) return NULL;

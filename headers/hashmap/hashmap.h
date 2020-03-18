@@ -1,7 +1,7 @@
 #ifndef __HASHMAP_H_
 #define __HASHMAP_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /* Initial capacity of the hashmap */
 static const size_t hashmap_init_capacity = 32;

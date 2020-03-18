@@ -1,7 +1,7 @@
 #ifndef __VECTOR_DUP_H_
 #define __VECTOR_DUP_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /**
  * @func: vector_dup

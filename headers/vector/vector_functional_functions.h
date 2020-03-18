@@ -1,7 +1,7 @@
 #ifndef __VECTOR_FUNCTIONAL_FUNCTIONS_H_
 #define __VECTOR_FUNCTIONAL_FUNCTIONS_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /**
  * @func: lambda

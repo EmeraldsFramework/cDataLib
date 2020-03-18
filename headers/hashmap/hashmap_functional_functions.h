@@ -1,7 +1,7 @@
 #ifndef __HASHMAP_FUNCTIONAL_FUNCTIONS_H_
 #define __HASHMAP_FUNCTIONAL_FUNCTIONS_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /**
  * @func: lambda

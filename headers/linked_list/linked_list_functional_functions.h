@@ -1,7 +1,7 @@
 #ifndef __LINKED_LIST_FUNCTIONAL_FUNCTIONS_H_
 #define __LINKED_LIST_FUNCTIONAL_FUNCTIONS_H_
 
-#include "../_data_structures.h"
+#include "../../../cSuite.h"
 
 /**
  * @func: lambda

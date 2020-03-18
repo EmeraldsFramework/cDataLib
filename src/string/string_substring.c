@@ -1,4 +1,4 @@
-#include "../../headers/_data_structures.h"
+#include "../../../cSuite.h"
 
 string *string_substring(string *str, size_t from, size_t to) {
     string *strdup = string_dup(str);
