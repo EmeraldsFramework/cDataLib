@@ -1,4 +1,4 @@
-#include "../../cSpec/unit_testing.h"
+#include "../../cSpec/__all.h"
 
 static int a = 0;
 static int b = 0;
