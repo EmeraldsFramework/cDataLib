@@ -161,7 +161,7 @@ hashmap *hashmap_create(void) {
 void hashmap_add(hashmap *map, char *key, void *value) {
     if(map == NULL || key == NULL) return;
 
-	size_t index = hashmap_hash(map, key);
+    size_t index = hashmap_hash(map, key);
     
     /* In case of a full hashmap */
 	while(index == -1) {
