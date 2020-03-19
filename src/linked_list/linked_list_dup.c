@@ -1,7 +1,7 @@
 #include "../../../cSuite.h"
 
 linked_list *linked_list_dup(linked_list *list) {
-    if(list == NULL) return;
+    if(list == NULL) return NULL;
 
     /* Use the address to take advantage of a pointer to pointer approach */
     llnode **probe = &(list->head);

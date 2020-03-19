@@ -1,7 +1,7 @@
 #include "../../../cSuite.h"
 
 hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type) {
-    if(map == NULL || modifier == NULL || element_type == NULL) return NULL;
+    if(map == NULL || modifier == NULL) return NULL;
 
     hashmap *dup = hashmap_dup(map);
     
@@ -26,7 +26,7 @@ hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element
 }
 
 hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type element_type) {
-    if(map == NULL || filter == NULL || element_type == NULL) return NULL;
+    if(map == NULL || filter == NULL) return NULL;
 
     hashmap *dup = hashmap_dup(map);
 
@@ -58,7 +58,7 @@ hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type elemen
 }
 
 void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_type) {
-    if(map == NULL || fold == NULL || element_type == NULL) return NULL;
+    if(map == NULL || fold == NULL) return NULL;
 
     void *accumulator;
     void *current;
