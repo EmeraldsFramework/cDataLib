@@ -110,7 +110,7 @@ static size_t hashmap_hash(hashmap *map, char *key) {
 	size_t curr = hashmap_hash_int(map, key);
 
 	/* Linear probing */
-	for(int i = 0; i < max_chain_length; i++){
+	for(int i = 0; i < max_chain_length; i++) {
 		if(map->data[curr].in_use == 0) return curr;
 		
         if(map->data[curr].in_use == 1
