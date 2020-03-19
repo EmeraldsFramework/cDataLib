@@ -117,11 +117,4 @@ void string_skip(string *sb, size_t len);
  **/
 size_t string_length(string *sb);
 
-/**
- * @func: string_free
- * @desc: Free the allocated memory for the char*
- * @param sb -> The string builder to use
- **/
-void string_free(string *sb);
-
 #endif

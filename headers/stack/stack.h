@@ -64,11 +64,4 @@ void *stack_pop(stack *st);
  **/
 void *stack_peek(stack *st);
 
-/**
- * @func: stack_free
- * @desc: Frees all memory of the stack
- * @param st -> The stack to use
- **/
-void stack_free(stack *st);
-
 #endif

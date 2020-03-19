@@ -49,11 +49,4 @@ void linked_list_add(linked_list *list, void *obj);
  **/
 void linked_list_remove(linked_list *list, void *obj);
 
-/**
- * @func: linked_list_free
- * @desc: Frees all elements of the list as well as the list pointer itself
- * @param list -> The list to free
- **/
-void linked_list_free(linked_list *list);
-
 #endif

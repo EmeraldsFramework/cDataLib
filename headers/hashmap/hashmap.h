@@ -94,11 +94,4 @@ void hashmap_delete(hashmap *map, char *key);
  **/
 size_t hashmap_length(hashmap *map);
 
-/**
- * @func: hashmap_free
- * @desc: Free (deallocate) the hashmap memory
- * @param map -> The hashmap to use
- **/
-void hashmap_free(hashmap *map);
-
 #endif

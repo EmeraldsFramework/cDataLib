@@ -77,11 +77,4 @@ void vector_delete(vector *v, size_t index);
  **/
 size_t vector_length(vector *v);
 
-/**
- * @func: vector_free
- * @desc: Free the allocated memory from the vector
- * @param v -> The vector to use
- **/
-void vector_free(vector *v);
-
 #endif
