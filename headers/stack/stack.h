@@ -14,6 +14,7 @@ typedef struct stack {
     size_t length;
     int top;
     vector *items;
+    bool persistence;
 } stack;
 
 /**
@@ -22,7 +23,9 @@ typedef struct stack {
  * @return The newly created stack
  **/
 stack *stack_create(void);
+stack *stack_persistent_create(void);
 #define new_stack() stack_create()
+#define new_persistent_stack() stack_persistent_create()
 
 /**
  * @func: stack_length

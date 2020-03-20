@@ -1,8 +1,16 @@
 #include "../../../cSuite.h"
 
 vector *string_split(string *str, string *delimeter) {
-	vector *str_tokens = new_vector();
-	string *token_str = new_string("");
+	vector *str_tokens;
+	string *token_str;
+	if(str->persistance) {
+		str_tokens = new_persistent_vector();
+		token_str = new_persistent_string("");
+	}
+	else {
+		str_tokens = new_vector();
+		token_str = new_string("");
+	}
 
 	/* Iterate through the chars constructing a string and
 		reseting the value once we find the delimeter */
@@ -13,7 +21,8 @@ vector *string_split(string *str, string *delimeter) {
 			vector_add(str_tokens, token_str);
 
 			/* Reset the temp string */
-			token_str = new_string("");
+			if(str->persistance) token_str = new_persistent_string("");
+			else token_str = new_string("");
 			continue;
 		}
 

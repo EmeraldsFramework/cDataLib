@@ -12,11 +12,13 @@ static const size_t string_init_capacity = 32;
  * @param str -> The str char* we construct our string into
  * @param alloced -> The total sized allocated for the string
  * @param length -> The total length of the string
+ * @param persistance -> A flag signaling the persistence state of the string
  **/
 typedef struct string {
     char *str;
     size_t alloced;
     size_t length;
+    bool persistance;
 } string;
 
 /**
@@ -28,12 +30,17 @@ typedef struct string {
 static void string_ensure_space(string *sb, size_t add_len);
 
 /**
- * @func: new_string
+ * @func: string_create
  * @desc: Create an str builder
+ * @param initial_string -> The initial string to set
+ * @param __persistence -> Dummy flag
  * @return The str builder
  **/
 string *string_create(char *initial_string);
+string *string_persistent_create(char *initial_string);
+// #define new_string(...) __CONC(string_create, __NARGS(__VA_ARGS__))(__VA_ARGS__);
 #define new_string(initial_string) string_create(initial_string)
+#define new_persistent_string(initial_string) string_persistent_create(initial_string)
 
 /**
  * @func: string_add_str

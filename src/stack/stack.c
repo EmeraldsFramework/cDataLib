@@ -7,6 +7,19 @@ stack *stack_create(void) {
     st->length = 0;
     st->top = -1;
     st->items = new_vector();
+    st->persistence = false;
+
+    return st;
+}
+
+stack *stack_persistent_create(void) {
+    stack *st = (stack*)malloc(sizeof(stack));
+
+    /* Initial values */
+    st->length = 0;
+    st->top = -1;
+    st->items = new_persistent_vector();
+    st->persistence = true;
 
     return st;
 }

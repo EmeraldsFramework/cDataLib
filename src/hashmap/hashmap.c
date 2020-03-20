@@ -130,7 +130,9 @@ static size_t hashmap_hash(hashmap *map, char *key) {
  * @param in -> The hashmap to rehash
  **/
 static void hashmap_rehash(hashmap *map) {
-	hashmap_element* temp = (hashmap_element*)ccalloc(2 * map->alloced, sizeof(hashmap_element));
+    hashmap_element *temp;
+    if(map->persistance) temp = (hashmap_element*)calloc(2 * map->alloced, sizeof(hashmap_element));
+    else temp = (hashmap_element*)ccalloc(2 * map->alloced, sizeof(hashmap_element));
 
 	/* Update the array */
 	hashmap_element *curr = map->data;
@@ -155,6 +157,16 @@ hashmap *hashmap_create(void) {
 	map->data = (hashmap_element*)ccalloc(hashmap_init_capacity, sizeof(hashmap_element));
 	map->alloced = hashmap_init_capacity;
 	map->length = 0;
+    map->persistance = false;
+	return map;
+}
+
+hashmap *hashmap_persistent_create(void) {
+    hashmap *map = malloc(sizeof(hashmap));
+	map->data = (hashmap_element*)calloc(hashmap_init_capacity, sizeof(hashmap_element));
+	map->alloced = hashmap_init_capacity;
+	map->length = 0;
+    map->persistance = true;
 	return map;
 }
 

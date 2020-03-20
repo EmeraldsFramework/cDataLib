@@ -2,9 +2,11 @@
 
 static void vector_ensure_space(vector *v, size_t capacity) {
     if(v == NULL || capacity == 0) return;
+    void **items;
 
     /* Attempt to reallocate new memory in the items list */
-    void **items = rrealloc(v->items, sizeof(void*) * capacity);
+    if(v->persistence) items = realloc(v->items, sizeof(void*) * capacity);
+    else items = rrealloc(v->items, sizeof(void*) * capacity);
 
     if(items) {
         /* Reset the items in the new memory space */
@@ -18,6 +20,16 @@ vector *vector_create(void) {
     v->alloced = vector_init_capacity;
     v->length = 0;
     v->items = mmalloc(sizeof(void*) * v->alloced);
+    v->persistence = false;
+    return v;
+}
+
+vector *vector_persistent_create(void) {
+    vector *v = malloc(sizeof(vector));
+    v->alloced = vector_init_capacity;
+    v->length = 0;
+    v->items = malloc(sizeof(void*) * v->alloced);
+    v->persistence = true;
     return v;
 }
 

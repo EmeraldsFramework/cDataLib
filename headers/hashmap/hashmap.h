@@ -41,6 +41,7 @@ typedef struct _hashmap {
 	size_t alloced;
 	size_t length;
 	hashmap_element *data;
+	bool persistance;
 } hashmap;
 
 /**
@@ -49,7 +50,9 @@ typedef struct _hashmap {
  * @return: The hashmap
  **/
 hashmap *hashmap_create(void);
+hashmap *hashmap_persistent_create(void);
 #define new_hashmap() hashmap_create()
+#define new_persistent_hashmap() hashmap_persistent_create()
 
 /**
  * @func: hashmap_add

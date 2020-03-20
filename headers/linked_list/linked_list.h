@@ -23,6 +23,7 @@ typedef struct _llnode {
 typedef struct linked_list {
 	size_t length;
     llnode *head;
+    bool persistence;
 } linked_list;
 
 /**
@@ -31,7 +32,9 @@ typedef struct linked_list {
  * @return The newly created typed linked list
  **/
 linked_list *linked_list_create(void);
+linked_list *linked_list_persistent_create(void);
 #define new_linked_list() linked_list_create()
+#define new_persistent_linked_list() linked_list_persistent_create()
 
 /**
  * @func: linked_list_add

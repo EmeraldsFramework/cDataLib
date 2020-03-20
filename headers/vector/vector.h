@@ -12,11 +12,13 @@ static const size_t vector_init_capacity = 32;
  * @param items -> A void pointer array that contains the heterogenous elements of the vector
  * @param alloced -> The total capacity of the vector
  * @param length -> The total number of values
+ * @param persistence
  **/
 typedef struct vector {
     void **items;
     size_t alloced;
     size_t length;
+    bool persistence;
 } vector;
 
 /**
@@ -33,7 +35,9 @@ static void vector_ensure_space(vector *v, size_t capacity);
  * @return: The newly created vector
  **/
 vector *vector_create(void);
+vector *vector_persistent_create(void);
 #define new_vector() vector_create()
+#define new_persistent_vector() vector_persistent_create()
 
 /**
  * @func: vector_add

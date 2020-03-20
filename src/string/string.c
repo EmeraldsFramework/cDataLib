@@ -19,13 +19,34 @@ static void string_ensure_space(string *sb, size_t add_len) {
             sb->alloced--;
         }
     }
-    sb->str = rrealloc(sb->str, sb->alloced);
+    if(sb->persistance) sb->str = realloc(sb->str, sb->alloced);
+    else sb->str = rrealloc(sb->str, sb->alloced);
 }
 
 string *string_create(char *initial_string) {
     string *sb;
+
     sb = ccalloc(1, sizeof(*sb));
     sb->str = mmalloc(string_init_capacity);
+    sb->persistance = false;
+
+    /* NULL terminate the string */
+    *sb->str = '\0';
+
+    sb->alloced = string_init_capacity;
+    sb->length = 0;
+
+    string_add_str(sb, initial_string);
+    return sb;
+}
+
+string *string_persistent_create(char *initial_string) {
+    string *sb;
+
+    /* If a persitence flag is passed do not store on the garbage collector */
+    sb = calloc(1, sizeof(*sb));
+    sb->str = malloc(string_init_capacity);
+    sb->persistance = true;
 
     /* NULL terminate the string */
     *sb->str = '\0';

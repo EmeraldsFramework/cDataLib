@@ -3,7 +3,10 @@
 hashmap *hashmap_dup(hashmap *map) {
     if(map == NULL) return NULL;
 
-    hashmap *dup = new_hashmap();
+    hashmap *dup;
+
+    if(map->persistance) dup = new_persistent_hashmap();
+    else dup = new_hashmap();
     
     /* Iteratively copy all hashmap elements from one pointer to another */
     for(size_t i = 0; i < map->alloced; i++)
