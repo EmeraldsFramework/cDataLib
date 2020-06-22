@@ -30,7 +30,7 @@ size_t stack_length(stack *st) {
     return st->length;
 }
 
-int stack_is_empty(stack *st) {
+bool stack_is_empty(stack *st) {
     if(st == NULL) return 0;
 
     return stack_length(st) == 0;
@@ -49,7 +49,10 @@ void stack_push(stack *st, void *item) {
 void *stack_pop(stack *st) {
     if(st == NULL) return NULL;
 
-    if(!stack_is_empty(st)) return vector_get(st->items, st->top--);
+    if(!stack_is_empty(st)) {
+        st->length--;
+        return vector_get(st->items, st->top--);
+    }
     return NULL;
 }
 

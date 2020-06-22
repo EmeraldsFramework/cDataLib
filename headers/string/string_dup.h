@@ -9,6 +9,6 @@
  * @param sb -> The string to duplicate
  * @return The dup string
  **/
-string *string_dup(string *sb);
+__export string *string_dup(string *sb);
 
 #endif

@@ -34,8 +34,8 @@ static void vector_ensure_space(vector *v, size_t capacity);
  * @desc: Initializes a vector data structure
  * @return: The newly created vector
  **/
-vector *vector_create(void);
-vector *vector_persistent_create(void);
+__export vector *vector_create(void);
+__export vector *vector_persistent_create(void);
 #define new_vector() vector_create()
 #define new_persistent_vector() vector_persistent_create()
 
@@ -45,7 +45,7 @@ vector *vector_persistent_create(void);
  * @param v -> The vector to use
  * @param item -> The item to add
  **/
-void vector_add(vector *v, void *item);
+__export void vector_add(vector *v, void *item);
 
 /**
  * @func: vector_set
@@ -54,7 +54,7 @@ void vector_add(vector *v, void *item);
  * @param index -> The index to set the value of
  * @param item -> The item to set the value as
  **/
-void vector_set(vector *v, size_t index, void *item);
+__export void vector_set(vector *v, size_t index, void *item);
 
 /**
  * @func: vector_get
@@ -63,7 +63,7 @@ void vector_set(vector *v, size_t index, void *item);
  * @param index -> The index to get the value of
  * @return The value
  **/
-void *vector_get(vector *v, size_t index);
+__export void *vector_get(vector *v, size_t index);
 
 /**
  * @func: vector_delete
@@ -71,7 +71,7 @@ void *vector_get(vector *v, size_t index);
  * @param v -> The vector to use
  * @param index -> The index to delete
  **/
-void vector_delete(vector *v, size_t index);
+__export void vector_delete(vector *v, size_t index);
 
 /**
  * @func: vector_length
@@ -79,6 +79,6 @@ void vector_delete(vector *v, size_t index);
  * @param v -> The vector to use
  * @return: The number of items in the vector
  **/
-size_t vector_length(vector *v);
+__export size_t vector_length(vector *v);
 
 #endif

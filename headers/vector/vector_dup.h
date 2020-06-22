@@ -9,6 +9,6 @@
  * @param v -> The vector to use
  * @return The duplicate vector
  **/
-vector *vector_dup(vector *v);
+__export vector *vector_dup(vector *v);
 
 #endif

@@ -79,7 +79,7 @@ static unsigned long crc32(const unsigned char *s, unsigned int len) {
  * @return A unique hashed int
  **/
 static unsigned int hashmap_hash_int(hashmap *map, char *keystring) {
-    unsigned long key = crc32((unsigned char*)(keystring), strlen(keystring));
+    unsigned long key = crc32((unsigned char*)(keystring), _strlen(keystring));
 
 	/* Robert Jenkins' 32 bit Mix Function */
 	key += (key << 12);
@@ -114,7 +114,7 @@ static size_t hashmap_hash(hashmap *map, char *key) {
 		if(map->data[curr].in_use == 0) return curr;
 		
         if(map->data[curr].in_use == 1
-        && (strcmp(map->data[curr].key, key) == 0))
+        && (_strcmp(map->data[curr].key, key) == 0))
             return curr;
 
 		curr = (curr + 1) % map->alloced;
@@ -196,7 +196,7 @@ void hashmap_set(hashmap *map, char *key, void *value) {
 	/* Linear probing */
 	for(int i = 0; i < max_chain_length; i++) {
         if(map->data[curr].in_use == 1) {
-            if(strcmp(map->data[curr].key, key) == 0) {
+            if(_strcmp(map->data[curr].key, key) == 0) {
                 /* Set to the new value */
                 map->data[curr].data = value;
             }
@@ -214,7 +214,7 @@ void *hashmap_get(hashmap *map, char *key) {
 	/* Linear probing  */
 	for(int i = 0; i < max_chain_length; i++) {
         if(map->data[curr].in_use == 1) {
-            if(strcmp(map->data[curr].key, key) == 0) {
+            if(_strcmp(map->data[curr].key, key) == 0) {
                 /* Return the contained data void pointer */
                 return map->data[curr].data;
             }
@@ -232,7 +232,7 @@ void hashmap_delete(hashmap *map, char *key) {
 	/* Linear probing */
 	for(int i = 0; i < max_chain_length; i++) {
         if(map->data[curr].in_use == 1) {
-            if(strcmp(map->data[curr].key, key) == 0) {
+            if(_strcmp(map->data[curr].key, key) == 0) {
                 /* Blank out the fields */
                 map->data[curr].in_use = 0;
                 map->data[curr].data = NULL;

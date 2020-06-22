@@ -25,7 +25,7 @@ typedef void* (*lambda4)(void*, void*, void*, void*);
  * @param modifier -> The modifier function
  * @return The mapped vector duplicate
  **/
-vector *vector_map(vector *v, lambda modifier);
+__export vector *vector_map(vector *v, lambda modifier);
 
 /**
  * @func: vector_filter
@@ -34,7 +34,7 @@ vector *vector_map(vector *v, lambda modifier);
  * @param filter -> The filter function
  * @return The filtered vector duplicate
  **/
-vector *vector_filter(vector *v, lambda filter);
+__export vector *vector_filter(vector *v, lambda filter);
 
 /**
  * @func: vector_reduce
@@ -43,6 +43,6 @@ vector *vector_filter(vector *v, lambda filter);
  * @param fold -> The folding function to use
  * @return The folder void* result
  **/
-void *vector_reduce(vector *v, lambda2 fold);
+__export void *vector_reduce(vector *v, lambda2 fold);
 
 #endif

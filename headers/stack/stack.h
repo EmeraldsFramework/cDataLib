@@ -22,8 +22,8 @@ typedef struct stack {
  * @desc: Creates a basic stack data structure using a dynamic array
  * @return The newly created stack
  **/
-stack *stack_create(void);
-stack *stack_persistent_create(void);
+__export stack *stack_create(void);
+__export stack *stack_persistent_create(void);
 #define new_stack() stack_create()
 #define new_persistent_stack() stack_persistent_create()
 
@@ -33,7 +33,7 @@ stack *stack_persistent_create(void);
  * @param st -> The stack to use
  * @return The length (st->length)
  **/
-size_t stack_length(stack *st);
+__export size_t stack_length(stack *st);
 
 /**
  * @func: stack_is_empty
@@ -41,7 +41,7 @@ size_t stack_length(stack *st);
  * @param st -> The stack to use
  * @return A boolean
  **/
-int stack_is_empty(stack *st);
+__export bool stack_is_empty(stack *st);
 
 /**
  * @func: stack_push
@@ -49,7 +49,7 @@ int stack_is_empty(stack *st);
  * @param st -> The stack to use
  * @param item -> The item to push to the stack
  **/
-void stack_push(stack *st, void *item);
+__export void stack_push(stack *st, void *item);
 
 /**
  * @func: stack_pop
@@ -57,7 +57,7 @@ void stack_push(stack *st, void *item);
  * @param st -> The stack to use
  * @return The item on the top of the stack
  **/
-void *stack_pop(stack *st);
+__export void *stack_pop(stack *st);
 
 /**
  * @func: stack_peek
@@ -65,6 +65,6 @@ void *stack_pop(stack *st);
  * @param st -> The stack to use
  * @return The item on top of the stack withou removing it
  **/
-void *stack_peek(stack *st);
+__export void *stack_peek(stack *st);
 
 #endif

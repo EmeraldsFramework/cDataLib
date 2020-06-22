@@ -11,6 +11,6 @@
  * @param to -> The point where we end our substring
  * @return A substring of a copy of the original string
  **/
-string *string_substring(string *sb, size_t from, size_t to);
+__export string *string_substring(string *sb, size_t from, size_t __to);
 
 #endif

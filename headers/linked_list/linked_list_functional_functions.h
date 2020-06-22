@@ -25,7 +25,7 @@ typedef void* (*lambda4)(void*, void*, void*, void*);
  * @param modifier -> The modifier function
  * @return The mapped linked list duplicate
  **/
-linked_list *linked_list_map(linked_list *list, lambda modifier);
+__export linked_list *linked_list_map(linked_list *list, lambda modifier);
 
 /**
  * @func: linked_list_filter
@@ -34,7 +34,7 @@ linked_list *linked_list_map(linked_list *list, lambda modifier);
  * @param filter -> The filter functions
  * @return The filtered linked list duplicate
  **/
-linked_list *linked_list_filter(linked_list *list, lambda filter);
+__export linked_list *linked_list_filter(linked_list *list, lambda filter);
 
 /**
  * @func: linked_list_reduce
@@ -43,6 +43,6 @@ linked_list *linked_list_filter(linked_list *list, lambda filter);
  * @param fold -> The fold function
  * @return The accumulated result
  **/
-void *linked_list_reduce(linked_list *list, lambda2 fold);
+__export void *linked_list_reduce(linked_list *list, lambda2 fold);
 
 #endif

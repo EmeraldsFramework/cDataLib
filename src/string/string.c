@@ -61,11 +61,11 @@ string *string_persistent_create(char *initial_string) {
 void string_add_str(string *sb, const char *str) {
     if(sb == NULL || str == NULL || *str == '\0') return;
 
-    size_t len = strlen(str);
+    size_t len = _strlen(str);
     string_ensure_space(sb, len);
 
     /* Copy the value into memory */
-    memmove(sb->str+sb->length, str, len);
+    _memmove(sb->str+sb->length, str, len);
 
     /* Reset length and NULL terminate */
     sb->length += len;
@@ -110,7 +110,7 @@ char *string_get(string *sb) {
 }
 
 char string_get_char_at_index(string *sb, size_t index) {
-    if(sb == NULL || index < 0) return NULL;
+    if(sb == NULL || index < 0) return '\0';
     return sb->str[index];
 }
 
@@ -143,7 +143,7 @@ void string_skip(string *sb, size_t len) {
     sb->length -= len;
 
     /* +1 to move the NULL. */
-    memmove(sb->str, sb->str + len, sb->length + 1);
+    _memmove(sb->str, sb->str + len, sb->length + 1);
 }
 
 size_t string_length(string *sb) {

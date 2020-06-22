@@ -26,7 +26,7 @@ typedef void* (*lambda4)(void*, void*, void*, void*);
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The mapped hashmap duplicate
  **/
-hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type);
+__export hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type);
 
 /**
  * @func: hashmap_filter
@@ -36,7 +36,7 @@ hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The filtered hashmap duplicate
  **/
-hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type element_type);
+__export hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type element_type);
 
 /**
  * @func: hashmap_reduce
@@ -46,6 +46,6 @@ hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type elemen
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The folder void* result
  **/
-void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_type);
+__export void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_type);
 
 #endif

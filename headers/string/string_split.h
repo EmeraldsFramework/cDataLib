@@ -10,6 +10,6 @@
  * @param delimeter -> The string delimeter
  * @return A vector with the string tokens
  **/
-vector *string_split(string *str, string *delimeter);
+__export vector *string_split(string *str, string *delimeter);
 
 #endif

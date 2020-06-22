@@ -31,8 +31,8 @@ typedef struct linked_list {
  * @desc: Creates a new linked list instance and initiates the head node
  * @return The newly created typed linked list
  **/
-linked_list *linked_list_create(void);
-linked_list *linked_list_persistent_create(void);
+__export linked_list *linked_list_create(void);
+__export linked_list *linked_list_persistent_create(void);
 #define new_linked_list() linked_list_create()
 #define new_persistent_linked_list() linked_list_persistent_create()
 
@@ -42,7 +42,7 @@ linked_list *linked_list_persistent_create(void);
  * @param list -> The list to append to
  * @param obj -> The node to append
  **/
-void linked_list_add(linked_list *list, void *obj);
+__export void linked_list_add(linked_list *list, void *obj);
 
 /**
  * @func: linked_list_remove
@@ -50,6 +50,6 @@ void linked_list_add(linked_list *list, void *obj);
  * @param list -> The list to remove from
  * @param obj -> The node to remove
  **/
-void linked_list_remove(linked_list *list, void *obj);
+__export void linked_list_remove(linked_list *list, void *obj);
 
 #endif
