@@ -1,7 +1,7 @@
 #ifndef __LINKED_LIST_H_
 #define __LINKED_LIST_H_
 
-#include "../../../cSuite.h"
+#include <stdlib.h> /* malloc, calloc, realloc, free */
 
 /**
  * @struct: llnode
@@ -23,7 +23,6 @@ typedef struct _llnode {
 typedef struct linked_list {
 	size_t length;
     llnode *head;
-    bool persistence;
 } linked_list;
 
 /**
@@ -31,10 +30,8 @@ typedef struct linked_list {
  * @desc: Creates a new linked list instance and initiates the head node
  * @return The newly created typed linked list
  **/
-__export linked_list *linked_list_create(void);
-__export linked_list *linked_list_persistent_create(void);
+linked_list *linked_list_create(void);
 #define new_linked_list() linked_list_create()
-#define new_persistent_linked_list() linked_list_persistent_create()
 
 /**
  * @func: linked_list_add
@@ -42,7 +39,7 @@ __export linked_list *linked_list_persistent_create(void);
  * @param list -> The list to append to
  * @param obj -> The node to append
  **/
-__export void linked_list_add(linked_list *list, void *obj);
+void linked_list_add(linked_list *list, void *obj);
 
 /**
  * @func: linked_list_remove
@@ -50,6 +47,6 @@ __export void linked_list_add(linked_list *list, void *obj);
  * @param list -> The list to remove from
  * @param obj -> The node to remove
  **/
-__export void linked_list_remove(linked_list *list, void *obj);
+void linked_list_remove(linked_list *list, void *obj);
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef __LINKED_LIST_DUP_H_
 #define __LINKED_LIST_DUP_H_
 
-#include "../../../cSuite.h"
+#include "linked_list.h"
 
 /**
  * @func: linked_list_dup
@@ -9,6 +9,6 @@
  * @param list -> The linked list to duplicate
  * @return The duplicate
  **/
-__export linked_list *linked_list_dup(linked_list *list);
+linked_list *linked_list_dup(linked_list *list);
 
 #endif

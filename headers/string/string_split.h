@@ -1,7 +1,8 @@
 #ifndef __STRING_SPLIT_H_
 #define __STRING_SPLIT_H_
 
-#include "../../../cSuite.h"
+#include "string.h"
+#include "../vector/vector.h"
 
 /**
  * @func: string_split
@@ -10,6 +11,6 @@
  * @param delimeter -> The string delimeter
  * @return A vector with the string tokens
  **/
-__export vector *string_split(string *str, string *delimeter);
+vector *string_split(string *str, string *delimeter);
 
 #endif

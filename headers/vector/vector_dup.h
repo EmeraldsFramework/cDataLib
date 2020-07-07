@@ -1,7 +1,7 @@
 #ifndef __VECTOR_DUP_H_
 #define __VECTOR_DUP_H_
 
-#include "../../../cSuite.h"
+#include "vector.h"
 
 /**
  * @func: vector_dup
@@ -9,6 +9,6 @@
  * @param v -> The vector to use
  * @return The duplicate vector
  **/
-__export vector *vector_dup(vector *v);
+vector *vector_dup(vector *v);
 
 #endif

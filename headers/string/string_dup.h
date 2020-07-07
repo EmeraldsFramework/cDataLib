@@ -1,7 +1,7 @@
 #ifndef __STRING_DUP_H_
 #define __STRING_DUP_H_
 
-#include "../../../cSuite.h"
+#include "string.h"
 
 /**
  * @func: string_dup
@@ -9,6 +9,6 @@
  * @param sb -> The string to duplicate
  * @return The dup string
  **/
-__export string *string_dup(string *sb);
+string *string_dup(string *sb);
 
 #endif

@@ -1,4 +1,4 @@
-#include "../../../cSuite.h"
+#include "../../headers/hashmap/hashmap.h"
 
 static unsigned long crc32_tab[] = {
       0x00000000L, 0x77073096L, 0xee0e612cL, 0x990951baL, 0x076dc419L,
@@ -66,7 +66,8 @@ static unsigned long crc32_tab[] = {
 static unsigned long crc32(const unsigned char *s, unsigned int len) {
     unsigned long crc32val = 0;
 
-    for(unsigned int i = 0; i < len; i++)
+    unsigned int i;
+    for(i = 0; i < len; i++)
         crc32val = crc32_tab[(crc32val ^ s[i]) & 0xff] ^ (crc32val >> 8);
     return crc32val;
 }
@@ -79,7 +80,7 @@ static unsigned long crc32(const unsigned char *s, unsigned int len) {
  * @return A unique hashed int
  **/
 static unsigned int hashmap_hash_int(hashmap *map, char *keystring) {
-    unsigned long key = crc32((unsigned char*)(keystring), _strlen(keystring));
+    unsigned long key = crc32((unsigned char*)(keystring), strlen(keystring));
 
 	/* Robert Jenkins' 32 bit Mix Function */
 	key += (key << 12);
@@ -110,11 +111,12 @@ static size_t hashmap_hash(hashmap *map, char *key) {
 	size_t curr = hashmap_hash_int(map, key);
 
 	/* Linear probing */
-	for(int i = 0; i < max_chain_length; i++) {
+    size_t i = 0;
+	for(i = 0; i < max_chain_length; i++) {
 		if(map->data[curr].in_use == 0) return curr;
 		
         if(map->data[curr].in_use == 1
-        && (_strcmp(map->data[curr].key, key) == 0))
+        && (strcmp(map->data[curr].key, key) == 0))
             return curr;
 
 		curr = (curr + 1) % map->alloced;
@@ -130,9 +132,7 @@ static size_t hashmap_hash(hashmap *map, char *key) {
  * @param in -> The hashmap to rehash
  **/
 static void hashmap_rehash(hashmap *map) {
-    hashmap_element *temp;
-    if(map->persistance) temp = (hashmap_element*)calloc(2 * map->alloced, sizeof(hashmap_element));
-    else temp = (hashmap_element*)ccalloc(2 * map->alloced, sizeof(hashmap_element));
+    hashmap_element *temp = (hashmap_element*)calloc(2 * map->alloced, sizeof(hashmap_element));
 
 	/* Update the array */
 	hashmap_element *curr = map->data;
@@ -144,7 +144,8 @@ static void hashmap_rehash(hashmap *map) {
 	map->length = 0;
 
     /* Rehash all the elements */
-	for(int i = 0; i < old_size; i++) {
+    size_t i = 0;
+	for(i = 0; i < old_size; i++) {
         /* Skip deleted elements */
         if(curr[i].in_use == 0) continue;
 		hashmap_add(map, curr[i].key, curr[i].data);
@@ -153,20 +154,10 @@ static void hashmap_rehash(hashmap *map) {
 }
 
 hashmap *hashmap_create(void) {
-    hashmap *map = mmalloc(sizeof(hashmap));
-	map->data = (hashmap_element*)ccalloc(hashmap_init_capacity, sizeof(hashmap_element));
-	map->alloced = hashmap_init_capacity;
-	map->length = 0;
-    map->persistance = false;
-	return map;
-}
-
-hashmap *hashmap_persistent_create(void) {
-    hashmap *map = malloc(sizeof(hashmap));
+    hashmap *map = (hashmap*)malloc(sizeof(hashmap));
 	map->data = (hashmap_element*)calloc(hashmap_init_capacity, sizeof(hashmap_element));
 	map->alloced = hashmap_init_capacity;
 	map->length = 0;
-    map->persistance = true;
 	return map;
 }
 
@@ -194,9 +185,10 @@ void hashmap_set(hashmap *map, char *key, void *value) {
 	size_t curr = hashmap_hash_int(map, key);
 
 	/* Linear probing */
-	for(int i = 0; i < max_chain_length; i++) {
+    size_t i = 0;
+	for(i = 0; i < max_chain_length; i++) {
         if(map->data[curr].in_use == 1) {
-            if(_strcmp(map->data[curr].key, key) == 0) {
+            if(strcmp(map->data[curr].key, key) == 0) {
                 /* Set to the new value */
                 map->data[curr].data = value;
             }
@@ -212,9 +204,10 @@ void *hashmap_get(hashmap *map, char *key) {
 	size_t curr = hashmap_hash_int(map, key);
 
 	/* Linear probing  */
-	for(int i = 0; i < max_chain_length; i++) {
+    size_t i = 0;
+	for(i = 0; i < max_chain_length; i++) {
         if(map->data[curr].in_use == 1) {
-            if(_strcmp(map->data[curr].key, key) == 0) {
+            if(strcmp(map->data[curr].key, key) == 0) {
                 /* Return the contained data void pointer */
                 return map->data[curr].data;
             }
@@ -230,9 +223,10 @@ void hashmap_delete(hashmap *map, char *key) {
 	size_t curr = hashmap_hash_int(map, key);
 
 	/* Linear probing */
-	for(int i = 0; i < max_chain_length; i++) {
+    size_t i = 0;
+	for(i = 0; i < max_chain_length; i++) {
         if(map->data[curr].in_use == 1) {
-            if(_strcmp(map->data[curr].key, key) == 0) {
+            if(strcmp(map->data[curr].key, key) == 0) {
                 /* Blank out the fields */
                 map->data[curr].in_use = 0;
                 map->data[curr].data = NULL;

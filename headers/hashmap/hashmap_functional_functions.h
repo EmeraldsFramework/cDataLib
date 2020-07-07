@@ -1,7 +1,7 @@
 #ifndef __HASHMAP_FUNCTIONAL_FUNCTIONS_H_
 #define __HASHMAP_FUNCTIONAL_FUNCTIONS_H_
 
-#include "../../../cSuite.h"
+#include "hashmap.h"
 
 /**
  * @func: lambda
@@ -26,7 +26,7 @@ typedef void* (*lambda4)(void*, void*, void*, void*);
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The mapped hashmap duplicate
  **/
-__export hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type);
+hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type);
 
 /**
  * @func: hashmap_filter
@@ -36,7 +36,7 @@ __export hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_typ
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The filtered hashmap duplicate
  **/
-__export hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type element_type);
+hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type element_type);
 
 /**
  * @func: hashmap_reduce
@@ -46,6 +46,6 @@ __export hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_ty
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The folder void* result
  **/
-__export void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_type);
+void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_type);
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef __VECTOR_H_
 #define __VECTOR_H_
 
-#include "../../../cSuite.h"
+#include <stdlib.h> /* malloc, calloc, realloc, free */
 
 /* Initial capacity of a vector */
 static const size_t vector_init_capacity = 32;
@@ -12,13 +12,12 @@ static const size_t vector_init_capacity = 32;
  * @param items -> A void pointer array that contains the heterogenous elements of the vector
  * @param alloced -> The total capacity of the vector
  * @param length -> The total number of values
- * @param persistence
  **/
 typedef struct vector {
+    /* TODO -> USE A TYPED UNION INSTEAD OF VOID POINTERS */
     void **items;
     size_t alloced;
     size_t length;
-    bool persistence;
 } vector;
 
 /**
@@ -34,10 +33,8 @@ static void vector_ensure_space(vector *v, size_t capacity);
  * @desc: Initializes a vector data structure
  * @return: The newly created vector
  **/
-__export vector *vector_create(void);
-__export vector *vector_persistent_create(void);
+vector *vector_create(void);
 #define new_vector() vector_create()
-#define new_persistent_vector() vector_persistent_create()
 
 /**
  * @func: vector_add
@@ -45,7 +42,7 @@ __export vector *vector_persistent_create(void);
  * @param v -> The vector to use
  * @param item -> The item to add
  **/
-__export void vector_add(vector *v, void *item);
+void vector_add(vector *v, void *item);
 
 /**
  * @func: vector_set
@@ -54,7 +51,7 @@ __export void vector_add(vector *v, void *item);
  * @param index -> The index to set the value of
  * @param item -> The item to set the value as
  **/
-__export void vector_set(vector *v, size_t index, void *item);
+void vector_set(vector *v, size_t index, void *item);
 
 /**
  * @func: vector_get
@@ -63,7 +60,7 @@ __export void vector_set(vector *v, size_t index, void *item);
  * @param index -> The index to get the value of
  * @return The value
  **/
-__export void *vector_get(vector *v, size_t index);
+void *vector_get(vector *v, size_t index);
 
 /**
  * @func: vector_delete
@@ -71,7 +68,7 @@ __export void *vector_get(vector *v, size_t index);
  * @param v -> The vector to use
  * @param index -> The index to delete
  **/
-__export void vector_delete(vector *v, size_t index);
+void vector_delete(vector *v, size_t index);
 
 /**
  * @func: vector_length
@@ -79,6 +76,6 @@ __export void vector_delete(vector *v, size_t index);
  * @param v -> The vector to use
  * @return: The number of items in the vector
  **/
-__export size_t vector_length(vector *v);
+size_t vector_length(vector *v);
 
 #endif

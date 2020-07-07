@@ -1,15 +1,10 @@
 #!/bin/sh
 
-rm a.out
+gcc -Ofast -std=c89 -Wno-incompatible-pointer-types -Wno-int-conversion test.c \
+    ../src/vector/*.c \
+    ../src/hashmap/*.c \
+    ../src/string/*.c \
+    ../src/linked_list/*.c \
+    ../src/stack/*.c
 
-./compile_all
-
-## Compile the test file using the shared library
-gcc -Ofast -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-pointer-to-int-cast test.c -lsuite
-
-## Compile using the dll
-#cp ../lib/cSuite/lib/dll/libsuite.dll ./
-#../../tcc/tcc_win/tcc.exe -Ofast -Wno-incompatible-pointer-types -Wno-int-conversion test.c -o a.exe
-
-## Run the test files
 ./a.out

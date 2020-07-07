@@ -1,12 +1,10 @@
-#include "../../../cSuite.h"
+#include "../../headers/vector/vector.h"
 
 static void vector_ensure_space(vector *v, size_t capacity) {
     if(v == NULL || capacity == 0) return;
-    void **items;
 
     /* Attempt to reallocate new memory in the items list */
-    if(v->persistence) items = realloc(v->items, sizeof(void*) * capacity);
-    else items = rrealloc(v->items, sizeof(void*) * capacity);
+    void **items = realloc(v->items, sizeof(void*) * capacity);
 
     if(items) {
         /* Reset the items in the new memory space */
@@ -16,20 +14,10 @@ static void vector_ensure_space(vector *v, size_t capacity) {
 }
 
 vector *vector_create(void) {
-    vector *v = mmalloc(sizeof(vector));
+    vector *v = (vector*)malloc(sizeof(vector));
     v->alloced = vector_init_capacity;
     v->length = 0;
-    v->items = mmalloc(sizeof(void*) * v->alloced);
-    v->persistence = false;
-    return v;
-}
-
-vector *vector_persistent_create(void) {
-    vector *v = malloc(sizeof(vector));
-    v->alloced = vector_init_capacity;
-    v->length = 0;
-    v->items = malloc(sizeof(void*) * v->alloced);
-    v->persistence = true;
+    v->items = (void**)malloc(sizeof(void*) * v->alloced);
     return v;
 }
 
@@ -61,7 +49,8 @@ void vector_delete(vector *v, size_t index) {
     v->items[index] = NULL;
 
     /* Reset the rest of the elements forwards */
-    for(int i = index; i < v->length - 1; i++) {
+    size_t i;
+    for(i = index; i < v->length - 1; i++) {
         v->items[i] = v->items[i + 1];
         v->items[i + 1] = NULL;
     }

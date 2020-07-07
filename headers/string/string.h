@@ -1,7 +1,10 @@
 #ifndef __STRING_H_
 #define __STRING_H_
 
-#include "../../../cSuite.h"
+#include <stdio.h> /* snprintf */
+#include <stdlib.h> /* malloc, calloc, realloc, free */
+/* TODO -> REPLACE WITH CUSTOM FUNCTIONS */
+#include <string.h> /* memmove, strlen */
 
 /** The initial minimum size of a string **/
 static const size_t string_init_capacity = 32;
@@ -12,13 +15,11 @@ static const size_t string_init_capacity = 32;
  * @param str -> The str char* we construct our string into
  * @param alloced -> The total sized allocated for the string
  * @param length -> The total length of the string
- * @param persistance -> A flag signaling the persistence state of the string
  **/
 typedef struct string {
     char *str;
     size_t alloced;
     size_t length;
-    bool persistance;
 } string;
 
 /**
@@ -33,14 +34,11 @@ static void string_ensure_space(string *sb, size_t add_len);
  * @func: string_create
  * @desc: Create an str builder
  * @param initial_string -> The initial string to set
- * @param __persistence -> Dummy flag
  * @return The str builder
  **/
-__export string *string_create(char *initial_string);
-__export string *string_persistent_create(char *initial_string);
-// #define new_string(...) __CONC(string_create, __NARGS(__VA_ARGS__))(__VA_ARGS__);
+string *string_create(char *initial_string);
+/* #define new_string(...) __CONC(string_create, __NARGS(__VA_ARGS__))(__VA_ARGS__); */
 #define new_string(initial_string) string_create(initial_string)
-#define new_persistent_string(initial_string) string_persistent_create(initial_string)
 
 /**
  * @func: string_add_str
@@ -50,7 +48,7 @@ __export string *string_persistent_create(char *initial_string);
  * @param len -> The length of the string to add.
  *              If 0, strlen will be called internally to determine length
  **/
-__export void string_add_str(string *sb, const char *str);
+void string_add_str(string *sb, const char *str);
 
 /**
  * @func: string_add_char
@@ -58,7 +56,7 @@ __export void string_add_str(string *sb, const char *str);
  * @param sb -> The string builder to use
  * @param c -> The character to add 
  **/
-__export void string_add_char(string *sb, char c);
+void string_add_char(string *sb, char c);
 
 /**
  * @func: string_add_int
@@ -66,7 +64,7 @@ __export void string_add_char(string *sb, char c);
  * @param sb -> The string builder to use
  * @param val -> The integer to add
  **/
-__export void string_add_int(string *sb, int val);
+void string_add_int(string *sb, int val);
 
 /**
  * @func: string_add_double_precision
@@ -74,7 +72,7 @@ __export void string_add_int(string *sb, int val);
  * @param sb -> The string builder to use
  * @param val -> The double to add
  **/
-__export void string_add_double_precision(string *sb, double val);
+void string_add_double_precision(string *sb, double val);
 
 /**
  * @func: string_get
@@ -82,7 +80,7 @@ __export void string_add_double_precision(string *sb, double val);
  * @param sb -> The string builder to use
  * @return A pointer to the internal string data
  **/
-__export char *string_get(string *sb);
+char *string_get(string *sb);
 
 /**
  * @func: string_get_char_at_index
@@ -91,7 +89,7 @@ __export char *string_get(string *sb);
  * @param index -> The index of the character we want to receive
  * @return The character we searched for
  **/
-__export char string_get_char_at_index(string *sb, size_t index);
+char string_get_char_at_index(string *sb, size_t index);
 
 /**
  * @func: string_shorten
@@ -99,14 +97,14 @@ __export char string_get_char_at_index(string *sb, size_t index);
  * @param sb -> The string builder to use
  * @param len -> The new length of the string, anything after this length is removed
  **/
-__export void string_shorten(string *sb, size_t len);
+void string_shorten(string *sb, size_t len);
 
 /**
  * @func: string_delete
  * @desc: Clear the builder
  * @param sb -> The string builder to use
  **/
-__export void string_delete(string *sb);
+void string_delete(string *sb);
 
 /**
  * @func: string_skip
@@ -114,7 +112,7 @@ __export void string_delete(string *sb);
  * @param sb -> The string builder to use
  * @param len -> The length to remove
  **/
-__export void string_skip(string *sb, size_t len);
+void string_skip(string *sb, size_t len);
 
 /**
  * @func: string_length
@@ -122,6 +120,6 @@ __export void string_skip(string *sb, size_t len);
  * @param sb -> The string builder to use
  * @return The current length of the string
  **/
-__export size_t string_length(string *sb);
+size_t string_length(string *sb);
 
 #endif

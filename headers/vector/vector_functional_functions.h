@@ -1,7 +1,7 @@
 #ifndef __VECTOR_FUNCTIONAL_FUNCTIONS_H_
 #define __VECTOR_FUNCTIONAL_FUNCTIONS_H_
 
-#include "../../../cSuite.h"
+#include "vector.h"
 
 /**
  * @func: lambda
@@ -25,7 +25,7 @@ typedef void* (*lambda4)(void*, void*, void*, void*);
  * @param modifier -> The modifier function
  * @return The mapped vector duplicate
  **/
-__export vector *vector_map(vector *v, lambda modifier);
+vector *vector_map(vector *v, lambda modifier);
 
 /**
  * @func: vector_filter
@@ -34,7 +34,7 @@ __export vector *vector_map(vector *v, lambda modifier);
  * @param filter -> The filter function
  * @return The filtered vector duplicate
  **/
-__export vector *vector_filter(vector *v, lambda filter);
+vector *vector_filter(vector *v, lambda filter);
 
 /**
  * @func: vector_reduce
@@ -43,6 +43,6 @@ __export vector *vector_filter(vector *v, lambda filter);
  * @param fold -> The folding function to use
  * @return The folder void* result
  **/
-__export void *vector_reduce(vector *v, lambda2 fold);
+void *vector_reduce(vector *v, lambda2 fold);
 
 #endif

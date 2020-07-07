@@ -1,15 +1,13 @@
-#include "../../../cSuite.h"
+#include "../../headers/hashmap/hashmap_dup.h"
 
 hashmap *hashmap_dup(hashmap *map) {
     if(map == NULL) return NULL;
 
-    hashmap *dup;
-
-    if(map->persistance) dup = new_persistent_hashmap();
-    else dup = new_hashmap();
+    hashmap *dup = new_hashmap();
     
     /* Iteratively copy all hashmap elements from one pointer to another */
-    for(size_t i = 0; i < map->alloced; i++)
+    size_t i = 0;
+    for(i = 0; i < map->alloced; i++)
         if(map->data[i].in_use != 0)
             hashmap_add(dup, map->data[i].key, map->data[i].data);
 

@@ -1,7 +1,7 @@
 #ifndef __LINKED_LIST_FUNCTIONAL_FUNCTIONS_H_
 #define __LINKED_LIST_FUNCTIONAL_FUNCTIONS_H_
 
-#include "../../../cSuite.h"
+#include "linked_list.h"
 
 /**
  * @func: lambda
@@ -25,7 +25,7 @@ typedef void* (*lambda4)(void*, void*, void*, void*);
  * @param modifier -> The modifier function
  * @return The mapped linked list duplicate
  **/
-__export linked_list *linked_list_map(linked_list *list, lambda modifier);
+linked_list *linked_list_map(linked_list *list, lambda modifier);
 
 /**
  * @func: linked_list_filter
@@ -34,7 +34,7 @@ __export linked_list *linked_list_map(linked_list *list, lambda modifier);
  * @param filter -> The filter functions
  * @return The filtered linked list duplicate
  **/
-__export linked_list *linked_list_filter(linked_list *list, lambda filter);
+linked_list *linked_list_filter(linked_list *list, lambda filter);
 
 /**
  * @func: linked_list_reduce
@@ -43,6 +43,6 @@ __export linked_list *linked_list_filter(linked_list *list, lambda filter);
  * @param fold -> The fold function
  * @return The accumulated result
  **/
-__export void *linked_list_reduce(linked_list *list, lambda2 fold);
+void *linked_list_reduce(linked_list *list, lambda2 fold);
 
 #endif

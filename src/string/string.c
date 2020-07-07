@@ -1,4 +1,4 @@
-#include "../../../cSuite.h"
+#include "../../headers/string/string.h"
 
 static void string_ensure_space(string *sb, size_t add_len) {
     if(sb == NULL || add_len == 0) return;
@@ -19,34 +19,12 @@ static void string_ensure_space(string *sb, size_t add_len) {
             sb->alloced--;
         }
     }
-    if(sb->persistance) sb->str = realloc(sb->str, sb->alloced);
-    else sb->str = rrealloc(sb->str, sb->alloced);
+    sb->str = (char*)realloc(sb->str, sb->alloced);
 }
 
 string *string_create(char *initial_string) {
-    string *sb;
-
-    sb = ccalloc(1, sizeof(*sb));
-    sb->str = mmalloc(string_init_capacity);
-    sb->persistance = false;
-
-    /* NULL terminate the string */
-    *sb->str = '\0';
-
-    sb->alloced = string_init_capacity;
-    sb->length = 0;
-
-    string_add_str(sb, initial_string);
-    return sb;
-}
-
-string *string_persistent_create(char *initial_string) {
-    string *sb;
-
-    /* If a persitence flag is passed do not store on the garbage collector */
-    sb = calloc(1, sizeof(*sb));
-    sb->str = malloc(string_init_capacity);
-    sb->persistance = true;
+    string *sb = (string*)calloc(1, sizeof(*sb));
+    sb->str = (char*)malloc(string_init_capacity);
 
     /* NULL terminate the string */
     *sb->str = '\0';
@@ -61,11 +39,11 @@ string *string_persistent_create(char *initial_string) {
 void string_add_str(string *sb, const char *str) {
     if(sb == NULL || str == NULL || *str == '\0') return;
 
-    size_t len = _strlen(str);
+    size_t len = strlen(str);
     string_ensure_space(sb, len);
 
     /* Copy the value into memory */
-    _memmove(sb->str+sb->length, str, len);
+    memmove(sb->str+sb->length, str, len);
 
     /* Reset length and NULL terminate */
     sb->length += len;
@@ -143,7 +121,7 @@ void string_skip(string *sb, size_t len) {
     sb->length -= len;
 
     /* +1 to move the NULL. */
-    _memmove(sb->str, sb->str + len, sb->length + 1);
+    memmove(sb->str, sb->str + len, sb->length + 1);
 }
 
 size_t string_length(string *sb) {

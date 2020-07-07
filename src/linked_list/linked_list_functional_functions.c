@@ -1,11 +1,9 @@
-#include "../../../cSuite.h"
+#include "../../headers/linked_list/linked_list_functional_functions.h"
 
 linked_list *linked_list_map(linked_list *list, lambda modifier) {
     if(list == NULL || modifier == NULL) return NULL;
 
-    linked_list *dup;
-    if(list->persistence) dup = new_persistent_linked_list();
-    else dup = new_linked_list();
+    linked_list *dup = new_linked_list();
 
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
     llnode **probe = &(list->head);
@@ -25,9 +23,7 @@ linked_list *linked_list_map(linked_list *list, lambda modifier) {
 linked_list *linked_list_filter(linked_list *list, lambda filter) {
     if(list == NULL || filter == NULL) return NULL;
 
-    linked_list *dup;
-    if(list->persistence) dup = new_persistent_linked_list();
-    else dup = new_linked_list();
+    linked_list *dup = new_linked_list();
 
     /* Typecast and use the address to take advantage of a pointer to pointer approach */
     llnode **probe = &(list->head);

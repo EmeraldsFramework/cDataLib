@@ -1,4 +1,5 @@
-#include "../../../cSuite.h"
+#include "../../headers/hashmap/hashmap_functional_functions.h"
+#include "../../headers/hashmap/hashmap_dup.h"
 
 hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type) {
     if(map == NULL || modifier == NULL) return NULL;
@@ -6,7 +7,8 @@ hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element
     hashmap *dup = hashmap_dup(map);
     
     /* Iterate with linear probing */
-    for(size_t i = 0; i < map->alloced; i++) {
+    size_t i;
+    for(i = 0; i < map->alloced; i++) {
         if(map->data[i].in_use != 0) {
             switch(element_type) {
                 case KEYS:
@@ -31,7 +33,8 @@ hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type elemen
     hashmap *dup = hashmap_dup(map);
 
     /* Iterate with linear probing */
-    for(size_t i = 0; i < map->alloced; i++) {
+    size_t i;
+    for(i = 0; i < map->alloced; i++) {
         if(map->data[i].in_use != 0) {
             switch(element_type) {
                 case KEYS:
@@ -65,7 +68,8 @@ void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_ty
     int skip_first = 1;
 
     /* In general this takes constant time no matter the hashmap size */
-    for(size_t i = 0; i < map->alloced; i++) {
+    size_t i;
+    for(i = 0; i < map->alloced; i++) {
         if(map->data[i].in_use != 0) {
             switch(element_type) {
                 case KEYS:
@@ -84,7 +88,7 @@ void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_ty
     }
 
     /* Iterate through the hashmap */
-    for(size_t i = 0; i < map->alloced; i++) {
+    for(i = 0; i < map->alloced; i++) {
         if(map->data[i].in_use != 0) {
             if(skip_first == 1) {
                 skip_first = 0;

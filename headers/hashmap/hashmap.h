@@ -1,7 +1,9 @@
 #ifndef __HASHMAP_H_
 #define __HASHMAP_H_
 
-#include "../../../cSuite.h"
+#include <stdlib.h> /* malloc, calloc, realloc, free */
+/* TODO -> REPLACE WITH CUSTOM FUNCTIONS */
+#include <string.h> /* strlen, strcmp */
 
 /* Initial capacity of the hashmap */
 static const size_t hashmap_init_capacity = 32;
@@ -41,7 +43,6 @@ typedef struct hashmap {
 	size_t alloced;
 	size_t length;
 	hashmap_element *data;
-	bool persistance;
 } hashmap;
 
 /**
@@ -49,10 +50,8 @@ typedef struct hashmap {
  * @desc: Create an empty hashmap
  * @return: The hashmap
  **/
-__export hashmap *hashmap_create(void);
-__export hashmap *hashmap_persistent_create(void);
+hashmap *hashmap_create(void);
 #define new_hashmap() hashmap_create()
-#define new_persistent_hashmap() hashmap_persistent_create()
 
 /**
  * @func: hashmap_add
@@ -61,7 +60,7 @@ __export hashmap *hashmap_persistent_create(void);
  * @param key -> The key of the new element
  * @param value -> The value of the new element
  **/
-__export void hashmap_add(hashmap *map, char *key, void *value);
+void hashmap_add(hashmap *map, char *key, void *value);
 
 /**
  * @func: hashmap_set
@@ -70,7 +69,7 @@ __export void hashmap_add(hashmap *map, char *key, void *value);
  * @param key -> The key to get the value of
  * @param value -> The item to set to the specific key
  **/
-__export void hashmap_set(hashmap *map, char *key, void *value);
+void hashmap_set(hashmap *map, char *key, void *value);
 
 /**
  * @func: hashmap_get
@@ -79,7 +78,7 @@ __export void hashmap_set(hashmap *map, char *key, void *value);
  * @param key -> The key to get the value of
  * @return The value we are searching for
  **/
-__export void *hashmap_get(hashmap *map, char *key);
+void *hashmap_get(hashmap *map, char *key);
 
 /**
  * @func: hashmap_delete
@@ -87,7 +86,7 @@ __export void *hashmap_get(hashmap *map, char *key);
  * @param map -> The hashmap to use
  * @param key -> The key of the element to remove
  **/
-__export void hashmap_delete(hashmap *map, char *key);
+void hashmap_delete(hashmap *map, char *key);
 
 /**
  * @func: hashmap_length
@@ -95,6 +94,6 @@ __export void hashmap_delete(hashmap *map, char *key);
  * @param map -> The hashmap to use
  * @return The size of the provided hashmap
  **/
-__export size_t hashmap_length(hashmap *map);
+size_t hashmap_length(hashmap *map);
 
 #endif

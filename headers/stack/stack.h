@@ -1,7 +1,18 @@
 #ifndef __STACK_H_
 #define __STACK_H_
 
-#include "../../../cSuite.h"
+#include <stdlib.h> /* malloc, calloc, realloc, free */
+
+/* Stack gets implemented using a vector */
+#include "../vector/vector.h"
+
+
+/* TODO -> TURN INTO A LIBRARY */
+    /** @param bool -> A 'big' enough size to hold both 1 and 0 **/
+    typedef unsigned char bool;
+    #define true 1
+    #define false 0
+
 
 /**
  * @struct: stack
@@ -12,9 +23,8 @@
  **/
 typedef struct stack {
     size_t length;
-    int top;
+    size_t top;
     vector *items;
-    bool persistence;
 } stack;
 
 /**
@@ -22,10 +32,8 @@ typedef struct stack {
  * @desc: Creates a basic stack data structure using a dynamic array
  * @return The newly created stack
  **/
-__export stack *stack_create(void);
-__export stack *stack_persistent_create(void);
+stack *stack_create(void);
 #define new_stack() stack_create()
-#define new_persistent_stack() stack_persistent_create()
 
 /**
  * @func: stack_length
@@ -33,7 +41,7 @@ __export stack *stack_persistent_create(void);
  * @param st -> The stack to use
  * @return The length (st->length)
  **/
-__export size_t stack_length(stack *st);
+size_t stack_length(stack *st);
 
 /**
  * @func: stack_is_empty
@@ -41,7 +49,7 @@ __export size_t stack_length(stack *st);
  * @param st -> The stack to use
  * @return A boolean
  **/
-__export bool stack_is_empty(stack *st);
+bool stack_is_empty(stack *st);
 
 /**
  * @func: stack_push
@@ -49,7 +57,7 @@ __export bool stack_is_empty(stack *st);
  * @param st -> The stack to use
  * @param item -> The item to push to the stack
  **/
-__export void stack_push(stack *st, void *item);
+void stack_push(stack *st, void *item);
 
 /**
  * @func: stack_pop
@@ -57,7 +65,7 @@ __export void stack_push(stack *st, void *item);
  * @param st -> The stack to use
  * @return The item on the top of the stack
  **/
-__export void *stack_pop(stack *st);
+void *stack_pop(stack *st);
 
 /**
  * @func: stack_peek
@@ -65,6 +73,6 @@ __export void *stack_pop(stack *st);
  * @param st -> The stack to use
  * @return The item on top of the stack withou removing it
  **/
-__export void *stack_peek(stack *st);
+void *stack_peek(stack *st);
 
 #endif
