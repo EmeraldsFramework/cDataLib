@@ -30,7 +30,7 @@ vector *vector_filter(vector *v, lambda filter) {
     return dup;
 }
 
-void *vector_reduce(vector *v, lambda2 fold) {
+void *vector_reduce(vector *v, lambda fold) {
     if(v == NULL || fold == NULL) return NULL;
 
     /* Get the initial value that gets returned

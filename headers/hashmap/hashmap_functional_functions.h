@@ -12,11 +12,7 @@
 /* The param void* can have more than 1 argument stored as a list of some sort */
 /* Since this is completely generic we can't check for validity of arguments */
 /* The validity of the function is dependent on the callee */
-typedef void* (*lambda)(void*);
-typedef void* (*lambda2)(void*, void*);
-typedef void* (*lambda3)(void*, void*, void*);
-typedef void* (*lambda4)(void*, void*, void*, void*);
-/* TODO Obviously find some generic abstraction for the above */
+typedef void* (*lambda)();
 
 /**
  * @func: hashmap_map
@@ -46,6 +42,6 @@ hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type elemen
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The folder void* result
  **/
-void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_type);
+void *hashmap_reduce(hashmap *map, lambda fold, hashmap_element_type element_type);
 
 #endif

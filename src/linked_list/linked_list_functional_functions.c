@@ -41,7 +41,7 @@ linked_list *linked_list_filter(linked_list *list, lambda filter) {
     return dup;
 }
 
-void *linked_list_reduce(linked_list *list, lambda2 fold) {
+void *linked_list_reduce(linked_list *list, lambda fold) {
     if(list == NULL || fold == NULL) return NULL;
 
     llnode **probe = (&list->head);

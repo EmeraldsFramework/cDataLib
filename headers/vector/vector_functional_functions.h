@@ -12,11 +12,7 @@
 /* The param void* can have more than 1 argument stored as a list of some sort */
 /* Since this is completely generic we can't check for validity of arguments */
 /* The validity of the function is dependent on the callee */
-typedef void* (*lambda)(void*);
-typedef void* (*lambda2)(void*, void*);
-typedef void* (*lambda3)(void*, void*, void*);
-typedef void* (*lambda4)(void*, void*, void*, void*);
-/* TODO Find some generic abstraction for the above */
+typedef void* (*lambda)();
 
 /**
  * @func: vector_map
@@ -43,6 +39,5 @@ vector *vector_filter(vector *v, lambda filter);
  * @param fold -> The folding function to use
  * @return The folder void* result
  **/
-void *vector_reduce(vector *v, lambda2 fold);
-
+void *vector_reduce(vector *v, lambda fold);
 #endif

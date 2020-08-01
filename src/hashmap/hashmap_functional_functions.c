@@ -60,7 +60,7 @@ hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type elemen
     return dup;
 }
 
-void *hashmap_reduce(hashmap *map, lambda2 fold, hashmap_element_type element_type) {
+void *hashmap_reduce(hashmap *map, lambda fold, hashmap_element_type element_type) {
     if(map == NULL || fold == NULL) return NULL;
 
     void *accumulator;

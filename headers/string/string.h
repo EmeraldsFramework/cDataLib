@@ -37,7 +37,6 @@ static void string_ensure_space(string *sb, size_t add_len);
  * @return The str builder
  **/
 string *string_create(char *initial_string);
-/* #define new_string(...) __CONC(string_create, __NARGS(__VA_ARGS__))(__VA_ARGS__); */
 #define new_string(initial_string) string_create(initial_string)
 
 /**

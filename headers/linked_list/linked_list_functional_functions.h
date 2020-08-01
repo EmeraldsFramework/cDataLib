@@ -12,11 +12,7 @@
 /* The param void* can have more than 1 argument stored as a list of some sort */
 /* Since this is completely generic we can't check for validity of arguments */
 /* The validity of the function is dependent on the callee */
-typedef void* (*lambda)(void*);
-typedef void* (*lambda2)(void*, void*);
-typedef void* (*lambda3)(void*, void*, void*);
-typedef void* (*lambda4)(void*, void*, void*, void*);
-/* TODO Obviously find some generic abstraction for the above */
+typedef void* (*lambda)();
 
 /**
  * @func: linked_list_map
@@ -43,6 +39,6 @@ linked_list *linked_list_filter(linked_list *list, lambda filter);
  * @param fold -> The fold function
  * @return The accumulated result
  **/
-void *linked_list_reduce(linked_list *list, lambda2 fold);
+void *linked_list_reduce(linked_list *list, lambda fold);
 
 #endif
