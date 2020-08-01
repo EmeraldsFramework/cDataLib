@@ -6,5 +6,6 @@
 #include "string_split.h"
 #include "string_dup.h"
 #include "string_interpolation.h"
+#include "string_functional_functions.h"
 
 #endif

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-gcc -Ofast -std=c89 -Wno-incompatible-pointer-types -Wno-int-conversion test.c \
+gcc -O2 -std=c89 -Wno-incompatible-pointer-types -Wno-int-conversion test.c \
     ../src/vector/*.c \
     ../src/hashmap/*.c \
     ../src/string/*.c \
