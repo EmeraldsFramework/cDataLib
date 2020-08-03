@@ -4,7 +4,7 @@
 #include <stdio.h> /* snprintf */
 #include <stdlib.h> /* malloc, calloc, realloc, free */
 /* TODO -> REPLACE WITH CUSTOM FUNCTIONS */
-#include <string.h> /* memmove, strlen */
+#include <string.h> /* memmove, strlen, strcmp */
 
 /** The initial minimum size of a string **/
 static const size_t string_init_capacity = 32;
@@ -120,5 +120,14 @@ void string_skip(string *sb, size_t len);
  * @return The current length of the string
  **/
 size_t string_length(string *sb);
+
+/**
+ * @func: string_equals
+ * @desc: Checks if the char pointers of the two strings passed are the same
+ * @param sb -> The first string
+ * @param other -> The second string
+ * @return A boolean signaling if the strings are equal
+ **/
+unsigned char string_equals(string *sb, string *other);
 
 #endif

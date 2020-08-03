@@ -128,3 +128,7 @@ size_t string_length(string *sb) {
     if(sb == NULL) return 0;
     return sb->length;
 }
+
+unsigned char string_equals(string *sb, string *other) {
+    return strcmp(string_get(sb), string_get(other)) == 0;
+}
