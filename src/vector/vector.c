@@ -13,7 +13,7 @@ static void vector_ensure_space(vector *v, size_t capacity) {
     }
 }
 
-vector *vector_create(void) {
+vector *new_vector(void) {
     vector *v = (vector*)malloc(sizeof(vector));
     v->alloced = vector_init_capacity;
     v->length = 0;
@@ -31,20 +31,20 @@ void vector_add(vector *v, void *item) {
 
 void vector_set(vector *v, size_t index, void *item) {
     if(v == NULL) return;
-    if(index >= 0 && index < v->length)
+    if(index < v->length)
         v->items[index] = item;
 }
 
 void *vector_get(vector *v, size_t index) {
     if(v == NULL) return NULL;
-    if(index >= 0 && index < v->length)
+    if(index < v->length)
         return v->items[index];
     return NULL;
 }
 
 void vector_delete(vector *v, size_t index) {
     if(v == NULL) return;
-    if(index < 0 || index >= v->length) return;
+    if(index >= v->length) return;
     
     v->items[index] = NULL;
 
@@ -64,4 +64,4 @@ void vector_delete(vector *v, size_t index) {
 size_t vector_length(vector *v) {
     if(v == NULL) return 0;
     return v->length;
-};
+}

@@ -23,4 +23,22 @@ typedef void* (*lambda)();
  **/
 string *string_iterate(string *sb, lambda apply);
 
+/**
+ * @func: string_map
+ * @desc: Maps each character of the string according to a modifier function
+ * @param sb -> The string builder to map
+ * @param modifier -> The lambda function to use for the conversions
+ * @return A new mapped string
+ **/
+string *string_map(string *sb, lambda modifier);
+
+/**
+ * @func: string_filter
+ * @desc: Filters out characters from the string according to a function
+ * @param sb -> The string builder to filter
+ * @param filter -> The labmda function to use
+ * @return A new filtered string
+ **/
+string *string_filter(string *sb, lambda filter);
+
 #endif

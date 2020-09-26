@@ -1,6 +1,6 @@
 #!/bin/sh
 
-gcc -O2 -std=c89 -Wno-incompatible-pointer-types -Wno-int-conversion test.c \
+gcc -O2 -Wno-format -Wno-maybe-uninitialized -Wno-unused-function -Wno-return-type -Wno-incompatible-pointer-types -Wno-int-conversion -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic test.c \
     ../src/vector/*.c \
     ../src/hashmap/*.c \
     ../src/string/*.c \

@@ -153,7 +153,7 @@ static void hashmap_rehash(hashmap *map) {
 	return;
 }
 
-hashmap *hashmap_create(void) {
+hashmap *new_hashmap(void) {
     hashmap *map = (hashmap*)malloc(sizeof(hashmap));
 	map->data = (hashmap_element*)calloc(hashmap_init_capacity, sizeof(hashmap_element));
 	map->alloced = hashmap_init_capacity;
@@ -164,7 +164,7 @@ hashmap *hashmap_create(void) {
 void hashmap_add(hashmap *map, char *key, void *value) {
     if(map == NULL || key == NULL) return;
 
-    size_t index = hashmap_hash(map, key);
+    signed long long index = hashmap_hash(map, key);
     
     /* In case of a full hashmap */
 	while(index == -1) {

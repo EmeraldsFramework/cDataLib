@@ -5,7 +5,7 @@ void display(size_t argc, ...) {
     
     va_list vars;
     va_start(vars, argc);
-        int i;
+        size_t i;
         for(i = 0; i < argc; i++)
             string_add_str(sb, va_arg(vars, void*));
     va_end(vars);

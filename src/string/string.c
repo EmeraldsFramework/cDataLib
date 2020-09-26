@@ -22,7 +22,7 @@ static void string_ensure_space(string *sb, size_t add_len) {
     sb->str = (char*)realloc(sb->str, sb->alloced);
 }
 
-string *string_create(char *initial_string) {
+string *new_string(char *initial_string) {
     string *sb = (string*)calloc(1, sizeof(*sb));
     sb->str = (char*)malloc(string_init_capacity);
 
@@ -52,9 +52,6 @@ void string_add_str(string *sb, const char *str) {
 
 void string_add_char(string *sb, char c) {
     if(sb == NULL) return;
-
-    /* In any case we try to overflow the input */
-    if(c > 255 || c < 0) return;
 
     string_ensure_space(sb, 1);
 
@@ -88,7 +85,7 @@ char *string_get(string *sb) {
 }
 
 char string_get_char_at_index(string *sb, size_t index) {
-    if(sb == NULL || index < 0) return '\0';
+    if(sb == NULL) return '\0';
     return sb->str[index];
 }
 
@@ -131,4 +128,39 @@ size_t string_length(string *sb) {
 
 unsigned char string_equals(string *sb, string *other) {
     return strcmp(string_get(sb), string_get(other)) == 0;
+}
+
+char *string_identifier(string *sb) {
+    if(sb == NULL) return NULL;
+
+    string *output = new_string("");
+
+    unsigned char add_underscore = 0;
+    char buf[32];
+    size_t i;
+
+    for(i = 0; i < string_length(sb); i++) {
+        char c = string_get(sb)[i];
+
+        if((c > 47 && c < 58)
+        || (c > 64 && c < 91)
+        || (c > 96 && c != 95 && c < 123))
+            string_add_char(output, c);
+        else if(c == 32)
+            string_add_char(output, '_');
+        else {
+            if(i == 0) add_underscore = 1;
+            sprintf(buf, "%02x", c & 0xff);
+            string_add_str(output, buf);
+        }
+    }
+
+    string *ret_value;
+    if(add_underscore)
+        ret_value = new_string("_");
+    else
+        ret_value = new_string("");
+    string_add_str(ret_value, string_get(output));
+
+    return string_get(ret_value);
 }

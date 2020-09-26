@@ -29,12 +29,11 @@ typedef struct vector {
 static void vector_ensure_space(vector *v, size_t capacity);
 
 /**
- * @func: vector_create
+ * @func: new_vector
  * @desc: Initializes a vector data structure
  * @return: The newly created vector
  **/
-vector *vector_create(void);
-#define new_vector() vector_create()
+vector *new_vector(void);
 
 /**
  * @func: vector_add

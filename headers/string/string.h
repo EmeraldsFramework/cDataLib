@@ -31,13 +31,12 @@ typedef struct string {
 static void string_ensure_space(string *sb, size_t add_len);
 
 /**
- * @func: string_create
+ * @func: new_string
  * @desc: Create an str builder
  * @param initial_string -> The initial string to set
  * @return The str builder
  **/
-string *string_create(char *initial_string);
-#define new_string(initial_string) string_create(initial_string)
+string *new_string(char *initial_string);
 
 /**
  * @func: string_add_str
@@ -129,5 +128,14 @@ size_t string_length(string *sb);
  * @return A boolean signaling if the strings are equal
  **/
 unsigned char string_equals(string *sb, string *other);
+
+/**
+ * @func: string_identifier
+ * @desc: Turns a string into a valid identifier by
+ *  converting illegal characters to hex codes
+ * @param sb -> The string builder to convert
+ * @return A valid char pointer identifier
+ **/
+char *string_identifier(string *sb);
 
 #endif
