@@ -4,7 +4,7 @@
 #include "hashmap.h"
 
 /**
- * @func: lambda
+ * @func: hashmap_lambda
  * @desc: A generic function type used upon iterable data structures
  * @param -> An element belonging to an iterable
  * @return -> A value that satisfies the callee's purpose (map, filter, reduce)
@@ -12,7 +12,7 @@
 /* The param void* can have more than 1 argument stored as a list of some sort */
 /* Since this is completely generic we can't check for validity of arguments */
 /* The validity of the function is dependent on the callee */
-typedef void* (*lambda)();
+typedef void* (*hashmap_lambda)();
 
 /**
  * @func: hashmap_map
@@ -22,7 +22,7 @@ typedef void* (*lambda)();
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The mapped hashmap duplicate
  **/
-hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type);
+hashmap *hashmap_map(hashmap *map, hashmap_lambda modifier, hashmap_element_type element_type);
 
 /**
  * @func: hashmap_filter
@@ -32,7 +32,7 @@ hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The filtered hashmap duplicate
  **/
-hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type element_type);
+hashmap *hashmap_filter(hashmap *map, hashmap_lambda filter, hashmap_element_type element_type);
 
 /**
  * @func: hashmap_reduce
@@ -42,7 +42,7 @@ hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type elemen
  * @param element_type -> A type signaling whether we operate on keys or values
  * @return The folder void* result
  **/
-void *hashmap_reduce(hashmap *map, lambda fold, hashmap_element_type element_type);
+void *hashmap_reduce(hashmap *map, hashmap_lambda fold, hashmap_element_type element_type);
 
 #endif
 

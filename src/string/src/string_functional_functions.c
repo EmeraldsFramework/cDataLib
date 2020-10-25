@@ -1,6 +1,6 @@
 #include "../headers/string_functional_functions.h"
 
-void string_iterate(string *sb, lambda apply) {
+void string_iterate(string *sb, string_lambda apply) {
     /* TODO -> Convert check to asserts */
     if(sb == NULL || apply == NULL) return;
 
@@ -11,7 +11,7 @@ void string_iterate(string *sb, lambda apply) {
         apply(sb_str[i]);
 }
 
-string *string_map(string *sb, lambda modifier) {
+string *string_map(string *sb, string_lambda modifier) {
     if(sb == NULL || modifier == NULL) return NULL;
 
     char *sb_str = string_get(sb);
@@ -24,7 +24,7 @@ string *string_map(string *sb, lambda modifier) {
     return sb_dup;
 }
 
-string *string_filter(string *sb, lambda filter) {
+string *string_filter(string *sb, string_lambda filter) {
     if(sb == NULL || filter == NULL) return NULL;
 
     char *sb_str = string_get(sb);

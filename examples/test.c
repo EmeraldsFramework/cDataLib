@@ -1,8 +1,4 @@
-#include "../headers/vector/__all.h"
-#include "../headers/hashmap/__all.h"
-#include "../headers/string/__all.h"
-#include "../headers/linked_list/__all.h"
-#include "../headers/stack/__all.h"
+#include "../export/cDataLib.h"
 
 #include <stdio.h> /* printf */
 

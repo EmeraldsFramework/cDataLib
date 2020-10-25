@@ -1,7 +1,7 @@
 #include "../headers/hashmap_functional_functions.h"
 #include "../headers/hashmap_dup.h"
 
-hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type) {
+hashmap *hashmap_map(hashmap *map, hashmap_lambda modifier, hashmap_element_type element_type) {
     if(map == NULL || modifier == NULL) return NULL;
 
     hashmap *dup = hashmap_dup(map);
@@ -27,7 +27,7 @@ hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element
     return dup;
 }
 
-hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type element_type) {
+hashmap *hashmap_filter(hashmap *map, hashmap_lambda filter, hashmap_element_type element_type) {
     if(map == NULL || filter == NULL) return NULL;
 
     hashmap *dup = hashmap_dup(map);
@@ -60,7 +60,7 @@ hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type elemen
     return dup;
 }
 
-void *hashmap_reduce(hashmap *map, lambda fold, hashmap_element_type element_type) {
+void *hashmap_reduce(hashmap *map, hashmap_lambda fold, hashmap_element_type element_type) {
     if(map == NULL || fold == NULL) return NULL;
 
     void *accumulator;

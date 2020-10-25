@@ -4,7 +4,7 @@
 #include "linked_list.h"
 
 /**
- * @func: lambda
+ * @func: linked_list_lambda
  * @desc: A generic function type used upon iterable data structures
  * @param -> An element belonging to an iterable
  * @return -> A value that satisfies the callee's purpose (map, filter, reduce)
@@ -12,7 +12,7 @@
 /* The param void* can have more than 1 argument stored as a list of some sort */
 /* Since this is completely generic we can't check for validity of arguments */
 /* The validity of the function is dependent on the callee */
-typedef void* (*lambda)();
+typedef void* (*linked_list_lambda)();
 
 /**
  * @func: linked_list_map
@@ -21,7 +21,7 @@ typedef void* (*lambda)();
  * @param modifier -> The modifier function
  * @return The mapped linked list duplicate
  **/
-linked_list *linked_list_map(linked_list *list, lambda modifier);
+linked_list *linked_list_map(linked_list *list, linked_list_lambda modifier);
 
 /**
  * @func: linked_list_filter
@@ -30,7 +30,7 @@ linked_list *linked_list_map(linked_list *list, lambda modifier);
  * @param filter -> The filter functions
  * @return The filtered linked list duplicate
  **/
-linked_list *linked_list_filter(linked_list *list, lambda filter);
+linked_list *linked_list_filter(linked_list *list, linked_list_lambda filter);
 
 /**
  * @func: linked_list_reduce
@@ -39,7 +39,7 @@ linked_list *linked_list_filter(linked_list *list, lambda filter);
  * @param fold -> The fold function
  * @return The accumulated result
  **/
-void *linked_list_reduce(linked_list *list, lambda fold);
+void *linked_list_reduce(linked_list *list, linked_list_lambda fold);
 
 #endif
 

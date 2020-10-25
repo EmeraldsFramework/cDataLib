@@ -2,7 +2,7 @@
 #define __STRING_SPLIT_H_
 
 #include "string.h"
-#include "../../vector/headers/vector.h"
+#include "../vector/vector.h"
 
 /**
  * @func: string_split

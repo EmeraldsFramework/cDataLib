@@ -1,6 +1,6 @@
 #include "../headers/linked_list_functional_functions.h"
 
-linked_list *linked_list_map(linked_list *list, lambda modifier) {
+linked_list *linked_list_map(linked_list *list, linked_list_lambda modifier) {
     if(list == NULL || modifier == NULL) return NULL;
 
     linked_list *dup = new_linked_list();
@@ -20,7 +20,7 @@ linked_list *linked_list_map(linked_list *list, lambda modifier) {
     return dup;
 }
 
-linked_list *linked_list_filter(linked_list *list, lambda filter) {
+linked_list *linked_list_filter(linked_list *list, linked_list_lambda filter) {
     if(list == NULL || filter == NULL) return NULL;
 
     linked_list *dup = new_linked_list();
@@ -41,7 +41,7 @@ linked_list *linked_list_filter(linked_list *list, lambda filter) {
     return dup;
 }
 
-void *linked_list_reduce(linked_list *list, lambda fold) {
+void *linked_list_reduce(linked_list *list, linked_list_lambda fold) {
     if(list == NULL || fold == NULL) return NULL;
 
     llnode **probe = (&list->head);

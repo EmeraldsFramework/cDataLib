@@ -4,7 +4,7 @@
 #include <stdlib.h> /* malloc, calloc, realloc, free */
 
 /* Stack gets implemented using a vector */
-#include "../../vector/headers/vector.h"
+#include "../vector/vector.h"
 
 
 /* TODO -> TURN INTO A LIBRARY */

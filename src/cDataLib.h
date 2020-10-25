@@ -16,7 +16,7 @@
 #include "hashmap/hashmap_functional_functions.h"
 #include "hashmap/hashmap.h"
 
-#include "stack/stack_dup.h"
+#include "stack/stack.h"
 
 #include "linked_list/linked_list_dup.h"
 #include "linked_list/linked_list_functional_functions.h"

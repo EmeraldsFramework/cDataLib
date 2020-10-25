@@ -20,6 +20,12 @@ all: compiler
 compiler:
 	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(LIBS) $(COMPILE)
 	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) -shared -o $(LIB_OUTPUT) ./*.o
+	mkdir ../string/vector
+	cp headers/vector.h ../string/vector/
+	mkdir ../stack/vector
+	cp headers/vector.h ../stack/vector/
 
 clean:
+	rm -rf ../string/vector
+	rm -rf ../stack/vector
 	rm -rf ./*.o ./*.so
