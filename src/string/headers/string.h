@@ -139,3 +139,4 @@ unsigned char string_equals(string *sb, string *other);
 char *string_identifier(string *sb);
 
 #endif
+

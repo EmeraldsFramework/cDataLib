@@ -1,4 +1,4 @@
-#include "../../headers/string/string.h"
+#include "../headers/string.h"
 
 static void string_ensure_space(string *sb, size_t add_len) {
     if(sb == NULL || add_len == 0) return;

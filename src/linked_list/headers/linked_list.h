@@ -50,3 +50,4 @@ void linked_list_add(linked_list *list, void *obj);
 void linked_list_remove(linked_list *list, void *obj);
 
 #endif
+

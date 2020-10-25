@@ -1,4 +1,4 @@
-#include "../../headers/vector/vector.h"
+#include "../headers/vector.h"
 
 static void vector_ensure_space(vector *v, size_t capacity) {
     if(v == NULL || capacity == 0) return;

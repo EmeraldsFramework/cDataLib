@@ -1,4 +1,4 @@
-#include "../../headers/string/string_split.h"
+#include "../headers/string_split.h"
 
 vector *string_split(string *str, string *delimeter) {
 	vector *str_tokens = new_vector();

@@ -71,3 +71,4 @@
  * @param __VA_ARGS__ -> The rest of the arguments to iterate through
  **/
 void display(size_t argc, ...);
+

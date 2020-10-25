@@ -42,3 +42,4 @@ linked_list *linked_list_filter(linked_list *list, lambda filter);
 void *linked_list_reduce(linked_list *list, lambda fold);
 
 #endif
+

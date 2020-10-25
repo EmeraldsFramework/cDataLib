@@ -1,4 +1,4 @@
-#include "../../headers/string/string_dup.h"
+#include "../headers/string_dup.h"
 
 string *string_dup(string *sb) {
     if(sb == NULL) return NULL;

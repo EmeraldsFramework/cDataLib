@@ -12,16 +12,15 @@
 /* The param void* can have more than 1 argument stored as a list of some sort */
 /* Since this is completely generic we can't check for validity of arguments */
 /* The validity of the function is dependent on the callee */
-typedef void* (*lambda)();
+typedef char (*lambda)();
 
 /**
  * @func: string_iterate
  * @desc: Iterates through the characters of the string
  * @param sb -> The string builder we want to iterate
  * @param apply -> The function we apply to each character
- * @return The mapped string duplicate
  **/
-string *string_iterate(string *sb, lambda apply);
+void string_iterate(string *sb, lambda apply);
 
 /**
  * @func: string_map
@@ -42,3 +41,4 @@ string *string_map(string *sb, lambda modifier);
 string *string_filter(string *sb, lambda filter);
 
 #endif
+

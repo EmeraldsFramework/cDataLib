@@ -131,3 +131,4 @@ void hashmap_delete(hashmap *map, char *key);
 size_t hashmap_length(hashmap *map);
 
 #endif
+

@@ -4,7 +4,7 @@
 #include <stdlib.h> /* malloc, calloc, realloc, free */
 
 /* Stack gets implemented using a vector */
-#include "../vector/vector.h"
+#include "../../vector/headers/vector.h"
 
 
 /* TODO -> TURN INTO A LIBRARY */
@@ -76,3 +76,4 @@ void *stack_pop(stack *st);
 void *stack_peek(stack *st);
 
 #endif
+

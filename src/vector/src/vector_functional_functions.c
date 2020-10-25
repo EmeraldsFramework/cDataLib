@@ -1,4 +1,4 @@
-#include "../../headers/vector/vector_functional_functions.h"
+#include "../headers/vector_functional_functions.h"
 
 vector *vector_map(vector *v, lambda modifier) {
     if(v == NULL || modifier == NULL) return NULL;
@@ -30,7 +30,7 @@ vector *vector_filter(vector *v, lambda filter) {
     return dup;
 }
 
-void *vector_reduce(vector *v, lambda fold) {
+void *vector_reduce(vector *v, lambda2 fold) {
     if(v == NULL || fold == NULL) return NULL;
 
     /* Get the initial value that gets returned

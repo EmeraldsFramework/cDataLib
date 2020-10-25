@@ -1,4 +1,4 @@
-#include "../../headers/linked_list/linked_list_dup.h"
+#include "../headers/linked_list_dup.h"
 
 linked_list *linked_list_dup(linked_list *list) {
     if(list == NULL) return NULL;
@@ -16,3 +16,4 @@ linked_list *linked_list_dup(linked_list *list) {
 
     return dup;
 }
+

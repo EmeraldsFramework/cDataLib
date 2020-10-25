@@ -1,4 +1,4 @@
-#include "../../headers/hashmap/hashmap.h"
+#include "../headers/hashmap.h"
 
 static unsigned long crc32_tab[] = {
       0x00000000L, 0x77073096L, 0xee0e612cL, 0x990951baL, 0x076dc419L,
@@ -247,3 +247,4 @@ size_t hashmap_length(hashmap *map) {
 	if(map != NULL) return map->length;
 	else return 0;
 }
+

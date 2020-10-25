@@ -1,4 +1,4 @@
-#include "../../headers/linked_list/linked_list_functional_functions.h"
+#include "../headers/linked_list_functional_functions.h"
 
 linked_list *linked_list_map(linked_list *list, lambda modifier) {
     if(list == NULL || modifier == NULL) return NULL;
@@ -61,3 +61,4 @@ void *linked_list_reduce(linked_list *list, lambda fold) {
     
     return accumulator;
 }
+

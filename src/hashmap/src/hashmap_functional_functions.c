@@ -1,5 +1,5 @@
-#include "../../headers/hashmap/hashmap_functional_functions.h"
-#include "../../headers/hashmap/hashmap_dup.h"
+#include "../headers/hashmap_functional_functions.h"
+#include "../headers/hashmap_dup.h"
 
 hashmap *hashmap_map(hashmap *map, lambda modifier, hashmap_element_type element_type) {
     if(map == NULL || modifier == NULL) return NULL;
@@ -117,3 +117,4 @@ void *hashmap_reduce(hashmap *map, lambda fold, hashmap_element_type element_typ
     
     return accumulator;
 }
+

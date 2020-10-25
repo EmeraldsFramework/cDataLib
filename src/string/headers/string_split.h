@@ -2,7 +2,7 @@
 #define __STRING_SPLIT_H_
 
 #include "string.h"
-#include "../vector/vector.h"
+#include "../../vector/headers/vector.h"
 
 /**
  * @func: string_split
@@ -14,3 +14,4 @@
 vector *string_split(string *str, string *delimeter);
 
 #endif
+

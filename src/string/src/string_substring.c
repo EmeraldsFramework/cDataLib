@@ -1,4 +1,4 @@
-#include "../../headers/string/string_substring.h"
+#include "../headers/string_substring.h"
 
 string *string_substring(string *str, size_t from, size_t __to) {
     string *strdup = string_dup(str);

@@ -12,3 +12,4 @@
 linked_list *linked_list_dup(linked_list *list);
 
 #endif
+

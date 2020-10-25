@@ -1,8 +1,8 @@
-#include "../../headers/string/string_functional_functions.h"
+#include "../headers/string_functional_functions.h"
 
-string *string_iterate(string *sb, lambda apply) {
+void string_iterate(string *sb, lambda apply) {
     /* TODO -> Convert check to asserts */
-    if(sb == NULL || apply == NULL) return NULL;
+    if(sb == NULL || apply == NULL) return;
 
     char *sb_str = string_get(sb);
 

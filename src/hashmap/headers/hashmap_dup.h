@@ -12,3 +12,4 @@
 hashmap *hashmap_dup(hashmap *map);
 
 #endif
+

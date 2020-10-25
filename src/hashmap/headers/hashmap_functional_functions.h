@@ -45,3 +45,4 @@ hashmap *hashmap_filter(hashmap *map, lambda filter, hashmap_element_type elemen
 void *hashmap_reduce(hashmap *map, lambda fold, hashmap_element_type element_type);
 
 #endif
+

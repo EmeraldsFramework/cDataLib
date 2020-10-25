@@ -1,4 +1,4 @@
-#include "../../headers/vector/vector_dup.h"
+#include "../headers/vector_dup.h"
 
 vector *vector_dup(vector *v) {
     if(v == NULL) return NULL;

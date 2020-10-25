@@ -1,4 +1,4 @@
-#include "../../headers/string/string_interpolation.h"
+#include "../headers/string_interpolation.h"
 
 void display(size_t argc, ...) {
     string *sb = new_string("");

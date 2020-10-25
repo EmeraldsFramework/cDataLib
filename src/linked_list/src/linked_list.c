@@ -1,4 +1,4 @@
-#include "../../headers/linked_list/linked_list.h"
+#include "../headers/linked_list.h"
 
 linked_list *linked_list_create(void) {
     linked_list *list = (linked_list*)malloc(sizeof(linked_list));
@@ -37,3 +37,4 @@ void linked_list_remove(linked_list *list, void *item) {
 
     *probe = (*probe)->next;
 }
+

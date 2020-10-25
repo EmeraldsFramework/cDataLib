@@ -1,4 +1,4 @@
-#include "../../headers/stack/stack.h"
+#include "../headers/stack.h"
 
 stack *stack_create(void) {
     stack *st = (stack*)malloc(sizeof(stack));
@@ -49,3 +49,4 @@ void *stack_peek(stack *st) {
     if(!stack_is_empty(st)) return vector_get(st->items, st->top);
     return NULL;
 }
+

@@ -1,4 +1,4 @@
-#include "../../headers/hashmap/hashmap_dup.h"
+#include "../headers/hashmap_dup.h"
 
 hashmap *hashmap_dup(hashmap *map) {
     if(map == NULL) return NULL;
@@ -13,3 +13,4 @@ hashmap *hashmap_dup(hashmap *map) {
 
     return dup;
 }
+
