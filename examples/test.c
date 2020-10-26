@@ -40,9 +40,11 @@ int main(void) {
     printf("TESTING STRING INTERPOLATION\n");
     char *str = "Hello World";
     char *num = "42";
-    puts("My num is: ", num, " and my string is: ", str, "\n");
+    puts("Num: `", num, "` should be `42` and String: `", str, "` should be `Hello World`", "\n");
+    //puts("My num is: ", num, " and my string is: ", str, "\n");
     printf("TESTING STRING ITERATION\n");
     string *iter = new_string("oblivious");
+    printf("Iteration of `o b l i v i o u s`\n");
     string_iterate(iter, print_chars);
     printf("\n");
     printf("TESTING STRING SPLIT\n");
@@ -95,7 +97,7 @@ int main(void) {
     vector *double_testv = vector_map(testv, double_item);
     vector *positive_double_testv = vector_filter(double_testv, positive_filter);
     int sum = vector_reduce(positive_double_testv, adder);
-    printf("SUM: %d\n\n", sum);
+    printf("SUM: `%d` should be `30`\n\n", sum);
 
 
 
@@ -122,7 +124,7 @@ int main(void) {
     hashmap *double_hashmap = hashmap_map(testh, double_item, VALUES);
     hashmap *positive_double_hashmap = hashmap_filter(double_hashmap, positive_filter, VALUES);
     int hsum = hashmap_reduce(positive_double_hashmap, adder, VALUES);
-    printf("HASH SUM: %d\n\n", hsum);
+    printf("HASH SUM: `%d` should be `42`\n\n", hsum);
 
     
 
@@ -161,7 +163,7 @@ int main(void) {
     linked_list *double_list = linked_list_map(llist, double_item);
     linked_list *positive_double_list = linked_list_filter(double_list, positive_filter);
     int lsum = linked_list_reduce(positive_double_list, adder);
-    printf("LL SUM: %d\n", lsum);
+    printf("LL SUM: `%d` should be `30`\n", lsum);
 
 /* #if defined(_WIN32)
     getch();
