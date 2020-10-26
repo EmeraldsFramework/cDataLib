@@ -71,7 +71,7 @@ int main(void) {
     free(strValue3);
     free(strValue4);
     free(strValue5);
-    printf("AFTER:  %s, %s, %s, %s, %s\n\n", string_get(strValue1), string_get(strValue2), string_get(strValue3), string_get(strValue4), string_get(strValue5));
+    printf("AFTER:  %p, %p, %p, %p, %p\n\n", string_get(strValue1), string_get(strValue2), string_get(strValue3), string_get(strValue4), string_get(strValue5));
 
 
 

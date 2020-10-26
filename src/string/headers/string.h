@@ -3,8 +3,9 @@
 
 #include <stdio.h> /* snprintf */
 #include <stdlib.h> /* malloc, calloc, realloc, free */
-/* TODO -> REPLACE WITH CUSTOM FUNCTIONS */
-#include <string.h> /* memmove, strlen, strcmp */
+
+#include "standard_io.h" /* snprintf */
+#include "standard_string.h" /* strlen, strcmp, memmove */
 
 /** The initial minimum size of a string **/
 static const size_t string_init_capacity = 32;
