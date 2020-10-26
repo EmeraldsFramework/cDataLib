@@ -1,5 +1,5 @@
 # cDataLib
- A helper function library writter in C, containing multiple data structures. Brings some cross platform, higher level features meant to be used mainly on embedded as well as high efficient code bases.
+ A high performance library writter in C, containing multiple data structures. Brings some cross platform features meant to be used mainly on embedded as well as highly efficient code bases.
 
 # Compilation
-gcc -Ofast #{file.c} -ldata
+Run the Makefile
