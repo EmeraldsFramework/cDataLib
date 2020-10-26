@@ -3,3 +3,5 @@
 
 # Compilation
 Run the Makefile
+
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](./COPYING)
