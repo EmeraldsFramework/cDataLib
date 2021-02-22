@@ -2,12 +2,12 @@ NAME = linked_list
 
 CC = clang
 OPT = -march=native -O2
-#VERSION = -std=c89
+VERSION = -std=c89
 OUTPUT = $(NAME).o
 LIB_OUTPUT = $(NAME).so
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
-WARNINGS = -Wno-unused-function -Wno-incompatible-pointer-types
+WARNINGS = -Wno-unused-function
 HEADERS =
 LIBS = -c -fpic
 

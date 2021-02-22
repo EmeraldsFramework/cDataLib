@@ -2,12 +2,13 @@
 #include "../headers/hashmap_dup.h"
 
 hashmap *hashmap_map(hashmap *map, hashmap_lambda modifier, hashmap_element_type element_type) {
+    hashmap *dup;
+    size_t i;
     if(map == NULL || modifier == NULL) return NULL;
 
-    hashmap *dup = hashmap_dup(map);
+    dup = hashmap_dup(map);
     
     /* Iterate with linear probing */
-    size_t i;
     for(i = 0; i < map->alloced; i++) {
         if(map->data[i].in_use != 0) {
             switch(element_type) {
@@ -28,12 +29,13 @@ hashmap *hashmap_map(hashmap *map, hashmap_lambda modifier, hashmap_element_type
 }
 
 hashmap *hashmap_filter(hashmap *map, hashmap_lambda filter, hashmap_element_type element_type) {
+    hashmap *dup;
+    size_t i;
     if(map == NULL || filter == NULL) return NULL;
 
-    hashmap *dup = hashmap_dup(map);
+    dup = hashmap_dup(map);
 
     /* Iterate with linear probing */
-    size_t i;
     for(i = 0; i < map->alloced; i++) {
         if(map->data[i].in_use != 0) {
             switch(element_type) {
@@ -61,14 +63,14 @@ hashmap *hashmap_filter(hashmap *map, hashmap_lambda filter, hashmap_element_typ
 }
 
 void *hashmap_reduce(hashmap *map, hashmap_lambda fold, hashmap_element_type element_type) {
-    if(map == NULL || fold == NULL) return NULL;
-
     void *accumulator;
     void *current;
     int skip_first = 1;
+    size_t i;
+
+    if(map == NULL || fold == NULL) return NULL;
 
     /* In general this takes constant time no matter the hashmap size */
-    size_t i;
     for(i = 0; i < map->alloced; i++) {
         if(map->data[i].in_use != 0) {
             switch(element_type) {

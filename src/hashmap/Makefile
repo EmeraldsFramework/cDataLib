@@ -2,7 +2,7 @@ NAME = hashmap
 
 CC = clang
 OPT = -march=native -O2
-#VERSION = -std=c89
+VERSION = -std=c89
 OUTPUT = $(NAME).o
 LIB_OUTPUT = $(NAME).so
 

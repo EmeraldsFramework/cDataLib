@@ -1,6 +1,6 @@
 CC = clang
 OPT = -march=native -O2
-#VERSION = -std=c89
+VERSION = -std=c89
 OUTPUT = a.out
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
