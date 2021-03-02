@@ -37,12 +37,12 @@ build_export:
 
 default: build_export
 	cp src/cDataLib.h export/
-	cd src/$(NAME)/$(VECTOR) && cp -r headers/* ../../../export/$(NAME)/$(VECTOR)/headers && make && cp $(VECTOR).so ../../../export/lib$(VECTOR).so && cd ../../../
-	cd src/$(NAME)/$(STRING) && cp -r headers/* ../../../export/$(NAME)/$(STRING)/headers && make && cp $(STRING).so ../../../export/lib$(STRING).so && cd ../../../
-	cd src/$(NAME)/$(HASHMAP) && cp -r headers/* ../../../export/$(NAME)/$(HASHMAP)/headers && make && cp $(HASHMAP).so ../../../export/lib$(HASHMAP).so && cd ../../../
-	cd src/$(NAME)/$(STACK) && cp -r headers/* ../../../export/$(NAME)/$(STACK)/headers && make && cp $(STACK).so ../../../export/lib$(STACK).so && cd ../../../
-	cd src/$(NAME)/$(LINKED_LIST) && cp -r headers/* ../../../export/$(NAME)/$(LINKED_LIST)/headers && make && cp $(LINKED_LIST).so ../../../export/lib$(LINKED_LIST).so && cd ../../../
-	cp export/*.so /usr/local/lib/
+	cd src/$(NAME)/$(VECTOR) && cp -r headers/* ../../../export/$(NAME)/$(VECTOR)/headers && make && cp $(VECTOR).a ../../../export/lib$(VECTOR).a && cd ../../../
+	cd src/$(NAME)/$(STRING) && cp -r headers/* ../../../export/$(NAME)/$(STRING)/headers && make && cp $(STRING).a ../../../export/lib$(STRING).a && cd ../../../
+	cd src/$(NAME)/$(HASHMAP) && cp -r headers/* ../../../export/$(NAME)/$(HASHMAP)/headers && make && cp $(HASHMAP).a ../../../export/lib$(HASHMAP).a && cd ../../../
+	cd src/$(NAME)/$(STACK) && cp -r headers/* ../../../export/$(NAME)/$(STACK)/headers && make && cp $(STACK).a ../../../export/lib$(STACK).a && cd ../../../
+	cd src/$(NAME)/$(LINKED_LIST) && cp -r headers/* ../../../export/$(NAME)/$(LINKED_LIST)/headers && make && cp $(LINKED_LIST).a ../../../export/lib$(LINKED_LIST).a && cd ../../../
+	cp export/*.a /usr/local/lib/
 
 lib: default
 
@@ -56,11 +56,11 @@ spec: test
 clean:
 	$(RM) spec/$(TESTOUTPUT)
 	$(RM) -r export
-	$(RM) -r /usr/local/lib$(VECTOR).so
-	$(RM) -r /usr/local/lib$(STRING).so
-	$(RM) -r /usr/local/lib$(HASHMAP).so
-	$(RM) -r /usr/local/lib$(STACK).so
-	$(RM) -r /usr/local/lib$(LINKED_LIST).so
+	$(RM) -r /usr/local/lib$(VECTOR).a
+	$(RM) -r /usr/local/lib$(STRING).a
+	$(RM) -r /usr/local/lib$(HASHMAP).a
+	$(RM) -r /usr/local/lib$(STACK).a
+	$(RM) -r /usr/local/lib$(LINKED_LIST).a
 	cd src/$(NAME)/$(STRING) && make clean && cd ../../
 	cd src/$(NAME)/$(VECTOR) && make clean && cd ../../
 	cd src/$(NAME)/$(HASHMAP) && make clean && cd ../../

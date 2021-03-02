@@ -9,7 +9,7 @@ FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
 PRINT_WARNINGS = -Wno-int-conversion -Wno-format -Wno-incompatible-pointer-types
 WARNINGS = $(PRINT_WARNINGS) -Wno-unused-function -Wno-macro-redefined
 HEADERS =
-LIBS = -L/usr/local/lib -lstring -lvector -lhashmap -lstack -llinked_list
+LIBS = -L../export -lstring -lvector -lhashmap -lstack -llinked_list
 
 INPUT = $(NAME).c
 

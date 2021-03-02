@@ -3,19 +3,21 @@ NAME = hashmap
 CC = clang
 OPT = -O2
 VERSION = -std=c89
-OUTPUT = $(NAME).so
+OUTPUT = $(NAME).a
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
 WARNINGS = -Wno-unused-function -Wno-long-long
 HEADERS =
-LIBS = -fPIC -shared
+LIBS = -c
 
 INPUT = ./*.c
 
 all: default
 
 default:
-	$(CC) $(LIB_OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT)
+	$(CC) $(LIB_OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(LIBS) $(INPUT)
+	ar -rcs $(OUTPUT) *.o
 
 clean:
-	rm -rf ./*.so
+	$(RM) -rf ./*.o
+	$(RM) $(OUTPUT)

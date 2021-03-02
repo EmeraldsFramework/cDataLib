@@ -4,19 +4,21 @@ CC = clang
 OPT = -O2
 #VERSION = -std=c89
 VERSION = -std=c11
-OUTPUT = $(NAME).so
+OUTPUT = $(NAME).a
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
 WARNINGS = -Wno-unused-function
 HEADERS =
-LIBS = -fPIC -shared
+LIBS = -c
 
 INPUT = ./*.c ../vector/*.c
 
 all: compiler
 
 compiler:
-	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT)
+	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(LIBS) $(INPUT)
+	ar -rcs $(OUTPUT) *.o
 
 clean:
-	rm -rf ./*.so
+	$(RM) -r ./*.o
+	$(RM) -r ./*.a
