@@ -9,7 +9,7 @@
  * @param item -> The typed object contained in the linked list node
  * @param next -> The next node on the linked list
  **/
-typedef struct _llnode {
+typedef struct llnode {
     void *item;
     struct llnode *next;
 } llnode;
