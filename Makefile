@@ -1,4 +1,9 @@
 NAME = cDataLib
+STRING = string
+VECTOR = vector
+HASHMAP = hashmap
+STACK = stack
+LINKED_LIST = linked_list
 
 CC = clang
 OPT = -O2
@@ -16,12 +21,6 @@ OUTPUT = $(NAME)
 #TESTFILES = ../src/$(NAME)/*.c
 TESTINPUT = $(NAME).spec.c
 TESTOUTPUT = spec_results
-
-STRING = string
-VECTOR = vector
-HASHMAP = hashmap
-STACK = stack
-LINKED_LIST = linked_list
 
 all: default
 
