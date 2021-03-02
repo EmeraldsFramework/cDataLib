@@ -1,25 +1,25 @@
 #ifndef __CDATALIB_H_
 #define __CDATALIB_H_
 
-#include "string/string_dup.h"
-#include "string/string_functional_functions.h"
-#include "string/string.h"
-#include "string/string_interpolation.h"
-#include "string/string_split.h"
-#include "string/string_substring.h"
+#include "cDataLib/string/headers/string_dup.h"
+#include "cDataLib/string/headers/string_functional_functions.h"
+#include "cDataLib/string/headers/string.h"
+#include "cDataLib/string/headers/string_interpolation.h"
+#include "cDataLib/string/headers/string_split.h"
+#include "cDataLib/string/headers/string_substring.h"
 
-#include "vector/vector_dup.h"
-#include "vector/vector_functional_functions.h"
-#include "vector/vector.h"
+#include "cDataLib/vector/headers/vector_dup.h"
+#include "cDataLib/vector/headers/vector_functional_functions.h"
+#include "cDataLib/vector/headers/vector.h"
 
-#include "hashmap/hashmap_dup.h"
-#include "hashmap/hashmap_functional_functions.h"
-#include "hashmap/hashmap.h"
+#include "cDataLib/hashmap/headers/hashmap_dup.h"
+#include "cDataLib/hashmap/headers/hashmap_functional_functions.h"
+#include "cDataLib/hashmap/headers/hashmap.h"
 
-#include "stack/stack.h"
+#include "cDataLib/stack/headers/stack.h"
 
-#include "linked_list/linked_list_dup.h"
-#include "linked_list/linked_list_functional_functions.h"
-#include "linked_list/linked_list.h"
+#include "cDataLib/linked_list/headers/linked_list_dup.h"
+#include "cDataLib/linked_list/headers/linked_list_functional_functions.h"
+#include "cDataLib/linked_list/headers/linked_list.h"
 
 #endif

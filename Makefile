@@ -1,31 +1,68 @@
+NAME = cDataLib
+
+CC = clang
+OPT = -O2
+VERSION = -std=c11
+
+FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
+WARNINGS =
+UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi
+REMOVE_WARNINGS = -Wno-macro-redefined
+LIBS =
+
+INPUT = src/$(NAME).c src/$(NAME)/*.c
+OUTPUT = $(NAME)
+
+#TESTFILES = ../src/$(NAME)/*.c
+TESTINPUT = $(NAME).spec.c
+TESTOUTPUT = spec_results
+
 STRING = string
 VECTOR = vector
 HASHMAP = hashmap
 STACK = stack
 LINKED_LIST = linked_list
 
-all: compiler
+all: default
 
-compiler:
+build_export:
+	$(RM) -r export
 	mkdir export
-	mkdir export/lib
+	mkdir export/$(NAME)
+	mkdir export/$(NAME)/$(VECTOR) && mkdir export/$(NAME)/$(VECTOR)/headers
+	mkdir export/$(NAME)/$(STRING) && mkdir export/$(NAME)/$(STRING)/headers
+	mkdir export/$(NAME)/$(HASHMAP) && mkdir export/$(NAME)/$(HASHMAP)/headers
+	mkdir export/$(NAME)/$(STACK) && mkdir export/$(NAME)/$(STACK)/headers
+	mkdir export/$(NAME)/$(LINKED_LIST) && mkdir export/$(NAME)/$(LINKED_LIST)/headers
+
+default: build_export
 	cp src/cDataLib.h export/
-	cd src/$(VECTOR) && cp headers -r ../../export/$(VECTOR) && make && cp $(VECTOR).so ../../export/lib/lib$(VECTOR).so && cd ../../
-	cd src/$(STRING) && cp headers -r ../../export/$(STRING) && make && cp $(STRING).so ../../export/lib/lib$(STRING).so && cd ../../
-	cd src/$(HASHMAP) && cp headers -r ../../export/$(HASHMAP) && make && cp $(HASHMAP).so ../../export/lib/lib$(HASHMAP).so && cd ../../
-	cd src/$(STACK) && cp headers -r ../../export/$(STACK) && make && cp $(STACK).so ../../export/lib/lib$(STACK).so && cd ../../
-	cd src/$(LINKED_LIST) && cp headers -r ../../export/$(LINKED_LIST) && make && cp $(LINKED_LIST).so ../../export/lib/lib$(LINKED_LIST).so && cd ../../
-	cp export/lib/* /usr/lib/
+	cd src/$(NAME)/$(VECTOR) && cp -r headers/* ../../../export/$(NAME)/$(VECTOR)/headers && make && cp $(VECTOR).so ../../../export/lib$(VECTOR).so && cd ../../../
+	cd src/$(NAME)/$(STRING) && cp -r headers/* ../../../export/$(NAME)/$(STRING)/headers && make && cp $(STRING).so ../../../export/lib$(STRING).so && cd ../../../
+	cd src/$(NAME)/$(HASHMAP) && cp -r headers/* ../../../export/$(NAME)/$(HASHMAP)/headers && make && cp $(HASHMAP).so ../../../export/lib$(HASHMAP).so && cd ../../../
+	cd src/$(NAME)/$(STACK) && cp -r headers/* ../../../export/$(NAME)/$(STACK)/headers && make && cp $(STACK).so ../../../export/lib$(STACK).so && cd ../../../
+	cd src/$(NAME)/$(LINKED_LIST) && cp -r headers/* ../../../export/$(NAME)/$(LINKED_LIST)/headers && make && cp $(LINKED_LIST).so ../../../export/lib$(LINKED_LIST).so && cd ../../../
+	cp export/*.so /usr/local/lib/
+
+lib: default
+
+test:
+	cd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)
+	@echo
+	./spec/$(TESTOUTPUT)
+
+spec: test
 
 clean:
-	rm -rf export
-	rm -rf /usr/lib/lib/$(VECTOR).so
-	rm -rf /usr/lib/lib/$(STRING).so
-	rm -rf /usr/lib/lib/$(HASHMAP).so
-	rm -rf /usr/lib/lib/$(STACK).so
-	rm -rf /usr/lib/lib/$(LINKED_LIST).so
-	cd src/$(STRING) && make clean && cd ../../
-	cd src/$(VECTOR) && make clean && cd ../../
-	cd src/$(HASHMAP) && make clean && cd ../../
-	cd src/$(STACK) && make clean && cd ../../
-	cd src/$(LINKED_LIST) && make clean && cd ../../
+	$(RM) spec/$(TESTOUTPUT)
+	$(RM) -r export
+	$(RM) -r /usr/local/lib$(VECTOR).so
+	$(RM) -r /usr/local/lib$(STRING).so
+	$(RM) -r /usr/local/lib$(HASHMAP).so
+	$(RM) -r /usr/local/lib$(STACK).so
+	$(RM) -r /usr/local/lib$(LINKED_LIST).so
+	cd src/$(NAME)/$(STRING) && make clean && cd ../../
+	cd src/$(NAME)/$(VECTOR) && make clean && cd ../../
+	cd src/$(NAME)/$(HASHMAP) && make clean && cd ../../
+	cd src/$(NAME)/$(STACK) && make clean && cd ../../
+	cd src/$(NAME)/$(LINKED_LIST) && make clean && cd ../../
