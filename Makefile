@@ -41,7 +41,7 @@ default: build_export
 	cd src/$(NAME)/$(HASHMAP) && cp -r headers/* ../../../export/$(NAME)/$(HASHMAP)/headers && make && cp $(HASHMAP).a ../../../export/lib$(HASHMAP).a && cd ../../../
 	cd src/$(NAME)/$(STACK) && cp -r headers/* ../../../export/$(NAME)/$(STACK)/headers && make && cp $(STACK).a ../../../export/lib$(STACK).a && cd ../../../
 	cd src/$(NAME)/$(LINKED_LIST) && cp -r headers/* ../../../export/$(NAME)/$(LINKED_LIST)/headers && make && cp $(LINKED_LIST).a ../../../export/lib$(LINKED_LIST).a && cd ../../../
-	cp export/*.a /usr/local/lib/
+	#cp export/*.a /usr/local/lib/
 
 lib: default
 
