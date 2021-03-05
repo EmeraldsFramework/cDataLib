@@ -16,12 +16,12 @@ INPUT = $(NAME).c
 all: compiler
 
 make_library:
-	cd ../ && make && cd examples
+	cd .. && em build lib && cd examples
 
 compiler: make_library
 	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT)
 	./$(OUTPUT)
 
 clean:
-	cd .. && make clean && cd examples
+	cd .. && em clean && cd examples
 	rm -rf $(OUTPUT)
