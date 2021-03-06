@@ -10,8 +10,6 @@ FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
 WARNINGS = -Wno-unused-function
 HEADERS =
 LIBS = ../export/*.so
-NIX_LIBS = ../export/*.so
-OSX_LIBS = ../export/*.a
 
 INPUT = $(NAME).c
 

@@ -38,9 +38,8 @@ build_osx: copy_headers
 	$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(HEADERS) $(OSX_LIBS) $(INPUT)
 	llvm-ar -rcs $(OUTPUT).a *.o
 	$(RM) -r *.o
-	mv $(OUTPUT).a ../../../export/
+	mv $(OUTPUT).a ../../../export/$(OUTPUT).so
 
 clean:
-	$(RM) -r $(OUTPUT).a
 	$(RM) -r *.o
 	$(RM) -r $(OUTPUT).so
