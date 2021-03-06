@@ -1,21 +1,45 @@
+PARENT_NAME = cDataLib
 NAME = string
 
 CC = clang
 OPT = -O2
 VERSION = -std=c89
-OUTPUT = $(NAME).so
+OUTPUT = $(NAME)
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
-WARNINGS = -Wno-unused-function -Wno-long-long
+WARNINGS = -Wno-unused-function
+C99_WARNINGS = -Wno-long-long
 HEADERS =
-LIBS = -shared -fPIC
+NIX_LIBS = -shared -fPIC
+OSX_LIBS = -c
 
 INPUT = ./*.c
 
 all: default
 
+nix: build_nix
+
+linux: build_nix
+
+osx: build_osx
+
+mac: build_osx
+
+copy_headers:
+	cp -r ./headers/* ../../../export/$(PARENT_NAME)/$(NAME)/headers/
+
 default:
-	$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(HEADERS) $(LIBS) -o $(OUTPUT) $(INPUT)
+	@echo "Run \`make nix\` or \`make osx\`"
+
+build_nix: copy_headers
+	$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(C99_WARNINGS) $(HEADERS) $(NIX_LIBS) -o $(OUTPUT).so $(INPUT)
+	mv $(OUTPUT).so ../../../export/
+
+build_osx: copy_headers
+	$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(C99_WARNINGS) $(HEADERS) $(OSX_LIBS) $(INPUT)
+	llvm-ar -rcs $(OUTPUT).a *.o
+	$(RM) -r *.o
+	mv $(OUTPUT).a ../../../export/
 
 clean:
 	$(RM) $(OUTPUT)

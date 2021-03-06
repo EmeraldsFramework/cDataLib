@@ -15,7 +15,7 @@ UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-functio
 REMOVE_WARNINGS = -Wno-macro-redefined
 LIBS =
 
-INPUT = src/$(NAME).c src/$(NAME)/*.c
+INPUT = src/$(NAME).c
 OUTPUT = $(NAME)
 
 #TESTFILES = ../src/$(NAME)/*.c
@@ -23,6 +23,19 @@ TESTINPUT = $(NAME).spec.c
 TESTOUTPUT = spec_results
 
 all: default
+
+nix: build_nix
+
+linux: build_nix
+
+osx: build_osx
+
+mac: build_osx
+
+# TODO -> ADD A UNAME TYPE OF BUILD
+
+default:
+	@echo "Run \`make nix\` or \`make osx\`"
 
 build_export:
 	$(RM) -r export
@@ -33,16 +46,21 @@ build_export:
 	mkdir export/$(NAME)/$(HASHMAP) && mkdir export/$(NAME)/$(HASHMAP)/headers
 	mkdir export/$(NAME)/$(STACK) && mkdir export/$(NAME)/$(STACK)/headers
 	mkdir export/$(NAME)/$(LINKED_LIST) && mkdir export/$(NAME)/$(LINKED_LIST)/headers
+	cp src/$(NAME).h export/
 
-default: build_export
-	cp src/cDataLib.h export/
-	cd src/$(NAME)/$(VECTOR) && cp -r headers/* ../../../export/$(NAME)/$(VECTOR)/headers && make && cp $(VECTOR).so ../../../export/lib$(VECTOR).so && cd ../../../
-	cd src/$(NAME)/$(STRING) && cp -r headers/* ../../../export/$(NAME)/$(STRING)/headers && make && cp $(STRING).so ../../../export/lib$(STRING).so && cd ../../../
-	cd src/$(NAME)/$(HASHMAP) && cp -r headers/* ../../../export/$(NAME)/$(HASHMAP)/headers && make && cp $(HASHMAP).so ../../../export/lib$(HASHMAP).so && cd ../../../
-	cd src/$(NAME)/$(STACK) && cp -r headers/* ../../../export/$(NAME)/$(STACK)/headers && make && cp $(STACK).so ../../../export/lib$(STACK).so && cd ../../../
-	cd src/$(NAME)/$(LINKED_LIST) && cp -r headers/* ../../../export/$(NAME)/$(LINKED_LIST)/headers && make && cp $(LINKED_LIST).so ../../../export/lib$(LINKED_LIST).so && cd ../../../
+build_nix: build_export
+	cd src/$(NAME)/$(VECTOR) && make nix && cd ../../../
+	cd src/$(NAME)/$(STRING) && make nix && cd ../../../
+	cd src/$(NAME)/$(HASHMAP) && make nix && cd ../../../
+	cd src/$(NAME)/$(STACK) && make nix && cd ../../../
+	cd src/$(NAME)/$(LINKED_LIST) && make nix && cd ../../../
 
-lib: default
+build_osx: build_export
+	cd src/$(NAME)/$(VECTOR) && make osx && cd ../../../
+	cd src/$(NAME)/$(STRING) && make osx && cd ../../../
+	cd src/$(NAME)/$(HASHMAP) && make osx && cd ../../../
+	cd src/$(NAME)/$(STACK) && make osx && cd ../../../
+	cd src/$(NAME)/$(LINKED_LIST) && make osx && cd ../../../
 
 test:
 	cd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)
