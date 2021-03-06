@@ -22,20 +22,8 @@ OUTPUT = $(NAME)
 TESTINPUT = $(NAME).spec.c
 TESTOUTPUT = spec_results
 
-all: default
-
-nix: build_nix
-
-linux: build_nix
-
-osx: build_osx
-
-mac: build_osx
-
-# TODO -> ADD A UNAME TYPE OF BUILD
-
-default:
-	@echo "Run \`make nix\` or \`make osx\`"
+# TODO -> WORKS ON LINUX AND MAC FOR THE MOMENT
+all: $(shell uname)
 
 build_export:
 	$(RM) -r export
@@ -48,14 +36,14 @@ build_export:
 	mkdir export/$(NAME)/$(LINKED_LIST) && mkdir export/$(NAME)/$(LINKED_LIST)/headers
 	cp src/$(NAME).h export/
 
-build_nix: build_export
+Linux: build_export
 	cd src/$(NAME)/$(VECTOR) && make nix && cd ../../../
 	cd src/$(NAME)/$(STRING) && make nix && cd ../../../
 	cd src/$(NAME)/$(HASHMAP) && make nix && cd ../../../
 	cd src/$(NAME)/$(STACK) && make nix && cd ../../../
 	cd src/$(NAME)/$(LINKED_LIST) && make nix && cd ../../../
 
-build_osx: build_export
+Darwin: build_export
 	cd src/$(NAME)/$(VECTOR) && make osx && cd ../../../
 	cd src/$(NAME)/$(STRING) && make osx && cd ../../../
 	cd src/$(NAME)/$(HASHMAP) && make osx && cd ../../../
