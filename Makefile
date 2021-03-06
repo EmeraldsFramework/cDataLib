@@ -25,6 +25,10 @@ TESTOUTPUT = spec_results
 # TODO -> WORKS ON LINUX AND MAC FOR THE MOMENT
 all: $(shell uname)
 
+application: $(shell uname)
+
+lib: $(shell uname)
+
 build_export:
 	$(RM) -r export
 	mkdir export
