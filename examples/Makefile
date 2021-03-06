@@ -2,14 +2,14 @@ NAME = test
 
 CC = clang
 OPT = -O2
-VERSION = -std=c11
+# TODO -> MOVE TO C89
+VERSION = -std=c99
 OUTPUT = a.out
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
-PRINT_WARNINGS = -Wno-int-conversion -Wno-format -Wno-incompatible-pointer-types
-WARNINGS = $(PRINT_WARNINGS) -Wno-unused-function -Wno-macro-redefined
+WARNINGS = -Wno-unused-function
 HEADERS =
-LIBS = -L../export -lstring -lvector -lhashmap -lstack -llinked_list
+LIBS = ../export/*.so
 
 INPUT = $(NAME).c
 
@@ -19,7 +19,7 @@ make_library:
 	cd .. && em build lib && cd examples
 
 compiler: make_library
-	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT)
+	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(PRINT_WARNINGS) $(C99_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT)
 	./$(OUTPUT)
 
 clean:

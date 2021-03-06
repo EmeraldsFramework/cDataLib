@@ -81,11 +81,11 @@ static size_t hashmap_hash(hashmap *map, char *key);
 static void hashmap_rehash(hashmap *map);
 
 /**
- * @func: new_hashmap
+ * @func: hashmap_new
  * @desc: Create an empty hashmap
  * @return: The hashmap
  **/
-hashmap *new_hashmap(void);
+hashmap *hashmap_new(void);
 
 /**
  * @func: hashmap_add

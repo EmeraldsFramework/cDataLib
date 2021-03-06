@@ -1,6 +1,6 @@
 #include "headers/linked_list.h"
 
-linked_list *linked_list_create(void) {
+linked_list *linked_list_new(void) {
     linked_list *list = (linked_list*)malloc(sizeof(linked_list));
     list->head = NULL;
     list->length = 0;
@@ -8,19 +8,22 @@ linked_list *linked_list_create(void) {
 }
 
 void linked_list_add(linked_list *list, void *item) {
+    struct llnode **probe = NULL;
+    struct llnode *newnode = NULL;
+
     if(list == NULL || item == NULL) return;
 
     /* Use the address to take advantage of a pointer to pointer approach */
-    llnode **probe = &(list->head);
+    probe = &(list->head);
 
     /* Create a new node */
-    llnode *newnode = (llnode*)malloc(sizeof(llnode));
+    newnode = (struct llnode*)malloc(sizeof(struct llnode));
     newnode->item = (void*)malloc(sizeof(item));
     newnode->item = item;
 
     /* Traverse to the end of the linked list */
     while(*probe)
-        probe = (llnode**)&(*probe)->next;
+        probe = (struct llnode**)&(*probe)->next;
 
     newnode->next = (struct llnode*)*probe;
     *probe = newnode;
@@ -28,13 +31,14 @@ void linked_list_add(linked_list *list, void *item) {
 }
 
 void linked_list_remove(linked_list *list, void *item) {
+    struct llnode **probe = NULL;
+
     if(list == NULL || item == NULL) return;
 
-    llnode **probe = &(list->head);
+    probe = &(list->head);
 
     while((*probe) && (*probe)->item != list)
-        probe = (llnode**)&(*probe)->next;
+        probe = (struct llnode**)&(*probe)->next;
 
-    *probe = (llnode*)((*probe)->next);
+    *probe = (struct llnode*)((*probe)->next);
 }
-

@@ -108,6 +108,7 @@ static unsigned int hashmap_hash_int(hashmap *map, char *keystring) {
 static size_t hashmap_hash(hashmap *map, char *key) {
     size_t curr;
     size_t i;
+
 	if(map->length >= (map->alloced / 2)) return -1;
 
 	curr = hashmap_hash_int(map, key);
@@ -155,7 +156,7 @@ static void hashmap_rehash(hashmap *map) {
 	return;
 }
 
-hashmap *new_hashmap(void) {
+hashmap *hashmap_new(void) {
     hashmap *map = (hashmap*)malloc(sizeof(hashmap));
 	map->data = (hashmap_element*)calloc(hashmap_init_capacity, sizeof(hashmap_element));
 	map->alloced = hashmap_init_capacity;
@@ -165,11 +166,13 @@ hashmap *new_hashmap(void) {
 
 void hashmap_add(hashmap *map, char *key, void *value) {
     signed long long index;
+
     if(map == NULL || key == NULL) return;
 
     index = hashmap_hash(map, key);
     
     /* In case of a full hashmap */
+    /* TODO -> FIX FOR SIZE_T */
 	while(index == -1) {
         hashmap_rehash(map);
 		index = hashmap_hash(map, key);
@@ -185,6 +188,7 @@ void hashmap_add(hashmap *map, char *key, void *value) {
 void hashmap_set(hashmap *map, char *key, void *value) {
     size_t curr;
     size_t i;
+
     if(map == NULL || key == NULL) return;
 
 	curr = hashmap_hash_int(map, key);
@@ -205,6 +209,7 @@ void hashmap_set(hashmap *map, char *key, void *value) {
 void *hashmap_get(hashmap *map, char *key) {
     size_t curr;
     size_t i;
+
     if(map == NULL || key == NULL) return NULL;
 
 	curr = hashmap_hash_int(map, key);
@@ -225,6 +230,7 @@ void *hashmap_get(hashmap *map, char *key) {
 void hashmap_delete(hashmap *map, char *key) {
     size_t curr;
     size_t i;
+
     if(map == NULL || key == NULL) return;
 
 	curr = hashmap_hash_int(map, key);
@@ -253,4 +259,3 @@ size_t hashmap_length(hashmap *map) {
 	if(map != NULL) return map->length;
 	else return 0;
 }
-

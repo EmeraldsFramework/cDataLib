@@ -2,23 +2,20 @@ NAME = stack
 
 CC = clang
 OPT = -O2
-#VERSION = -std=c89
-VERSION = -std=c11
-OUTPUT = $(NAME).a
+VERSION = -std=c89
+OUTPUT = $(NAME).so
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
-WARNINGS = -Wno-unused-function
+WARNINGS =
 HEADERS =
-LIBS = -c
+LIBS = -shared -fPIC
 
-INPUT = ./*.c ../vector/*.c
+INPUT = ./*.c
 
-all: compiler
+all: default
 
-compiler:
-	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(LIBS) $(INPUT)
-	ar -rcs $(OUTPUT) *.o
+default:
+	$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(HEADERS) $(LIBS) -o $(OUTPUT) $(INPUT)
 
 clean:
-	$(RM) -r ./*.o
-	$(RM) -r ./*.a
+	$(RM) $(OUTPUT)

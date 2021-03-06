@@ -98,17 +98,6 @@ static int vsnprintf_(char* buffer, size_t count, const char* format, va_list va
 static int vprintf_(const char* format, va_list va);
 
 
-/**
- * printf with output function
- * You may use this as dynamic alternative to printf() with its fixed _putchar() output
- * \param out An output function which takes one character and an argument pointer
- * \param arg An argument pointer for user data passed to output function
- * \param format A string that specifies the format of the output
- * \return The number of characters that are sent to the output function, not counting the terminating null character
- */
-static int fctprintf(void (*out)(char character, void* arg), void* arg, const char* format, ...);
-
-
 #ifdef __cplusplus
 }
 #endif
@@ -418,11 +407,16 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
 static size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags)
 {
   char buf[PRINTF_FTOA_BUFFER_SIZE];
+  bool negative = false;
   size_t len  = 0U;
   double diff = 0.0;
 
   /* powers of 10 */
   static const double pow10[] = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000 };
+  int whole = (int)value;
+  double tmp = (value - whole) * pow10[prec];
+  unsigned long frac = (unsigned long)tmp;
+  diff = tmp - frac;
 
   /* test for special values */
   if (value != value)
@@ -443,7 +437,6 @@ static size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
   }
 
   /* test for negative */
-  bool negative = false;
   if (value < 0) {
     negative = true;
     value = 0 - value;
@@ -458,11 +451,6 @@ static size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
     buf[len++] = '0';
     prec--;
   }
-
-  int whole = (int)value;
-  double tmp = (value - whole) * pow10[prec];
-  unsigned long frac = (unsigned long)tmp;
-  diff = tmp - frac;
 
   if (diff > 0.5) {
     ++frac;
@@ -545,13 +533,26 @@ static size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
 /* internal ftoa variant for exponential floating-point type, contributed by Martijn Jasperse <m.jasperse@gmail.com> */
 static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags)
 {
+  union {
+    uint64_t U;
+    double   F;
+  } conv;
+
+  int exp2;
+  int expval;
+  double z;
+  double z2;
+  unsigned int minwidth;
+  unsigned int fwidth;
+  size_t start_idx;
+
+  const bool negative = value < 0;
   /* check for NaN and special values */
   if ((value != value) || (value > DBL_MAX) || (value < -DBL_MAX)) {
     return _ftoa(out, buffer, idx, maxlen, value, prec, width, flags);
   }
 
   /* determine the sign */
-  const bool negative = value < 0;
   if (negative) {
     value = -value;
   }
@@ -563,20 +564,16 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
 
   /* determine the decimal exponent */
   /* based on the algorithm by David Gay (https://www.ampl.com/netlib/fp/dtoa.c) */
-  union {
-    uint64_t U;
-    double   F;
-  } conv;
 
   conv.F = value;
-  int exp2 = (int)((conv.U >> 52U) & 0x07FFU) - 1023;           /* effectively log2 */
+  exp2 = (int)((conv.U >> 52U) & 0x07FFU) - 1023;           /* effectively log2 */
   conv.U = (conv.U & ((1ULL << 52U) - 1U)) | (1023ULL << 52U);  /* drop the exponent so conv.F is now in [1,2) */
   /* now approximate log10 from the log2 integer part and an expansion of ln around 1.5 */
-  int expval = (int)(0.1760912590558 + exp2 * 0.301029995663981 + (conv.F - 1.5) * 0.289529654602168);
+  expval = (int)(0.1760912590558 + exp2 * 0.301029995663981 + (conv.F - 1.5) * 0.289529654602168);
   /* now we want to compute 10^expval but we want to be sure it won't overflow */
   exp2 = (int)(expval * 3.321928094887362 + 0.5);
-  const double z  = expval * 2.302585092994046 - exp2 * 0.6931471805599453;
-  const double z2 = z * z;
+  z  = expval * 2.302585092994046 - exp2 * 0.6931471805599453;
+  z2 = z * z;
   conv.U = (uint64_t)(exp2 + 1023) << 52U;
   /* compute exp(z) using continued fractions, see https://en.wikipedia.org/wiki/Exponential_function#Continued_fractions_for_ex */
   conv.F *= 1 + 2 * z / (2 - z + (z2 / (6 + (z2 / (10 + z2 / 14)))));
@@ -587,7 +584,7 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
   }
 
   /* the exponent format is "%+03d" and largest value is "307", so set aside 4-5 characters */
-  unsigned int minwidth = ((expval < 100) && (expval > -100)) ? 4U : 5U;
+  minwidth = ((expval < 100) && (expval > -100)) ? 4U : 5U;
 
   /* in "%g" mode, "prec" is the number of *significant figures* not decimals */
   if (flags & FLAGS_ADAPT_EXP) {
@@ -613,7 +610,7 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
   }
 
   /* will everything fit? */
-  unsigned int fwidth = width;
+  fwidth = width;
   if (width > minwidth) {
     /* we didn't fall-back so subtract the characters required for the exponent */
     fwidth -= minwidth;
@@ -632,7 +629,7 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
   }
 
   /* output the floating part */
-  const size_t start_idx = idx;
+  start_idx = idx;
   idx = _ftoa(out, buffer, idx, maxlen, negative ? -value : value, prec, fwidth, flags & ~FLAGS_ADAPT_EXP);
 
   /* output the exponent part */
@@ -899,10 +896,10 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
       }
 
       case 'p' : {
+        const bool is_ll = sizeof(uintptr_t) == sizeof(long long);
         width = sizeof(void*) * 2U;
         flags |= FLAGS_ZEROPAD | FLAGS_UPPERCASE;
 #if defined(PRINTF_SUPPORT_LONG_LONG)
-        const bool is_ll = sizeof(uintptr_t) == sizeof(long long);
         if (is_ll) {
           idx = _ntoa_long_long(out, buffer, idx, maxlen, (uintptr_t)va_arg(va, void*), false, 16U, precision, width, flags);
         }
@@ -937,10 +934,11 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
 
 static int printf_(const char* format, ...)
 {
+  int ret = 0;
+  char buffer[1];
   va_list va;
   va_start(va, format);
-  char buffer[1];
-  const int ret = _vsnprintf(_out_char, buffer, (size_t)-1, format, va);
+  ret = _vsnprintf(_out_char, buffer, (size_t)-1, format, va);
   va_end(va);
   return ret;
 }
@@ -948,9 +946,10 @@ static int printf_(const char* format, ...)
 
 static int sprintf_(char* buffer, const char* format, ...)
 {
+  int ret;
   va_list va;
   va_start(va, format);
-  const int ret = _vsnprintf(_out_buffer, buffer, (size_t)-1, format, va);
+  ret = _vsnprintf(_out_buffer, buffer, (size_t)-1, format, va);
   va_end(va);
   return ret;
 }
@@ -958,9 +957,10 @@ static int sprintf_(char* buffer, const char* format, ...)
 
 static int snprintf_(char* buffer, size_t count, const char* format, ...)
 {
+  int ret;
   va_list va;
   va_start(va, format);
-  const int ret = _vsnprintf(_out_buffer, buffer, count, format, va);
+  ret = _vsnprintf(_out_buffer, buffer, count, format, va);
   va_end(va);
   return ret;
 }
@@ -978,15 +978,5 @@ static int vsnprintf_(char* buffer, size_t count, const char* format, va_list va
   return _vsnprintf(_out_buffer, buffer, count, format, va);
 }
 
-
-static int fctprintf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
-{
-  va_list va;
-  va_start(va, format);
-  const out_fct_wrap_type out_fct_wrap = { out, arg };
-  const int ret = _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
-  va_end(va);
-  return ret;
-}
 
 #endif  /* _PRINTF_H_ */

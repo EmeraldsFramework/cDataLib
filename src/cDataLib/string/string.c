@@ -19,10 +19,11 @@ static void string_ensure_space(string *sb, size_t add_len) {
             sb->alloced--;
         }
     }
+    /* TODO -> PROB CREATES THE MEMORY PROBLEM */
     sb->str = (char*)realloc(sb->str, sb->alloced);
 }
 
-string *new_string(char *initial_string) {
+string *string_new(char *initial_string) {
     string *sb = (string*)calloc(1, sizeof(*sb));
     sb->str = (char*)malloc(string_init_capacity);
 
@@ -37,12 +38,15 @@ string *new_string(char *initial_string) {
 }
 
 void string_add_str(string *sb, const char *str) {
+    size_t len;
+    
     if(sb == NULL || str == NULL || *str == '\0') return;
 
-    size_t len = strlen(str);
+    len = strlen(str);
     string_ensure_space(sb, len);
 
     /* Copy the value into memory */
+    /* TODO -> CARE FOR CUSTOM MEMMOVE ALSO POSSIBLE CANDIDATE FOR MEMORY ERRORS */
     memmove(sb->str+sb->length, str, len);
 
     /* Reset length and NULL terminate */
@@ -131,13 +135,15 @@ unsigned char string_equals(string *sb, string *other) {
 }
 
 char *string_identifier(string *sb) {
-    if(sb == NULL) return NULL;
-
-    string *output = new_string("");
-
     unsigned char add_underscore = 0;
     char buf[32];
     size_t i;
+    string *output = NULL;
+    string *ret_value = NULL;
+
+    if(sb == NULL) return NULL;
+
+    output = string_new("");
 
     for(i = 0; i < string_length(sb); i++) {
         char c = string_get(sb)[i];
@@ -150,16 +156,15 @@ char *string_identifier(string *sb) {
             string_add_char(output, '_');
         else {
             if(i == 0) add_underscore = 1;
-            sprintf(buf, "%02x", c & 0xff);
+            snprintf(buf, 2, "%02x", c & 0xff);
             string_add_str(output, buf);
         }
     }
 
-    string *ret_value;
     if(add_underscore)
-        ret_value = new_string("_");
+        ret_value = string_new("_");
     else
-        ret_value = new_string("");
+        ret_value = string_new("");
     string_add_str(ret_value, string_get(output));
 
     return string_get(ret_value);

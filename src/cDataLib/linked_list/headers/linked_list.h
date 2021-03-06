@@ -9,10 +9,10 @@
  * @param item -> The typed object contained in the linked list node
  * @param next -> The next node on the linked list
  **/
-typedef struct llnode {
+struct llnode {
     void *item;
     struct llnode *next;
-} llnode;
+};
 
 /**
  * @struct: linked_list
@@ -22,16 +22,15 @@ typedef struct llnode {
  **/
 typedef struct linked_list {
 	size_t length;
-    llnode *head;
+    struct llnode *head;
 } linked_list;
 
 /**
- * @func: linked_list_create
+ * @func: linked_list_new
  * @desc: Creates a new linked list instance and initiates the head node
  * @return The newly created typed linked list
  **/
-linked_list *linked_list_create(void);
-#define new_linked_list() linked_list_create()
+linked_list *linked_list_new(void);
 
 /**
  * @func: linked_list_add

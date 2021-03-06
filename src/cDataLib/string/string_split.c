@@ -1,12 +1,12 @@
 #include "headers/string_split.h"
 
 vector *string_split(string *str, string *delimeter) {
-	vector *str_tokens = new_vector();
-	string *token_str = new_string("");
+	size_t i;
+	vector *str_tokens = vector_new();
+	string *token_str = string_new("");
 
 	/* Iterate through the chars constructing a string and
 		reseting the value once we find the delimeter */
-	size_t i;
 	for(i = 0; (i <= string_length(str)
 	&& string_get_char_at_index(str, i) != '\0'); i++) {
 		if(string_get_char_at_index(str, i) == string_get(delimeter)[0]) {
@@ -14,7 +14,7 @@ vector *string_split(string *str, string *delimeter) {
 			vector_add(str_tokens, token_str);
 
 			/* Reset the temp string */
-			token_str = new_string("");
+			token_str = string_new("");
 			continue;
 		}
 

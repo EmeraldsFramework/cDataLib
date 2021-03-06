@@ -1,10 +1,9 @@
 #ifndef __STRING_H_
 #define __STRING_H_
 
-#include <stdio.h> /* snprintf */
 #include <stdlib.h> /* malloc, calloc, realloc, free */
 
-#include "standard_io.h" /* snprintf */
+#include "standard_io.h" /* printf, snprintf */
 #include "standard_string.h" /* strlen, strcmp, memmove */
 
 /** The initial minimum size of a string **/
@@ -32,12 +31,12 @@ typedef struct string {
 static void string_ensure_space(string *sb, size_t add_len);
 
 /**
- * @func: new_string
+ * @func: string_new
  * @desc: Create an str builder
  * @param initial_string -> The initial string to set
  * @return The str builder
  **/
-string *new_string(char *initial_string);
+string *string_new(char *initial_string);
 
 /**
  * @func: string_add_str

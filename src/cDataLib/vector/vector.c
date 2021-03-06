@@ -1,10 +1,18 @@
 #include "headers/vector.h"
 
+/**
+ * @func: vector_ensure_space
+ * @desc: Ensure there is enough space for our values in the vector
+ * @param v -> The vector to use
+ * @param capacity -> The new capacity to set
+ **/
 static void vector_ensure_space(vector *v, size_t capacity) {
+    void **items = NULL;
+    
     if(v == NULL || capacity == 0) return;
 
     /* Attempt to reallocate new memory in the items list */
-    void **items = realloc(v->items, sizeof(void*) * capacity);
+    items = realloc(v->items, sizeof(void*) * capacity);
 
     if(items) {
         /* Reset the items in the new memory space */
@@ -13,7 +21,7 @@ static void vector_ensure_space(vector *v, size_t capacity) {
     }
 }
 
-vector *new_vector(void) {
+vector *vector_new(void) {
     vector *v = (vector*)malloc(sizeof(vector));
     v->alloced = vector_init_capacity;
     v->length = 0;
@@ -43,13 +51,14 @@ void *vector_get(vector *v, size_t index) {
 }
 
 void vector_delete(vector *v, size_t index) {
+    size_t i;
+    
     if(v == NULL) return;
     if(index >= v->length) return;
     
     v->items[index] = NULL;
 
     /* Reset the rest of the elements forwards */
-    size_t i;
     for(i = index; i < v->length - 1; i++) {
         v->items[i] = v->items[i + 1];
         v->items[i + 1] = NULL;

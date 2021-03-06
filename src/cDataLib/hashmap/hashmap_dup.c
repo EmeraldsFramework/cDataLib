@@ -1,11 +1,12 @@
 #include "headers/hashmap_dup.h"
 
 hashmap *hashmap_dup(hashmap *map) {
-    hashmap *dup;
+    hashmap *dup = NULL;
     size_t i;
+
     if(map == NULL) return NULL;
 
-    dup = new_hashmap();
+    dup = hashmap_new();
     
     /* Iteratively copy all hashmap elements from one pointer to another */
     for(i = 0; i < map->alloced; i++)
@@ -14,4 +15,3 @@ hashmap *hashmap_dup(hashmap *map) {
 
     return dup;
 }
-

@@ -21,19 +21,11 @@ typedef struct vector {
 } vector;
 
 /**
- * @func: vector_ensure_space
- * @desc: Ensure there is enough space for our values in the vector
- * @param v -> The vector to use
- * @param capacity -> The new capacity to set
- **/
-static void vector_ensure_space(vector *v, size_t capacity);
-
-/**
- * @func: new_vector
+ * @func: vector_new
  * @desc: Initializes a vector data structure
  * @return: The newly created vector
  **/
-vector *new_vector(void);
+vector *vector_new(void);
 
 /**
  * @func: vector_add

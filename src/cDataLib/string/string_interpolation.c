@@ -1,11 +1,12 @@
+/*
 #include "headers/string_interpolation.h"
 
 void display(size_t argc, ...) {
+    size_t i;
     string *sb = new_string("");
     
     va_list vars;
     va_start(vars, argc);
-        size_t i;
         for(i = 0; i < argc; i++)
             string_add_str(sb, va_arg(vars, void*));
     va_end(vars);
@@ -13,3 +14,7 @@ void display(size_t argc, ...) {
     printf("displaying: %s\n", string_get(sb));
     string_delete(sb);
 }
+TODO -> FIX SRC FOR C89
+*/
+
+void display(void) {}

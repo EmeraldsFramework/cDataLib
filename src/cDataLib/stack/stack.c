@@ -1,12 +1,12 @@
 #include "headers/stack.h"
 
-stack *stack_create(void) {
+stack *stack_new(void) {
     stack *st = (stack*)malloc(sizeof(stack));
 
     /* Initial values */
     st->length = 0;
     st->top = -1;
-    st->items = new_vector();
+    st->items = vector_new();
 
     return st;
 }

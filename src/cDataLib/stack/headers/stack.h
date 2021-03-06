@@ -30,12 +30,11 @@ typedef struct stack {
 } stack;
 
 /**
- * @func: stack_create
+ * @func: stack_new
  * @desc: Creates a basic stack data structure using a dynamic array
  * @return The newly created stack
  **/
-stack *stack_create(void);
-#define new_stack() stack_create()
+stack *stack_new(void);
 
 /**
  * @func: stack_length

@@ -2,8 +2,9 @@
 #include "headers/hashmap_dup.h"
 
 hashmap *hashmap_map(hashmap *map, hashmap_lambda modifier, hashmap_element_type element_type) {
-    hashmap *dup;
+    hashmap *dup = NULL;
     size_t i;
+
     if(map == NULL || modifier == NULL) return NULL;
 
     dup = hashmap_dup(map);
@@ -29,8 +30,9 @@ hashmap *hashmap_map(hashmap *map, hashmap_lambda modifier, hashmap_element_type
 }
 
 hashmap *hashmap_filter(hashmap *map, hashmap_lambda filter, hashmap_element_type element_type) {
-    hashmap *dup;
+    hashmap *dup = NULL;
     size_t i;
+
     if(map == NULL || filter == NULL) return NULL;
 
     dup = hashmap_dup(map);
@@ -63,8 +65,8 @@ hashmap *hashmap_filter(hashmap *map, hashmap_lambda filter, hashmap_element_typ
 }
 
 void *hashmap_reduce(hashmap *map, hashmap_lambda fold, hashmap_element_type element_type) {
-    void *accumulator;
-    void *current;
+    void *accumulator = NULL;
+    void *current = NULL;
     int skip_first = 1;
     size_t i;
 
@@ -119,4 +121,3 @@ void *hashmap_reduce(hashmap *map, hashmap_lambda fold, hashmap_element_type ele
     
     return accumulator;
 }
-

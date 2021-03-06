@@ -4,7 +4,8 @@
 #include "cDataLib/string/headers/string_dup.h"
 #include "cDataLib/string/headers/string_functional_functions.h"
 #include "cDataLib/string/headers/string.h"
-#include "cDataLib/string/headers/string_interpolation.h"
+/* TODO -> FIX HEADER FOR C89 */
+/* #include "cDataLib/string/headers/string_interpolation.h" */
 #include "cDataLib/string/headers/string_split.h"
 #include "cDataLib/string/headers/string_substring.h"
 
