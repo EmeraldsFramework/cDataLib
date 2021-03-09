@@ -1,20 +1,31 @@
 # cDataLib
 
- A high performance library writter in C, containing multiple data structures.  Brings some cross platform features     meant to be used mainly on embedded as well as highly efficient code bases.
+A high performance library writter in C, containing multiple data structures.
+Brings some cross platform features meant to be used mainly on embedded as well as highly efficient code bases.
 
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](./COPYING)
 
 # Installation
 
-Run the Makefile
+`em list`
+`em install`
+`em build lib`
 
 ## Usage
 
-TODO: Write usage instructions here
+* Include the headers and import the static libraries into the compilation
+
+`touch test.c`
+
+```c
+#include "export/cDataLib.h"
+```
+
+`clang test.c $(find ./libs -name "*.*o" | xargs ls -d)`
 
 ## Development
 
-TODO: Write development instructions here
+* Make all parts of cDataLib an emerald library.
 
 ## Contributing
 

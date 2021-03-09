@@ -2,14 +2,13 @@ NAME = test
 
 CC = clang
 OPT = -O2
-# TODO -> MOVE TO C89
 VERSION = -std=c99
 OUTPUT = a.out
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
-WARNINGS = -Wno-unused-function
+WARNINGS = -Wno-unused-function -Wno-macro-redefined
 HEADERS =
-LIBS = ../export/*.so
+LIBS = $(shell find ../libs -name "*.*o" | xargs ls -d)
 
 INPUT = $(NAME).c
 
