@@ -1,6 +1,6 @@
 NAME = cDataLib
 
-DEPS = $(shell find ./libs -name "*.*o" | xargs ls -d)
+DEPS = export/*.*o $(shell find ./libs -name "*.*o")
 
 all: default
 
@@ -14,6 +14,7 @@ copy_headers:
 default: lib
 
 lib: $(shell uname)
+	cp $(shell find ./libs -name "*.*o") export/
 
 Darwin: make_export copy_headers
 

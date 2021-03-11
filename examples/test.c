@@ -10,7 +10,7 @@ int double_item(int item) {
 }
 
 int positive_filter(int item) {
-    return item > 0;
+    return item < 0;
 }
 
 int adder(int accumulator, int current) {
@@ -36,10 +36,10 @@ void print_keys(char *key) {
 /* main({ */
 int main(void) {
     printf("TESTING STRING INTERPOLATION\n");
-    /* char *str = "Hello World"; */
-    /* char *num = "42"; */
-    /* puts("Num: `", num, "` should be `42` and String: `", str, "` should be `Hello World`", "\n"); */
-    /* puts("My num is: ", num, " and my string is: ", str, "\n"); */
+    char *str = "Hello World";
+    char *num = "42";
+    puts("Num: `", num, "` should be `42` and String: `", str, "` should be `Hello World`", "\n");
+    puts("My num is: ", num, " and my string is: ", str, "\n");
     printf("TESTING STRING ITERATION\n");
     string *iter = string_new("oblivious");
     printf("Iteration of `o b l i v i o u s`\n");
