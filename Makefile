@@ -1,6 +1,6 @@
 NAME = cDataLib
 
-DEPS = export/*.*o $(shell find ./libs -name "*.*o")
+DEPS = $(shell find ./export -name "*.*o") $(shell find ./libs -name "*.*o")
 
 all: default
 
