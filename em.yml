@@ -2,11 +2,11 @@ name: cDataLib
 version: 0.4.0
 
 dependencies:
-  String: Oblivious-Oblivious/String
-  Vector: Oblivious-Oblivious/Vector
-  Hashmap: Oblivious-Oblivious/Hashmap
-  Stack: Oblivious-Oblivious/Stack
-  LinkedList: Oblivious-Oblivious/LinkedList
+  String: EmeraldsFramework/String
+  Vector: EmeraldsFramework/Vector
+  Hashmap: EmeraldsFramework/Hashmap
+  Stack: EmeraldsFramework/Stack
+  LinkedList: EmeraldsFramework/LinkedList
 
 dev-dependencies:
   cSpec: Oblivious-Oblivious/cSpec
