@@ -71,7 +71,14 @@ int main(void) {
     free(strValue3);
     free(strValue4);
     free(strValue5);
-    printf("AFTER:  %p, %p, %p, %p, %p\n\n", string_get(strValue1), string_get(strValue2), string_get(strValue3), string_get(strValue4), string_get(strValue5));
+    printf(
+        "AFTER:  %p, %p, %p, %p, %p\n\n",
+        (void*)string_get(strValue1),
+        (void*)string_get(strValue2),
+        (void*)string_get(strValue3),
+        (void*)string_get(strValue4),
+        (void*)string_get(strValue5)
+    );
 
 
 
@@ -92,10 +99,11 @@ int main(void) {
     vector_add(testv, (void*)4);
     vector_add(testv, (void*)-5);
 
+    /* TODO Fix tests */
     vector *double_testv = vector_map(testv, (vector_lambda)double_item);
     vector *positive_double_testv = vector_filter(double_testv, (vector_lambda)positive_filter);
     void *sum = vector_reduce(positive_double_testv, (vector_lambda)adder);
-    printf("SUM: `%d` should be `30`\n\n", sum);
+    printf("SUM: `%d` should be `30`\n\n", *(int*)sum);
 
 
 
@@ -122,7 +130,7 @@ int main(void) {
     hashmap *double_hashmap = hashmap_map(testh, (hashmap_lambda)double_item, VALUES);
     hashmap *positive_double_hashmap = hashmap_filter(double_hashmap, (hashmap_lambda)positive_filter, VALUES);
     void *hsum = hashmap_reduce(positive_double_hashmap, (hashmap_lambda)adder, VALUES);
-    printf("HASH SUM: `%d` should be `42`\n\n", hsum);
+    printf("HASH SUM: `%d` should be `42`\n\n", *(int*)hsum);
 
     
 
@@ -134,10 +142,10 @@ int main(void) {
     stack_push(st, (void*)2);
     stack_push(st, (void*)3);
     stack_push(st, (void*)-1);
-    printf("item %d, should be -1\n", stack_pop(st));
-    printf("item %d, should be 3\n", stack_pop(st));
-    printf("peek item %d should be 2\n", stack_peek(st));
-    printf("item %d, should be 2\n", stack_pop(st));
+    printf("item %d, should be -1\n", *(int*)stack_pop(st));
+    printf("item %d, should be 3\n", *(int*)stack_pop(st));
+    printf("peek item %d should be 2\n", *(int*)stack_peek(st));
+    printf("item %d, should be 2\n", *(int*)stack_pop(st));
     printf("\n");
 
 
@@ -161,7 +169,7 @@ int main(void) {
     linked_list *double_list = linked_list_map(llist, (linked_list_lambda)double_item);
     linked_list *positive_double_list = linked_list_filter(double_list, (linked_list_lambda)positive_filter);
     void *lsum = linked_list_reduce(positive_double_list, (linked_list_lambda)adder);
-    printf("LL SUM: `%d` should be `30`\n", lsum);
+    printf("LL SUM: `%d` should be `30`\n", *(int*)lsum);
 
 /* #if defined(_WIN32)
     getch();
